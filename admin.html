@@ -1,0 +1,40 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin - MDoces</title>
+</head>
+<body>
+  <h2>Área Administrativa</h2>
+  <p>Senha: <input type="password" id="senha"><button onclick="login()">Entrar</button></p>
+  <div id="admin" style="display:none;">
+    <h3>Cadastrar Produto</h3>
+    <input placeholder="Nome" id="nome"><br>
+    <input placeholder="Descrição" id="descricao"><br>
+    <input placeholder="Preço" id="preco" type="number" step="0.01"><br>
+    <input placeholder="URL da imagem" id="imagem"><br>
+    <button onclick="salvarProduto()">Salvar</button>
+  </div>
+  <script>
+    function login() {
+      if (document.getElementById("senha").value === "mdoces123") {
+        document.getElementById("admin").style.display = "block";
+      } else {
+        alert("Senha incorreta.");
+      }
+    }
+    function salvarProduto() {
+      const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+      produtos.push({
+        nome: document.getElementById("nome").value,
+        descricao: document.getElementById("descricao").value,
+        preco: parseFloat(document.getElementById("preco").value),
+        imagem: document.getElementById("imagem").value
+      });
+      localStorage.setItem("produtos", JSON.stringify(produtos));
+      alert("Produto salvo!");
+    }
+  </script>
+</body>
+</html>
