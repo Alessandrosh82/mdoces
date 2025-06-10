@@ -4,7 +4,310 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MDoces - Doceria Delivery</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Fonte */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
+
+    :root {
+      --indigo: #3f51b5;
+      --indigo-dark: #303f9f;
+      --white: #fff;
+      --gray-light: #f5f5f5;
+      --gray-dark: #555;
+      --green: #25d366;
+      --radius: 12px;
+      --shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--gray-light);
+      margin: 0;
+      color: #222;
+      line-height: 1.4;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      background: var(--indigo);
+      color: var(--white);
+      text-align: center;
+      padding: 1.8rem 1rem 1.2rem;
+      box-shadow: var(--shadow);
+    }
+
+    header h1 {
+      margin-bottom: 0.3rem;
+      font-weight: 700;
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      font-weight: 400;
+      font-size: 1rem;
+      opacity: 0.85;
+      margin-top: 0;
+    }
+
+    main.container {
+      max-width: 960px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      flex: 1;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+    }
+
+    /* Seções do site */
+    #produtos {
+      flex: 2 1 320px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill,minmax(150px,1fr));
+      gap: 1rem;
+    }
+
+    .produto-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .produto-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+    }
+
+    .produto-img {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: var(--radius);
+      margin-bottom: 0.8rem;
+    }
+
+    .produto-nome {
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.3rem;
+      color: var(--indigo-dark);
+    }
+
+    .produto-descricao {
+      flex-grow: 1;
+      font-size: 0.9rem;
+      color: var(--gray-dark);
+      margin-bottom: 0.6rem;
+      min-height: 38px;
+    }
+
+    .produto-preco {
+      font-weight: 700;
+      font-size: 1rem;
+      color: var(--indigo);
+      margin-bottom: 0.5rem;
+    }
+
+    .btn-add {
+      background: var(--indigo);
+      color: var(--white);
+      border: none;
+      border-radius: 6px;
+      padding: 0.4rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-add:hover {
+      background: var(--indigo-dark);
+    }
+
+    /* Carrinho e formulário */
+    #carrinho {
+      flex: 1 1 320px;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 1rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    #carrinho h2 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      color: var(--indigo);
+      font-weight: 700;
+    }
+
+    #itens-carrinho {
+      list-style: none;
+      padding-left: 0;
+      flex-grow: 1;
+      margin-bottom: 1rem;
+      max-height: 280px;
+      overflow-y: auto;
+    }
+
+    #itens-carrinho li {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid #eee;
+    }
+
+    #itens-carrinho li:last-child {
+      border-bottom: none;
+    }
+
+    .item-info {
+      flex: 1;
+      font-size: 0.9rem;
+      color: #444;
+    }
+
+    .item-quantidade {
+      margin: 0 0.8rem;
+    }
+
+    .btn-remove-item {
+      background: #e53935;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      padding: 0 8px;
+      font-size: 1rem;
+      line-height: 1;
+      transition: background-color 0.2s ease;
+    }
+
+    .btn-remove-item:hover {
+      background: #b71c1c;
+    }
+
+    #total {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 1rem;
+      color: var(--indigo);
+      text-align: right;
+    }
+
+    form#form-pedido {
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+    }
+
+    form#form-pedido label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--indigo-dark);
+    }
+
+    form#form-pedido input,
+    form#form-pedido select,
+    form#form-pedido textarea {
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 0.5rem 0.6rem;
+      font-size: 1rem;
+      font-family: inherit;
+      resize: vertical;
+    }
+
+    form#form-pedido button.btn-finalizar {
+      background: var(--green);
+      color: var(--white);
+      font-weight: 700;
+      border: none;
+      border-radius: 6px;
+      padding: 0.7rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 0.5rem;
+    }
+
+    form#form-pedido button.btn-finalizar:hover {
+      background: #1ebe51;
+    }
+
+    /* Status do pedido */
+    #status-pedidos {
+      max-width: 960px;
+      margin: 1rem auto 3rem;
+      padding: 0 1rem;
+    }
+
+    #status-pedidos h2 {
+      color: var(--indigo);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    #lista-status-pedidos p {
+      color: var(--gray-dark);
+      font-style: italic;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--indigo);
+      color: var(--white);
+      text-align: center;
+      padding: 1rem 0.5rem;
+      font-size: 0.9rem;
+      user-select: none;
+      box-shadow: var(--shadow);
+    }
+
+    footer a.admin-link {
+      display: inline-block;
+      margin-top: 0.3rem;
+      color: var(--green);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    footer a.admin-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsividade */
+    @media (max-width: 720px) {
+      main.container {
+        flex-direction: column;
+        margin: 1rem;
+      }
+
+      #produtos {
+        grid-template-columns: repeat(auto-fill,minmax(140px,1fr));
+        margin-bottom: 2rem;
+      }
+
+      #carrinho {
+        max-height: none;
+      }
+    }
+  </style>
 </head>
 <body>
   <header>
@@ -71,7 +374,6 @@
     <section id="status-pedidos" aria-label="Acompanhamento do status do pedido">
       <h2>📦 Acompanhe seu pedido</h2>
       <div id="lista-status-pedidos">
-        <!-- Status dos pedidos aparecerão aqui -->
         <p>Você ainda não fez nenhum pedido.</p>
       </div>
     </section>
@@ -82,6 +384,162 @@
     <a href="admin.html" class="admin-link">🔒 Área Administrativa</a>
   </footer>
 
-  <script src="script.js"></script>
+  <script>
+    // Função para formatar preço em moeda BRL
+    function formatarPreco(valor) {
+      return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    // Busca produtos do localStorage ou lista vazia
+    let produtos = JSON.parse(localStorage.getItem('produtos') || '[]');
+
+    // Carrinho - array de itens { nome, preco, quantidade }
+    let carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
+
+    // Função para salvar carrinho no localStorage
+    function salvarCarrinho() {
+      localStorage.setItem('carrinho', JSON.stringify(carrinho));
+    }
+
+    // Atualiza o total do carrinho
+    function atualizarTotal() {
+      const total = carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
+      document.getElementById('total').textContent = 'Total: ' + formatarPreco(total);
+    }
+
+    // Renderiza lista de produtos
+    function renderizarProdutos() {
+      const container = document.getElementById('produtos');
+      if (produtos.length === 0) {
+        container.innerHTML = '<p>Nenhum produto disponível no momento.</p>';
+        return;
+      }
+
+      container.innerHTML = produtos.map((p, i) => `
+        <article class="produto-card" tabindex="0" aria-label="${p.nome}, R$ ${p.preco.toFixed(2)}">
+          <img src="${p.imagem}" alt="${p.nome}" class="produto-img" />
+          <h3 class="produto-nome">${p.nome}</h3>
+          <p class="produto-descricao">${p.descricao}</p>
+          <div class="produto-preco">${formatarPreco(p.preco)}</div>
+          <button class="btn-add" aria-label="Adicionar ${p.nome} ao carrinho" onclick="adicionarAoCarrinho(${i})">Adicionar</button>
+        </article>
+      `).join('');
+    }
+
+    // Adiciona produto ao carrinho
+    function adicionarAoCarrinho(indice) {
+      const produto = produtos[indice];
+      const existente = carrinho.find(item => item.nome === produto.nome);
+      if (existente) {
+        existente.quantidade++;
+      } else {
+        carrinho.push({ nome: produto.nome, preco: produto.preco, quantidade: 1 });
+      }
+      salvarCarrinho();
+      renderizarCarrinho();
+    }
+
+    // Remove item do carrinho
+    function removerDoCarrinho(indice) {
+      carrinho.splice(indice, 1);
+      salvarCarrinho();
+      renderizarCarrinho();
+    }
+
+    // Renderiza o carrinho
+    function renderizarCarrinho() {
+      const lista = document.getElementById('itens-carrinho');
+      if (carrinho.length === 0) {
+        lista.innerHTML = '<li>Seu carrinho está vazio.</li>';
+        atualizarTotal();
+        return;
+      }
+      lista.innerHTML = carrinho.map((item, i) => `
+        <li>
+          <span class="item-info">${item.nome} (${item.quantidade}x)</span>
+          <span class="item-quantidade">${formatarPreco(item.preco * item.quantidade)}</span>
+          <button class="btn-remove-item" aria-label="Remover ${item.nome}" onclick="removerDoCarrinho(${i})">×</button>
+        </li>
+      `).join('');
+      atualizarTotal();
+    }
+
+    // Manipula submissão do formulário de pedido
+    document.getElementById('form-pedido').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      if (carrinho.length === 0) {
+        alert('Seu carrinho está vazio. Adicione produtos antes de finalizar o pedido.');
+        return;
+      }
+
+      const nome = this.nomeCliente.value.trim();
+      const endereco = this.endereco.value.trim();
+      const formaPagamento = this.formaPagamento.value;
+      const observacoes = this.observacoes.value.trim();
+
+      if (nome.length < 2 || endereco.length < 5 || !formaPagamento) {
+        alert('Por favor, preencha todos os campos obrigatórios corretamente.');
+        return;
+      }
+
+      // Criar pedido
+      const pedido = {
+        id: Date.now(),
+        cliente: nome,
+        endereco,
+        formaPagamento,
+        observacoes,
+        itens: carrinho,
+        status: 'Pedido recebido',
+        criadoEm: new Date().toISOString()
+      };
+
+      // Salvar pedido no localStorage
+      let pedidos = JSON.parse(localStorage.getItem('pedidos') || '[]');
+      pedidos.push(pedido);
+      localStorage.setItem('pedidos', JSON.stringify(pedidos));
+
+      // Limpar carrinho e formulário
+      carrinho = [];
+      salvarCarrinho();
+      renderizarCarrinho();
+      this.reset();
+
+      alert('Pedido realizado com sucesso! Você pode acompanhar o status abaixo.');
+
+      carregarStatusPedidos();
+    });
+
+    // Carregar e mostrar status dos pedidos
+    function carregarStatusPedidos() {
+      const container = document.getElementById('lista-status-pedidos');
+      let pedidos = JSON.parse(localStorage.getItem('pedidos') || '[]');
+      if (pedidos.length === 0) {
+        container.innerHTML = '<p>Você ainda não fez nenhum pedido.</p>';
+        return;
+      }
+
+      // Mostra os últimos 5 pedidos (mais recentes primeiro)
+      pedidos = pedidos.slice(-5).reverse();
+
+      container.innerHTML = pedidos.map(pedido => `
+        <article style="background:#fff;padding:1rem;margin-bottom:0.8rem; border-radius: var(--radius); box-shadow: var(--shadow);">
+          <p><strong>Pedido #${pedido.id}</strong> - <em>${pedido.status}</em></p>
+          <p><strong>Cliente:</strong> ${pedido.cliente}</p>
+          <p><strong>Endereço:</strong> ${pedido.endereco}</p>
+          <p><strong>Pagamento:</strong> ${pedido.formaPagamento}</p>
+          <p><strong>Itens:</strong> ${pedido.itens.map(i => `${i.nome} (${i.quantidade})`).join(', ')}</p>
+          ${pedido.observacoes ? `<p><strong>Obs:</strong> ${pedido.observacoes}</p>` : ''}
+          <small style="color:#666;">Feito em: ${new Date(pedido.criadoEm).toLocaleString('pt-BR')}</small>
+        </article>
+      `).join('');
+    }
+
+    // Inicialização
+    renderizarProdutos();
+    renderizarCarrinho();
+    carregarStatusPedidos();
+  </script>
 </body>
 </html>
