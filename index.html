@@ -1,50 +1,57 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDoces</title>
+  <title>MDoces - Doceria Delivery</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <header>
     <h1>MDoces</h1>
+    <p>Doces artesanais com carinho e sabor</p>
   </header>
 
-  <section id="produtos" class="grid"></section>
+  <main class="container">
+    <section id="produtos" class="grid">
+      <!-- Produtos renderizados pelo JavaScript -->
+    </section>
 
-  <section id="carrinho">
-    <h2>Carrinho</h2>
-    <ul id="itens-carrinho"></ul>
-    <p id="total"></p>
+    <section id="carrinho">
+      <h2>🛒 Carrinho</h2>
+      <ul id="itens-carrinho"></ul>
+      <p id="total">Total: R$ 0,00</p>
 
-    <input
-      type="text"
-      id="endereco"
-      placeholder="Seu endereço completo"
-      autocomplete="address-line1"
-    />
+      <label for="endereco">📍 Endereço de entrega:</label>
+      <input
+        type="text"
+        id="endereco"
+        placeholder="Rua, número, bairro, cidade"
+        autocomplete="address-line1"
+        required
+      />
 
-    <label for="forma-pagamento">Forma de pagamento:</label>
-    <select id="forma-pagamento" required>
-      <option value="" disabled selected>Escolha uma opção</option>
-      <option value="Dinheiro">Dinheiro</option>
-      <option value="Cartão na entrega">Cartão na entrega</option>
-      <option value="Pix">Pix</option>
-    </select>
+      <label for="forma-pagamento">💳 Forma de pagamento:</label>
+      <select id="forma-pagamento" required>
+        <option value="" disabled selected>Escolha uma opção</option>
+        <option value="Dinheiro">Dinheiro</option>
+        <option value="Cartão na entrega">Cartão na entrega</option>
+        <option value="Pix">Pix</option>
+      </select>
 
-    <textarea
-      id="observacoes"
-      rows="3"
-      placeholder="Observações (ex: sem açúcar, entregar na portaria)"
-    ></textarea>
+      <label for="observacoes">📝 Observações:</label>
+      <textarea
+        id="observacoes"
+        rows="3"
+        placeholder="Ex: sem açúcar, entregar na portaria"
+      ></textarea>
 
-    <button onclick="finalizarPedido()">Finalizar pedido no WhatsApp</button>
-  </section>
+      <button class="btn-finalizar" onclick="finalizarPedido()">Finalizar pedido no WhatsApp</button>
+    </section>
+  </main>
 
   <footer>
-    <p><a href="admin.html">Área Administrativa</a></p>
+    <p><a href="admin.html">🔒 Área Administrativa</a></p>
   </footer>
 
   <script src="script.js"></script>
