@@ -3,415 +3,107 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDoces - Área Administrativa</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #1a237e; /* azul índigo escuro */
-      color: #fff;
-      margin: 0; padding: 0;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    header {
-      padding: 1rem;
-      text-align: center;
-      background: #283593;
-      width: 100%;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-    }
-    header h1 {
-      margin: 0;
-      font-weight: 700;
-      font-size: 2rem;
-      color: #bbdefb;
-    }
-    main {
-      flex-grow: 1;
-      max-width: 900px;
-      width: 100%;
-      padding: 1rem;
-      box-sizing: border-box;
-    }
-    .login-container, .admin-container {
-      background: #3949ab;
-      border-radius: 8px;
-      padding: 1.5rem;
-      box-shadow: 0 0 10px rgba(0,0,0,0.3);
-    }
-    .login-container h2, .admin-container h2 {
-      margin-top: 0;
-      margin-bottom: 1rem;
-      color: #e3f2fd;
-      text-align: center;
-    }
-    label {
-      display: block;
-      margin: 0.5rem 0 0.2rem;
-      font-weight: 600;
-      color: #e8eaf6;
-    }
-    input[type="text"], input[type="password"], input[type="number"], textarea, select {
-      width: 100%;
-      padding: 0.4rem 0.5rem;
-      font-size: 1rem;
-      border-radius: 4px;
-      border: none;
-      outline: none;
-      box-sizing: border-box;
-    }
-    textarea {
-      resize: vertical;
-    }
-    button {
-      margin-top: 1rem;
-      background: #66bb6a; /* verde */
-      border: none;
-      padding: 0.7rem 1.5rem;
-      font-size: 1rem;
-      font-weight: 700;
-      border-radius: 5px;
-      cursor: pointer;
-      color: #fff;
-      transition: background 0.3s;
-    }
-    button:hover {
-      background: #4caf50;
-    }
-    .btn-danger {
-      background: #ef5350;
-    }
-    .btn-danger:hover {
-      background: #d32f2f;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1rem;
-      color: #e3f2fd;
-    }
-    th, td {
-      border: 1px solid #5c6bc0;
-      padding: 0.5rem 0.7rem;
-      text-align: left;
-    }
-    th {
-      background: #283593;
-    }
-    td.actions {
-      text-align: center;
-      white-space: nowrap;
-    }
-    .footer {
-      padding: 1rem;
-      text-align: center;
-      font-size: 0.9rem;
-      background: #283593;
-      width: 100%;
-      color: #c5cae9;
-      user-select: none;
-    }
-    .hidden {
-      display: none;
-    }
-    .msg-error {
-      background: #ef5350;
-      padding: 0.7rem;
-      margin-top: 1rem;
-      border-radius: 4px;
-      color: #fff;
-      font-weight: 700;
-      text-align: center;
-    }
-    @media (max-width: 600px) {
-      table, th, td {
-        font-size: 0.9rem;
-      }
-    }
-  </style>
+  <title>MDoces - Administração</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <header>
+    <h1>Administração - MDoces</h1>
+  </header>
+  <main class="container admin">
+    <section class="form-produto">
+      <h2>Cadastrar/Editar Produto</h2>
+      <form id="produto-form">
+        <input type="hidden" id="produto-id" />
+        <label>Nome:</label>
+        <input type="text" id="produto-nome" required />
+        <label>Descrição:</label>
+        <textarea id="produto-descricao" rows="2" required></textarea>
+        <label>Preço (R$):</label>
+        <input type="number" id="produto-preco" step="0.01" required />
+        <label>Imagem (URL):</label>
+        <input type="url" id="produto-imagem" required />
+        <label>Categoria:</label>
+        <input type="text" id="produto-categoria" required />
+        <button type="submit">Salvar Produto</button>
+      </form>
+    </section>
+    <section class="lista-produtos">
+      <h2>Produtos Cadastrados</h2>
+      <div id="produtos-lista"></div>
+    </section>
+  </main>
+  <footer>
+    <p>Administração MDoces</p>
+    <small>Senha: <span id="senha-admin"></span></small>
+  </footer>
+  <script>
+    const senha = 'admin123';
+    document.getElementById('senha-admin').textContent = senha;
 
-<header>
-  <h1>MDoces - Área Administrativa</h1>
-</header>
+    let produtos = JSON.parse(localStorage.getItem('mdoces_produtos')) || [];
 
-<main>
-  <!-- Tela de login -->
-  <section id="login-section" class="login-container">
-    <h2>Login</h2>
-    <label for="senha">Senha:</label>
-    <input type="password" id="senha" placeholder="Digite a senha" autocomplete="current-password" />
-    <button id="btn-login">Entrar</button>
-    <div id="login-error" class="msg-error hidden">Senha incorreta. Tente novamente.</div>
-  </section>
+    const form = document.getElementById('produto-form');
+    const lista = document.getElementById('produtos-lista');
 
-  <!-- Tela administrativa -->
-  <section id="admin-section" class="admin-container hidden" aria-live="polite">
-    <h2>Cadastro e Edição de Produtos</h2>
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const id = document.getElementById('produto-id').value || 'p' + Date.now();
+      const nome = document.getElementById('produto-nome').value;
+      const descricao = document.getElementById('produto-descricao').value;
+      const preco = parseFloat(document.getElementById('produto-preco').value);
+      const imagem = document.getElementById('produto-imagem').value;
+      const categoria = document.getElementById('produto-categoria').value;
 
-    <form id="form-produto" aria-label="Formulário para cadastrar ou editar produto">
-      <input type="hidden" id="produto-id" />
-      <label for="nome-produto">Nome:</label>
-      <input type="text" id="nome-produto" required autocomplete="off" />
-      
-      <label for="descricao-produto">Descrição:</label>
-      <textarea id="descricao-produto" rows="2" required></textarea>
-      
-      <label for="preco-produto">Preço (R$):</label>
-      <input type="number" id="preco-produto" min="0" step="0.01" required />
-      
-      <label for="imagem-produto">URL da imagem:</label>
-      <input type="text" id="imagem-produto" placeholder="https://..." required />
-      
-      <label for="categoria-produto">Categoria:</label>
-      <select id="categoria-produto" required>
-        <option value="">Selecione...</option>
-        <option>Brigadeiros</option>
-        <option>Docinhos</option>
-        <option>Doces tradicionais</option>
-        <option>Bolos</option>
-        <option>Outros</option>
-      </select>
-      
-      <button type="submit" id="btn-salvar-produto">Salvar Produto</button>
-      <button type="button" id="btn-cancelar-edicao" class="hidden">Cancelar Edição</button>
-    </form>
-
-    <h3>Produtos cadastrados</h3>
-    <table aria-label="Tabela de produtos cadastrados">
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Preço</th>
-          <th>Categoria</th>
-          <th>Ações</th>
-        </tr>
-      </thead>
-      <tbody id="lista-produtos"></tbody>
-    </table>
-
-    <hr style="margin: 2rem 0; border-color: #5c6bc0;" />
-
-    <h2>Configuração do WhatsApp</h2>
-    <form id="form-whatsapp" aria-label="Formulário para configurar número do WhatsApp">
-      <label for="numero-whatsapp">Número do WhatsApp (com DDD e código do país, ex: 5511999999999):</label>
-      <input type="text" id="numero-whatsapp" placeholder="Ex: 5511999999999" pattern="[0-9]{10,15}" required autocomplete="tel" />
-      <button type="submit">Salvar Número</button>
-    </form>
-  </section>
-</main>
-
-<div class="footer">
-  &copy; 2025 MDoces - Desenvolvido por Você
-</div>
-
-<script>
-  // Senha fixa (pode mudar depois)
-  const SENHA_ADMIN = 'mdoces123';
-
-  // Elementos do DOM
-  const loginSection = document.getElementById('login-section');
-  const adminSection = document.getElementById('admin-section');
-  const inputSenha = document.getElementById('senha');
-  const btnLogin = document.getElementById('btn-login');
-  const loginError = document.getElementById('login-error');
-
-  const formProduto = document.getElementById('form-produto');
-  const inputProdutoId = document.getElementById('produto-id');
-  const inputNome = document.getElementById('nome-produto');
-  const inputDescricao = document.getElementById('descricao-produto');
-  const inputPreco = document.getElementById('preco-produto');
-  const inputImagem = document.getElementById('imagem-produto');
-  const selectCategoria = document.getElementById('categoria-produto');
-  const btnCancelarEdicao = document.getElementById('btn-cancelar-edicao');
-
-  const listaProdutosTbody = document.getElementById('lista-produtos');
-
-  const formWhatsapp = document.getElementById('form-whatsapp');
-  const inputNumeroWhatsApp = document.getElementById('numero-whatsapp');
-
-  // Variáveis de controle
-  let produtos = JSON.parse(localStorage.getItem('mdoces_produtos')) || [];
-  let numeroWhatsApp = localStorage.getItem('mdoces_numeroWhatsApp') || '';
-
-  // Função para renderizar tabela de produtos
-  function renderizarTabelaProdutos() {
-    listaProdutosTbody.innerHTML = '';
-    if (produtos.length === 0) {
-      listaProdutosTbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#ccc;">Nenhum produto cadastrado.</td></tr>';
-      return;
-    }
-
-    produtos.forEach(prod => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td>${prod.nome}</td>
-        <td>${prod.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
-        <td>${prod.categoria}</td>
-        <td class="actions">
-          <button aria-label="Editar ${prod.nome}" data-id="${prod.id}">✏️</button>
-          <button aria-label="Excluir ${prod.nome}" data-id="${prod.id}" class="btn-danger">🗑️</button>
-        </td>
-      `;
-      listaProdutosTbody.appendChild(tr);
-    });
-
-    // Adicionar eventos aos botões
-    listaProdutosTbody.querySelectorAll('button').forEach(botao => {
-      botao.addEventListener('click', e => {
-        const id = e.currentTarget.getAttribute('data-id');
-        if (botao.classList.contains('btn-danger')) {
-          excluirProduto(id);
-        } else {
-          editarProduto(id);
-        }
-      });
-    });
-  }
-
-  // Função para salvar produtos no localStorage
-  function salvarProdutos() {
-    localStorage.setItem('mdoces_produtos', JSON.stringify(produtos));
-  }
-
-  // Função para limpar formulário produto
-  function limparFormularioProduto() {
-    inputProdutoId.value = '';
-    inputNome.value = '';
-    inputDescricao.value = '';
-    inputPreco.value = '';
-    inputImagem.value = '';
-    selectCategoria.value = '';
-    btnCancelarEdicao.classList.add('hidden');
-    formProduto.querySelector('button[type="submit"]').textContent = 'Salvar Produto';
-  }
-
-  // Função para validar produto
-  function validarProduto(nome, descricao, preco, imagem, categoria) {
-    if (!nome.trim() || !descricao.trim() || !imagem.trim() || !categoria.trim()) return false;
-    if (isNaN(preco) || preco < 0) return false;
-    return true;
-  }
-
-  // Função para gerar ID único simples
-  function gerarId() {
-    return 'p' + Date.now();
-  }
-
-  // Salvar ou editar produto no envio do form
-  formProduto.addEventListener('submit', e => {
-    e.preventDefault();
-
-    const id = inputProdutoId.value;
-    const nome = inputNome.value.trim();
-    const descricao = inputDescricao.value.trim();
-    const preco = parseFloat(inputPreco.value);
-    const imagem = inputImagem.value.trim();
-    const categoria = selectCategoria.value;
-
-    if (!validarProduto(nome, descricao, preco, imagem, categoria)) {
-      alert('Por favor, preencha todos os campos corretamente.');
-      return;
-    }
-
-    if (id) {
-      // Editar produto
       const index = produtos.findIndex(p => p.id === id);
-      if (index > -1) {
+      if (index >= 0) {
         produtos[index] = { id, nome, descricao, preco, imagem, categoria };
+      } else {
+        produtos.push({ id, nome, descricao, preco, imagem, categoria });
       }
-    } else {
-      // Novo produto
-      produtos.push({ id: gerarId(), nome, descricao, preco, imagem, categoria });
+
+      localStorage.setItem('mdoces_produtos', JSON.stringify(produtos));
+      form.reset();
+      document.getElementById('produto-id').value = '';
+      atualizarLista();
+    });
+
+    function atualizarLista() {
+      lista.innerHTML = '';
+      produtos.forEach(prod => {
+        const div = document.createElement('div');
+        div.className = 'item-produto';
+        div.innerHTML = `
+          <img src="${prod.imagem}" alt="${prod.nome}" />
+          <div>
+            <strong>${prod.nome}</strong><br />
+            ${prod.descricao}<br />
+            <em>${prod.categoria}</em> - R$ ${prod.preco.toFixed(2)}<br />
+            <button onclick="editarProduto('${prod.id}')">Editar</button>
+            <button onclick="excluirProduto('${prod.id}')">Excluir</button>
+          </div>
+        `;
+        lista.appendChild(div);
+      });
     }
 
-    salvarProdutos();
-    renderizarTabelaProdutos();
-    limparFormularioProduto();
-    alert('Produto salvo com sucesso!');
-  });
+    window.editarProduto = id => {
+      const p = produtos.find(p => p.id === id);
+      document.getElementById('produto-id').value = p.id;
+      document.getElementById('produto-nome').value = p.nome;
+      document.getElementById('produto-descricao').value = p.descricao;
+      document.getElementById('produto-preco').value = p.preco;
+      document.getElementById('produto-imagem').value = p.imagem;
+      document.getElementById('produto-categoria').value = p.categoria;
+    };
 
-  // Editar produto - preencher form
-  function editarProduto(id) {
-    const produto = produtos.find(p => p.id === id);
-    if (!produto) return;
-
-    inputProdutoId.value = produto.id;
-    inputNome.value = produto.nome;
-    inputDescricao.value = produto.descricao;
-    inputPreco.value = produto.preco;
-    inputImagem.value = produto.imagem;
-    selectCategoria.value = produto.categoria;
-
-    btnCancelarEdicao.classList.remove('hidden');
-    formProduto.querySelector('button[type="submit"]').textContent = 'Atualizar Produto';
-  }
-
-  btnCancelarEdicao.addEventListener('click', e => {
-    e.preventDefault();
-    limparFormularioProduto();
-  });
-
-  // Excluir produto
-  function excluirProduto(id) {
-    if (confirm('Tem certeza que deseja excluir este produto?')) {
+    window.excluirProduto = id => {
       produtos = produtos.filter(p => p.id !== id);
-      salvarProdutos();
-      renderizarTabelaProdutos();
-      alert('Produto excluído.');
-    }
-  }
+      localStorage.setItem('mdoces_produtos', JSON.stringify(produtos));
+      atualizarLista();
+    };
 
-  // Salvar número WhatsApp
-  formWhatsapp.addEventListener('submit', e => {
-    e.preventDefault();
-
-    const numero = inputNumeroWhatsApp.value.trim();
-
-    if (!/^\d{10,15}$/.test(numero)) {
-      alert('Número inválido. Digite somente números entre 10 e 15 dígitos.');
-      return;
-    }
-
-    numeroWhatsApp = numero;
-    localStorage.setItem('mdoces_numeroWhatsApp', numeroWhatsApp);
-    alert('Número do WhatsApp salvo com sucesso!');
-  });
-
-  // Carregar número WhatsApp salvo
-  function carregarNumeroWhatsApp() {
-    if (numeroWhatsApp) {
-      inputNumeroWhatsApp.value = numeroWhatsApp;
-    }
-  }
-
-  // Login simples
-  btnLogin.addEventListener('click', () => {
-    const senha = inputSenha.value;
-    if (senha === SENHA_ADMIN) {
-      loginSection.classList.add('hidden');
-      adminSection.classList.remove('hidden');
-      loginError.classList.add('hidden');
-      inputSenha.value = '';
-      renderizarTabelaProdutos();
-      carregarNumeroWhatsApp();
-      inputNome.focus();
-    } else {
-      loginError.classList.remove('hidden');
-      inputSenha.focus();
-    }
-  });
-
-  // Permitir Enter no campo senha para login
-  inputSenha.addEventListener('keydown', e => {
-    if (e.key === 'Enter') {
-      btnLogin.click();
-    }
-  });
-</script>
-
+    atualizarLista();
+  </script>
 </body>
 </html>
