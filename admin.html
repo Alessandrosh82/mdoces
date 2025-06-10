@@ -1,310 +1,386 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <title>Admin - MDoces</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="stylesheet" href="style.css" />
+  <title>Administração MDoces</title>
   <style>
     body {
-      background: #fff5f8;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-    }
-
-    .admin-container {
-      max-width: 640px;
-      margin: 3rem auto;
-      padding: 2rem;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-
-    h2, h3 {
-      text-align: center;
-      color: #cc3366;
-      margin-bottom: 1.2rem;
-    }
-
-    #login p {
+      background: #f9f9f9;
+      color: #222;
+      margin: 0; padding: 1rem;
       display: flex;
-      gap: 0.5rem;
-      align-items: center;
       justify-content: center;
-      flex-wrap: wrap;
+      min-height: 100vh;
     }
-
-    #login input {
-      max-width: 180px;
-      padding: 0.5rem;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-    }
-
-    #login button {
-      padding: 0.5rem 1rem;
-      border-radius: 6px;
-      background: #ff66a3;
-      color: white;
-      border: none;
-      cursor: pointer;
-      font-size: 1rem;
-      transition: background 0.2s;
-    }
-
-    #login button:hover {
-      background: #ff3385;
-    }
-
-    #admin input {
+    #container {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 12px rgba(0,0,0,0.12);
+      max-width: 480px;
       width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 0.75rem;
-      font-size: 1rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      padding: 1.5rem 2rem;
       box-sizing: border-box;
     }
-
-    .produto-admin {
-      background: #ffe6ee;
-      padding: 0.75rem;
-      margin: 0.75rem 0;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
+    h1, h2 {
+      color: #3f51b5; /* azul índigo */
+      margin-bottom: 0.6rem;
     }
-
-    .produto-admin strong {
-      color: #cc3366;
-      font-size: 1.05rem;
+    h2 {
+      font-weight: 600;
+      border-bottom: 2px solid #3f51b5;
+      padding-bottom: 0.3rem;
+      margin-top: 2rem;
     }
-
-    .produto-admin small {
-      color: #555;
-    }
-
-    .produto-admin em {
-      font-style: italic;
-      color: #999;
-    }
-
-    .produto-admin .botoes {
-      margin-top: 0.5rem;
-    }
-
-    .produto-admin button {
-      font-size: 0.85rem;
-      padding: 0.3rem 0.8rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      margin-right: 0.5rem;
-      transition: background 0.2s;
-    }
-
-    .btn-excluir {
-      background: #dc3545;
-      color: white;
-    }
-
-    .btn-excluir:hover {
-      background: #b52a3a;
-    }
-
-    .btn-editar {
-      background: #ffc107;
-      color: #333;
-    }
-
-    .btn-editar:hover {
-      background: #e6ac00;
-    }
-
-    .btn-finalizar {
-      width: 100%;
-      padding: 0.75rem;
-      background: #28a745;
-      color: white;
-      font-size: 1.1rem;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
+    label {
+      font-weight: 600;
       margin-top: 1rem;
-      transition: background 0.2s;
+      display: block;
+      margin-bottom: 0.3rem;
     }
-
-    .btn-finalizar:hover {
-      background: #218838;
-    }
-
-    #btn-limpar {
-      margin-top: 0.5rem;
-      background: #007bff;
-      color: white;
+    input, textarea, select {
+      width: 100%;
+      padding: 0.5rem 0.7rem;
       font-size: 1rem;
-      padding: 0.5rem;
+      border: 1.8px solid #ccc;
+      border-radius: 5px;
+      box-sizing: border-box;
+      transition: border-color 0.3s;
+    }
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: #3f51b5;
+      box-shadow: 0 0 6px #7986cb88;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+    button {
+      background: #3f51b5;
+      color: white;
+      font-weight: 700;
       border: none;
+      padding: 0.55rem 1.1rem;
+      margin-top: 1rem;
       border-radius: 6px;
       cursor: pointer;
-      transition: background 0.2s;
+      transition: background-color 0.3s;
+      user-select: none;
     }
-
-    #btn-limpar:hover {
-      background: #0056b3;
+    button:hover {
+      background: #303f9f;
     }
-
-    @media (max-width: 500px) {
-      .admin-container {
-        padding: 1rem;
-      }
-
-      #login p {
-        flex-direction: column;
-        align-items: stretch;
-      }
-
-      #login input,
-      #login button {
-        width: 100%;
-      }
-
-      .produto-admin {
-        font-size: 0.9rem;
-      }
+    .btn-delete {
+      background: #e53935;
+      margin-left: 0.7rem;
+      font-weight: 600;
+    }
+    .btn-delete:hover {
+      background: #b71c1c;
+    }
+    #produtos-lista {
+      margin-top: 1rem;
+      max-height: 300px;
+      overflow-y: auto;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      padding: 0.8rem;
+      background: #fafafa;
+    }
+    .produto-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      padding: 0.4rem 0;
+      font-size: 0.95rem;
+    }
+    .produto-nome {
+      font-weight: 600;
+      color: #3f51b5;
+      flex: 1;
+      word-break: break-word;
+    }
+    .produto-actions button {
+      font-size: 0.85rem;
+      padding: 0.3rem 0.5rem;
+    }
+    #login {
+      max-width: 320px;
+      width: 100%;
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      padding: 1.5rem 2rem;
+      box-sizing: border-box;
+      text-align: center;
+    }
+    #login input {
+      margin-top: 1rem;
+      font-size: 1.1rem;
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: 1.8px solid #ccc;
+      width: 100%;
+    }
+    #login button {
+      margin-top: 1rem;
+      width: 100%;
+    }
+    .whatsapp-section {
+      margin-top: 2rem;
+      padding: 1rem;
+      background: #e8f5e9;
+      border: 1.5px solid #25d366;
+      border-radius: 8px;
+    }
+    .whatsapp-section label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+      color: #1b5e20;
+    }
+    .whatsapp-section svg {
+      width: 20px;
+      height: 20px;
+      fill: #25d366;
+    }
+    .whatsapp-section input {
+      margin-top: 0.5rem;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+    .whatsapp-section button {
+      background: #25d366;
+      width: 100%;
+      margin-top: 0.7rem;
+      font-weight: 700;
+    }
+    .whatsapp-section button:hover {
+      background: #1ebe57;
+    }
+    .info-text {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 0.3rem;
     }
   </style>
 </head>
 <body>
-  <div class="admin-container">
-    <h2>Área Administrativa</h2>
-
+  <div id="container">
     <div id="login">
-      <p>
-        <input type="password" id="senha" placeholder="Digite a senha de acesso" />
-        <button onclick="login()">Entrar</button>
-      </p>
+      <h1>Login Administrativo</h1>
+      <input
+        type="password"
+        id="senha"
+        placeholder="Digite a senha"
+        autocomplete="off"
+      />
+      <button onclick="login()">Entrar</button>
     </div>
 
     <div id="admin" style="display:none;">
-      <h3>Cadastrar ou Editar Produto</h3>
-      <input placeholder="Nome do produto" id="nome" />
-      <input placeholder="Descrição breve" id="descricao" />
-      <input placeholder="Preço (ex: 12.50)" id="preco" type="number" step="0.01" />
-      <input placeholder="URL da imagem" id="imagem" />
-      <input placeholder="Categoria (ex: Doces, Tortas, Bebidas...)" id="categoria" />
-      <button onclick="salvarProduto()" class="btn-finalizar">Salvar</button>
-      <button id="btn-limpar" onclick="limparProdutos()">Limpar todos os produtos</button>
+      <h1>Administração MDoces</h1>
 
-      <h3>Produtos Cadastrados</h3>
-      <div id="lista-produtos"></div>
+      <h2>Cadastro / Edição de Produtos</h2>
+
+      <label for="nome">Nome do produto</label>
+      <input id="nome" placeholder="Ex: Bolo de Chocolate" />
+
+      <label for="descricao">Descrição</label>
+      <textarea id="descricao" placeholder="Detalhes do produto..."></textarea>
+
+      <label for="preco">Preço (R$)</label>
+      <input
+        type="number"
+        id="preco"
+        placeholder="Ex: 19.90"
+        min="0"
+        step="0.01"
+      />
+
+      <label for="categoria">Categoria</label>
+      <select id="categoria">
+        <option value="">Selecione</option>
+        <option value="bolos">Bolos</option>
+        <option value="docinhos">Docinhos</option>
+        <option value="salgados">Salgados</option>
+        <option value="bebidas">Bebidas</option>
+      </select>
+
+      <label for="imagem">Imagem (URL)</label>
+      <input
+        id="imagem"
+        placeholder="Link direto da imagem (ex: https://...)"
+        type="url"
+      />
+
+      <button onclick="salvarProduto()">Salvar Produto</button>
+
+      <h2>Produtos Cadastrados</h2>
+      <div id="produtos-lista"></div>
+
+      <div class="whatsapp-section">
+        <label for="whatsapp">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+            <path d="M20.52 3.48A11.902 11.902 0 0012 0C5.372 0 0 5.372 0 12a11.9 11.9 0 0016.195 11.426L24 24l-2.574-7.682A11.902 11.902 0 0024 12c0-3.134-1.206-6.087-3.48-8.52zM12 21.81a9.75 9.75 0 01-5.022-1.393l-.36-.214-3 1 1-3.002-.23-.375A9.75 9.75 0 012.25 12c0-5.18 4.22-9.4 9.4-9.4 2.5 0 4.83.97 6.595 2.74A9.303 9.303 0 0121.7 12a9.756 9.756 0 01-9.7 9.81zM16.09 14.08c-.257-.128-1.52-.75-1.755-.84-.234-.086-.406-.128-.578.128s-.664.84-.813 1.01-.3.192-.557.064c-1.52-.75-2.513-1.39-3.51-3.13-.265-.46.264-.426.75-1.39.083-.18 0-.315-.044-.44-.128-.257-.578-.62-.86-.845-.29-.22-.622-.238-.9-.128-.234.086-.8.3-1.22 1.17-.434.902-.8 1.754-.7 2.404.092.653.638 1.536 1.454 2.34.35.38 2.4 3.67 5.825 5.14.814.35 1.45.56 1.946.716.818.272 1.563.234 2.15.143.656-.103 2.005-.82 2.29-1.616.288-.796.288-1.48.202-1.615-.086-.134-.314-.205-.572-.337z" />
+          </svg>
+          Número do WhatsApp (com DDD)
+        </label>
+        <input
+          type="text"
+          id="whatsapp"
+          placeholder="Ex: 11999998888"
+          maxlength="13"
+          autocomplete="off"
+        />
+        <div class="info-text">Digite somente números, sem espaços ou símbolos.</div>
+        <button onclick="salvarWhatsapp()">Salvar Número WhatsApp</button>
+      </div>
     </div>
   </div>
 
   <script>
-    let editandoIndex = null;
+    // Variáveis globais
+    let produtos = [];
 
-    function login() {
-      const senha = document.getElementById("senha").value;
-      if (senha === "mdoces123") {
-        document.getElementById("login").style.display = "none";
-        document.getElementById("admin").style.display = "block";
-        listarProdutos();
-      } else {
-        alert("Senha incorreta.");
-      }
-    }
-
+    // Função para salvar produto (novo ou edição)
     function salvarProduto() {
       const nome = document.getElementById("nome").value.trim();
       const descricao = document.getElementById("descricao").value.trim();
       const preco = parseFloat(document.getElementById("preco").value);
+      const categoria = document.getElementById("categoria").value;
       const imagem = document.getElementById("imagem").value.trim();
-      const categoria = document.getElementById("categoria").value.trim();
 
-      if (!nome || !descricao || isNaN(preco) || !imagem) {
-        alert("Preencha todos os campos corretamente.");
+      if (!nome || !descricao || isNaN(preco) || preco < 0 || !categoria || !imagem) {
+        alert("Por favor, preencha todos os campos corretamente.");
         return;
       }
 
-      const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
-      const novoProduto = { nome, descricao, preco, imagem, categoria };
-
-      if (editandoIndex !== null) {
-        produtos[editandoIndex] = novoProduto;
-        editandoIndex = null;
+      // Se produto existe, edita; se não, adiciona novo
+      const indexEdicao = produtos.findIndex(p => p.nome === nome);
+      if (indexEdicao >= 0) {
+        produtos[indexEdicao] = { nome, descricao, preco, categoria, imagem };
       } else {
-        produtos.push(novoProduto);
+        produtos.push({ nome, descricao, preco, categoria, imagem });
       }
 
-      localStorage.setItem("produtos", JSON.stringify(produtos));
-      alert("Produto salvo com sucesso!");
+      salvarLocalStorage();
       limparCampos();
       listarProdutos();
+      alert("Produto salvo com sucesso!");
     }
 
+    // Função para listar produtos
     function listarProdutos() {
-      const lista = document.getElementById("lista-produtos");
-      const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+      const lista = document.getElementById("produtos-lista");
       lista.innerHTML = "";
 
-      produtos.forEach((p, i) => {
-        const div = document.createElement("div");
-        div.className = "produto-admin";
+      if (produtos.length === 0) {
+        lista.innerHTML = "<p>Nenhum produto cadastrado.</p>";
+        return;
+      }
 
-        div.innerHTML = `
-          <strong>${p.nome}</strong> - R$ ${p.preco.toFixed(2)}<br>
-          <small>${p.descricao}</small><br>
-          <em>${p.categoria || "Sem categoria"}</em><br>
-          <div class="botoes">
-            <button class="btn-editar" onclick="editarProduto(${i})">Editar</button>
-            <button class="btn-excluir" onclick="excluirProduto(${i})">Excluir</button>
-          </div>
-        `;
+      produtos.forEach((produto, i) => {
+        const div = document.createElement("div");
+        div.className = "produto-item";
+
+        const nomeSpan = document.createElement("span");
+        nomeSpan.className = "produto-nome";
+        nomeSpan.textContent = produto.nome;
+
+        const acoes = document.createElement("div");
+        acoes.className = "produto-actions";
+
+        const btnEditar = document.createElement("button");
+        btnEditar.textContent = "Editar";
+        btnEditar.onclick = () => editarProduto(i);
+
+        const btnExcluir = document.createElement("button");
+        btnExcluir.textContent = "Excluir";
+        btnExcluir.className = "btn-delete";
+        btnExcluir.onclick = () => excluirProduto(i);
+
+        acoes.appendChild(btnEditar);
+        acoes.appendChild(btnExcluir);
+
+        div.appendChild(nomeSpan);
+        div.appendChild(acoes);
 
         lista.appendChild(div);
       });
     }
 
-    function excluirProduto(index) {
-      if (confirm("Tem certeza que deseja excluir este produto?")) {
-        const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
-        produtos.splice(index, 1);
-        localStorage.setItem("produtos", JSON.stringify(produtos));
+    // Função para editar produto (preenche os campos)
+    function editarProduto(i) {
+      const p = produtos[i];
+      document.getElementById("nome").value = p.nome;
+      document.getElementById("descricao").value = p.descricao;
+      document.getElementById("preco").value = p.preco;
+      document.getElementById("categoria").value = p.categoria;
+      document.getElementById("imagem").value = p.imagem;
+    }
+
+    // Função para excluir produto
+    function excluirProduto(i) {
+      if (confirm("Confirma exclusão do produto?")) {
+        produtos.splice(i, 1);
+        salvarLocalStorage();
         listarProdutos();
       }
     }
 
-    function editarProduto(index) {
-      const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
-      const p = produtos[index];
-      document.getElementById("nome").value = p.nome;
-      document.getElementById("descricao").value = p.descricao;
-      document.getElementById("preco").value = p.preco;
-      document.getElementById("imagem").value = p.imagem;
-      document.getElementById("categoria").value = p.categoria || "";
-      editandoIndex = index;
+    // Salva produtos no localStorage
+    function salvarLocalStorage() {
+      localStorage.setItem("produtos", JSON.stringify(produtos));
     }
 
+    // Carrega produtos do localStorage
+    function carregarLocalStorage() {
+      const dados = localStorage.getItem("produtos");
+      produtos = dados ? JSON.parse(dados) : [];
+    }
+
+    // Limpa campos do formulário
     function limparCampos() {
       document.getElementById("nome").value = "";
       document.getElementById("descricao").value = "";
       document.getElementById("preco").value = "";
-      document.getElementById("imagem").value = "";
       document.getElementById("categoria").value = "";
-      editandoIndex = null;
+      document.getElementById("imagem").value = "";
     }
 
-    function limparProdutos() {
-      if (confirm("Tem certeza que deseja limpar todos os produtos? Esta ação não pode ser desfeita.")) {
-        localStorage.removeItem("produtos");
+    // Salva número do WhatsApp no localStorage
+    function salvarWhatsapp() {
+      const numero = document.getElementById("whatsapp").value.trim();
+      if (!numero || !/^\d{10,13}$/.test(numero)) {
+        alert("Digite um número de WhatsApp válido (somente números, com DDD).");
+        return;
+      }
+      localStorage.setItem("whatsapp", numero);
+      alert("Número de WhatsApp salvo com sucesso!");
+    }
+
+    // Carrega número do WhatsApp no input
+    function carregarWhatsapp() {
+      const numeroSalvo = localStorage.getItem("whatsapp") || "";
+      document.getElementById("whatsapp").value = numeroSalvo;
+    }
+
+    // Login simples
+    function login() {
+      const senha = document.getElementById("senha").value;
+      if (senha === "mdoces123") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("admin").style.display = "block";
+        carregarLocalStorage();
         listarProdutos();
-        limparCampos();
+        carregarWhatsapp();
+      } else {
+        alert("Senha incorreta.");
       }
     }
   </script>
