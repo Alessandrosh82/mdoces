@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>Admin - MDoces</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css" />
   <style>
     body {
       background: #fff5f8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
     }
 
     .admin-container {
@@ -30,10 +33,15 @@
       gap: 0.5rem;
       align-items: center;
       justify-content: center;
+      flex-wrap: wrap;
     }
 
     #login input {
       max-width: 180px;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
     }
 
     #login button {
@@ -43,6 +51,7 @@
       color: white;
       border: none;
       cursor: pointer;
+      font-size: 1rem;
       transition: background 0.2s;
     }
 
@@ -51,7 +60,13 @@
     }
 
     #admin input {
+      width: 100%;
+      padding: 0.5rem;
       margin-bottom: 0.75rem;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      box-sizing: border-box;
     }
 
     .produto-admin {
@@ -60,6 +75,9 @@
       margin: 0.75rem 0;
       border-radius: 8px;
       box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
     }
 
     .produto-admin strong {
@@ -76,25 +94,69 @@
       color: #999;
     }
 
-    .produto-admin button {
+    .produto-admin .botoes {
       margin-top: 0.5rem;
-      margin-right: 0.5rem;
+    }
+
+    .produto-admin button {
       font-size: 0.85rem;
       padding: 0.3rem 0.8rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-right: 0.5rem;
+      transition: background 0.2s;
     }
 
     .btn-excluir {
       background: #dc3545;
       color: white;
-      border: none;
-      border-radius: 6px;
+    }
+
+    .btn-excluir:hover {
+      background: #b52a3a;
     }
 
     .btn-editar {
       background: #ffc107;
       color: #333;
+    }
+
+    .btn-editar:hover {
+      background: #e6ac00;
+    }
+
+    .btn-finalizar {
+      width: 100%;
+      padding: 0.75rem;
+      background: #28a745;
+      color: white;
+      font-size: 1.1rem;
       border: none;
       border-radius: 6px;
+      cursor: pointer;
+      margin-top: 1rem;
+      transition: background 0.2s;
+    }
+
+    .btn-finalizar:hover {
+      background: #218838;
+    }
+
+    #btn-limpar {
+      margin-top: 0.5rem;
+      background: #007bff;
+      color: white;
+      font-size: 1rem;
+      padding: 0.5rem;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    #btn-limpar:hover {
+      background: #0056b3;
     }
 
     @media (max-width: 500px) {
@@ -107,12 +169,13 @@
         align-items: stretch;
       }
 
-      #login input {
+      #login input,
+      #login button {
         width: 100%;
       }
 
-      #login button {
-        width: 100%;
+      .produto-admin {
+        font-size: 0.9rem;
       }
     }
   </style>
@@ -123,19 +186,20 @@
 
     <div id="login">
       <p>
-        <input type="password" id="senha" placeholder="Digite a senha de acesso">
+        <input type="password" id="senha" placeholder="Digite a senha de acesso" />
         <button onclick="login()">Entrar</button>
       </p>
     </div>
 
     <div id="admin" style="display:none;">
       <h3>Cadastrar ou Editar Produto</h3>
-      <input placeholder="Nome do produto" id="nome">
-      <input placeholder="Descrição breve" id="descricao">
-      <input placeholder="Preço (ex: 12.50)" id="preco" type="number" step="0.01">
-      <input placeholder="URL da imagem" id="imagem">
-      <input placeholder="Categoria (ex: Doces, Tortas, Bebidas...)" id="categoria">
+      <input placeholder="Nome do produto" id="nome" />
+      <input placeholder="Descrição breve" id="descricao" />
+      <input placeholder="Preço (ex: 12.50)" id="preco" type="number" step="0.01" />
+      <input placeholder="URL da imagem" id="imagem" />
+      <input placeholder="Categoria (ex: Doces, Tortas, Bebidas...)" id="categoria" />
       <button onclick="salvarProduto()" class="btn-finalizar">Salvar</button>
+      <button id="btn-limpar" onclick="limparProdutos()">Limpar todos os produtos</button>
 
       <h3>Produtos Cadastrados</h3>
       <div id="lista-produtos"></div>
@@ -192,13 +256,17 @@
       produtos.forEach((p, i) => {
         const div = document.createElement("div");
         div.className = "produto-admin";
+
         div.innerHTML = `
           <strong>${p.nome}</strong> - R$ ${p.preco.toFixed(2)}<br>
           <small>${p.descricao}</small><br>
           <em>${p.categoria || "Sem categoria"}</em><br>
-          <button class="btn-editar" onclick="editarProduto(${i})">Editar</button>
-          <button class="btn-excluir" onclick="excluirProduto(${i})">Excluir</button>
+          <div class="botoes">
+            <button class="btn-editar" onclick="editarProduto(${i})">Editar</button>
+            <button class="btn-excluir" onclick="excluirProduto(${i})">Excluir</button>
+          </div>
         `;
+
         lista.appendChild(div);
       });
     }
@@ -229,6 +297,15 @@
       document.getElementById("preco").value = "";
       document.getElementById("imagem").value = "";
       document.getElementById("categoria").value = "";
+      editandoIndex = null;
+    }
+
+    function limparProdutos() {
+      if (confirm("Tem certeza que deseja limpar todos os produtos? Esta ação não pode ser desfeita.")) {
+        localStorage.removeItem("produtos");
+        listarProdutos();
+        limparCampos();
+      }
     }
   </script>
 </body>
