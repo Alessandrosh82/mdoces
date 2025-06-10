@@ -1,255 +1,283 @@
-/* (todo o CSS anterior mantido aqui, sem alterações até o final) */
+/* Fonte */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
-/* --- Painel Administrativo --- */
+/* Variáveis de cores */
+:root {
+  --azul-base: #011941;
+  --azul-base-dark: #000f2a;
+  --azul-base-light: #0a2a74;
+  --bege-claro: #fdf9f0;
+  --bege-médio: #f2e8d5;
+  --white: #fff;
+  --gray-light: #f5f5f5;
+  --gray-dark: #555;
+  --green: #25d366;
+  --radius: 12px;
+  --shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
 
-/* Container principal */
-.admin-container {
-  max-width: 1000px;
-  margin: 2rem auto;
-  padding: 1rem;
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Corpo */
+body {
+  font-family: 'Inter', sans-serif;
+  background: var(--bege-claro);
+  color: #222;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+  line-height: 1.4;
+}
+
+/* Cabeçalho */
+header {
+  background: var(--azul-base);
+  color: var(--white);
+  text-align: center;
+  padding: 1.8rem 1rem;
+  box-shadow: var(--shadow);
+}
+header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+header p {
+  opacity: 0.85;
+}
+
+/* Conteúdo principal */
+main.container {
+  flex: 1;
+  max-width: 960px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
 }
 
-/* Título das seções */
-.admin-container h2 {
-  color: #0b1a38;
-  font-size: 1.8rem;
-  border-bottom: 2px solid #0b1a38;
-  padding-bottom: 0.25rem;
-  margin-bottom: 1rem;
-  user-select: none;
-  text-align: center;
+/* Seções de produtos por categoria */
+#produtos {
+  flex: 2 1 320px;
+  display: block;
+}
+#produtos section {
+  background: var(--bege-médio);
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+#produtos section h2 {
+  color: var(--azul-base-dark);
+  font-size: 1.5rem;
+  margin-bottom: 0.8rem;
+  border-bottom: 2px solid var(--azul-base-light);
+  padding-bottom: 0.3rem;
 }
 
-/* Seção de formulário */
-#formulario-produto {
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(11, 26, 56, 0.1);
+/* Cartões de produtos */
+.produto-card {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  gap: 0.5rem;
 }
-
-#formulario-produto label {
-  font-weight: 600;
-  color: #0b1a38;
-  margin-bottom: 0.25rem;
-}
-
-#formulario-produto input,
-#formulario-produto textarea,
-#formulario-produto select {
+.produto-img {
   width: 100%;
-  padding: 0.5rem;
-  margin-bottom: 1rem;
-  border: 1px solid #a1aab8;
-  border-radius: 6px;
-  font-size: 1rem;
-  font-family: inherit;
-  transition: border-color 0.3s ease;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  border-radius: var(--radius);
 }
-
-#formulario-produto input:focus,
-#formulario-produto textarea:focus,
-#formulario-produto select:focus {
-  border-color: #0b1a38;
-  outline: none;
-  box-shadow: 0 0 5px #0b1a38aa;
-}
-
-#formulario-produto button {
-  background-color: #0b1a38;
-  color: #fff;
-  border: none;
-  padding: 0.6rem 1rem;
-  border-radius: 8px;
+.produto-nome {
+  font-size: 1.2rem;
   font-weight: 600;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background-color 0.25s ease;
-  width: 100%;
+  color: var(--azul-base-dark);
 }
-
-#formulario-produto button:hover {
-  background-color: #163360;
+.produto-descricao {
+  flex: 1;
+  font-size: 0.9rem;
+  color: var(--gray-dark);
 }
-
-/* Lista de produtos */
-#lista-produtos {
-  background: #fff;
-  padding: 1.5rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(11, 26, 56, 0.1);
+.produto-preco {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--azul-base-light);
 }
-
-.item-produto {
+.quantidade-container {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  border-bottom: 1px solid #e2e8f0;
-  padding: 0.75rem 0;
-  flex-wrap: wrap;
-}
-
-.item-produto:last-child {
-  border-bottom: none;
-}
-
-.item-produto img {
-  width: 80px;
-  height: 80px;
-  object-fit: cover;
-  border-radius: 6px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
-}
-
-.info-produto {
-  flex: 1;
-  min-width: 250px;
-}
-
-.info-produto h3 {
-  font-size: 1.1rem;
-  color: #0b1a38;
-  margin-bottom: 0.25rem;
-}
-
-.info-produto p {
-  font-size: 0.9rem;
-  color: #444;
-  margin-bottom: 0.25rem;
-}
-
-.info-produto .categoria {
-  font-style: italic;
-  color: #555;
-}
-
-.item-produto .preco {
-  font-weight: 700;
-  color: #0b1a38;
-  min-width: 80px;
-  text-align: right;
-}
-
-.botoes-produto {
-  display: flex;
   gap: 0.5rem;
-  margin-left: auto;
 }
-
-.botoes-produto button {
-  background-color: #0b1a38;
-  color: #fff;
+.quantidade-container button {
+  background: var(--azul-base);
+  color: var(--white);
+  width: 32px;
+  height: 32px;
   border: none;
-  padding: 0.4rem 0.6rem;
   border-radius: 6px;
+  cursor: pointer;
+}
+.quantidade-container span {
+  min-width: 24px;
+  text-align: center;
+  font-weight: 600;
+}
+.btn-add {
+  background: var(--azul-base-light);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  padding: 0.5rem 0;
   font-weight: 600;
   cursor: pointer;
+}
+
+/* Carrinho e formulário */
+#carrinho {
+  flex: 1 1 320px;
+  background: var(--bege-médio);
+  padding: 1rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+#carrinho h2 {
+  color: var(--azul-base-dark);
+  margin-bottom: 0.5rem;
+}
+#itens-carrinho {
+  list-style: none;
+  flex: 1;
+  overflow-y: auto;
+  padding-left: 0;
+}
+#itens-carrinho li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--gray-light);
+}
+#itens-carrinho li:last-child {
+  border-bottom: none;
+}
+.item-info {
   font-size: 0.9rem;
-  transition: background-color 0.2s ease;
+  color: #444;
 }
-
-.botoes-produto button:hover {
-  background-color: #163360;
+.item-quantidade {
+  margin: 0 0.5rem;
 }
-
-.botoes-produto button:focus {
-  outline: 2px solid #2563eb;
-  outline-offset: 2px;
-}
-
-/* Campo do WhatsApp */
-#campo-whatsapp {
-  margin-top: 2rem;
-  background: #fff;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(11, 26, 56, 0.1);
-}
-
-#campo-whatsapp label {
-  font-weight: 600;
-  color: #0b1a38;
-}
-
-#campo-whatsapp input {
-  width: 100%;
-  padding: 0.5rem;
+.btn-remove-item {
+  background: #e53935;
+  color: var(--white);
+  border: none;
+  padding: 0 8px;
   border-radius: 6px;
-  border: 1px solid #a1aab8;
-  font-size: 1rem;
-  margin-top: 0.5rem;
-  font-family: inherit;
+  cursor: pointer;
+}
+#total {
+  font-size: 1.2rem;
+  font-weight: 700;
+  text-align: right;
+  color: var(--azul-base);
 }
 
-#campo-whatsapp input:focus {
-  border-color: #163360;
-  outline: none;
-  box-shadow: 0 0 5px #163360aa;
+/* Formulário de pedido */
+form#form-pedido {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+form label {
+  font-weight: 600;
+  color: var(--azul-base-dark);
+}
+form input, form textarea {
+  border: 1px solid var(--gray-light);
+  border-radius: 6px;
+  padding: 0.5rem;
+}
+form textarea {
+  resize: vertical;
+  min-height: 60px;
+}
+.btn-finalizar {
+  background: var(--green);
+  color: var(--white);
+  padding: 0.7rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 700;
+  cursor: pointer;
 }
 
-/* Rodapé com senha */
-footer .senha-admin {
-  margin-top: 0.5rem;
-  font-size: 0.85rem;
-  color: #cbd3e0;
-}
-/* Espaçamento e legibilidade para formulários */
-#formulario-produto input,
-#formulario-produto textarea,
-#formulario-produto select {
-  background-color: #f9fafb;
+/* Observações visíveis */
+textarea[placeholder*="obs"] {
+  background: var(--bege-claro);
 }
 
-/* Suavidade nos botões */
-#formulario-produto button,
-.botoes-produto button {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+/* Status dos pedidos */
+#status-pedidos {
+  max-width: 960px;
+  margin: 2rem auto;
 }
-
-#formulario-produto button:hover,
-.botoes-produto button:hover {
-  background-color: #1a2f56;
-  transform: scale(1.02);
-}
-
-/* Melhor visual para categorias */
-.info-produto .categoria {
-  font-style: italic;
-  font-size: 0.85rem;
-  background-color: #eef2f8;
-  padding: 0.1rem 0.4rem;
-  border-radius: 4px;
-  display: inline-block;
-  margin-top: 0.25rem;
-}
-
-/* Espaçamento entre cards de produto */
-.item-produto {
-  background-color: #fdfdfd;
-  border-radius: 8px;
+.pedido-status {
+  background: var(--white);
   padding: 1rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
   margin-bottom: 1rem;
 }
-
-/* Formulário: deixar labels acima com mais espaçamento */
-#formulario-produto label {
-  display: block;
-  margin-top: 0.5rem;
+.status-badge {
+  display: inline-block;
+  padding: 0.3rem 0.6rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--white);
 }
+.status-0 { background: #f59e0b; }
+.status-1 { background: #2563eb; }
+.status-2 { background: #14b8a6; }
+.status-3 { background: #16a34a; }
 
-/* Input de WhatsApp com ícone visual (se quiser colocar um depois via HTML) */
-#campo-whatsapp input {
-  background-color: #f9fafb;
-}
-
-/* Footer com leve distinção */
+/* Rodapé */
 footer {
-  margin-top: 3rem;
+  background: var(--azul-base);
+  color: var(--white);
   text-align: center;
   padding: 1rem;
-  font-size: 0.8rem;
-  color: #98a4b9;
+  margin-top: auto;
+}
+footer a.admin-link {
+  color: var(--green);
+}
+
+/* Responsividade */
+@media (max-width: 720px) {
+  main.container {
+    flex-direction: column;
+  }
+  #produtos section {
+    padding: 0.8rem;
+  }
+  .produto-card {
+    padding: 0.8rem;
+  }
+  #carrinho {
+    padding: 0.8rem;
+  }
 }
