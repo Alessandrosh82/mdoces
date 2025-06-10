@@ -1,37 +1,140 @@
+* {
+  box-sizing: border-box;
+}
 
 body {
-  font-family: sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
   background: #fff5f8;
+  color: #333;
 }
+
 header {
   background: #ff99bb;
-  padding: 1rem;
+  padding: 1.5rem;
   text-align: center;
   color: white;
 }
+
+header h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+header p {
+  margin: 0.5rem 0 0;
+  font-size: 1rem;
+}
+
+.container {
+  padding: 1rem;
+  padding-bottom: 5rem; /* espaço pro footer */
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
-  padding: 1rem;
 }
+
 .produto {
   background: white;
   padding: 1rem;
   border-radius: 10px;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   text-align: center;
+  transition: transform 0.2s;
 }
+
+.produto:hover {
+  transform: translateY(-5px);
+}
+
 .produto img {
   max-width: 100%;
   border-radius: 10px;
+  margin-bottom: 0.5rem;
 }
+
+.produto h3 {
+  margin: 0.5rem 0 0.2rem;
+  font-size: 1.1rem;
+}
+
+.produto p {
+  font-size: 0.9rem;
+  margin: 0.2rem 0 0.5rem;
+}
+
+.produto strong {
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.produto button {
+  background: #ff66a3;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.produto button:hover {
+  background: #ff3385;
+}
+
 #carrinho {
-  padding: 1rem;
+  margin-top: 2rem;
   background: #ffe6ee;
+  padding: 1rem;
+  border-radius: 10px;
 }
+
+#carrinho h2 {
+  margin-top: 0;
+}
+
+#itens-carrinho {
+  list-style: none;
+  padding-left: 0;
+  margin: 0 0 1rem 0;
+}
+
+#itens-carrinho li {
+  padding: 0.3rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  padding: 0.5rem;
+  margin: 0.5rem 0 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.btn-finalizar {
+  width: 100%;
+  padding: 0.75rem;
+  background: #28a745;
+  color: white;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.btn-finalizar:hover {
+  background: #218838;
+}
+
 footer {
   text-align: center;
   padding: 1rem;
@@ -39,4 +142,26 @@ footer {
   position: fixed;
   bottom: 0;
   width: 100%;
+  font-size: 0.9rem;
+  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+footer a {
+  text-decoration: none;
+  color: #333;
+}
+
+@media (max-width: 600px) {
+  .produto h3 {
+    font-size: 1rem;
+  }
+
+  .produto p,
+  .produto strong {
+    font-size: 0.85rem;
+  }
+
+  .btn-finalizar {
+    font-size: 1rem;
+  }
 }
