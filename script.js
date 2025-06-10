@@ -1,5 +1,5 @@
 // Produtos exemplo — pode ser carregado de localStorage/admin futuramente
-const produtos = [
+let produtos = [
   {
     id: 'doc1',
     nome: 'Brigadeiro Gourmet',
@@ -35,7 +35,11 @@ const produtos = [
 ];
 
 // Categorias extraídas automaticamente
-const categorias = [...new Set(produtos.map(p => p.categoria))];
+function getCategorias() {
+  return [...new Set(produtos.map(p => p.categoria))];
+}
+
+let categorias = getCategorias();
 
 // Estado do carrinho e pedidos
 let carrinho = JSON.parse(localStorage.getItem('mdoces-carrinho')) || [];
@@ -44,6 +48,9 @@ let pedidos = JSON.parse(localStorage.getItem('mdoces-pedidos')) || [];
 // Renderiza produtos por categoria no container #produtos
 function renderProdutos() {
   const container = document.getElementById('produtos');
+  if (!container) return;
+
+  categorias = getCategorias(); // Atualiza categorias caso produtos mudem
   container.innerHTML = '';
 
   categorias.forEach(cat => {
@@ -89,7 +96,7 @@ function alterarQuantidade(produtoId, delta) {
   const index = carrinho.findIndex(i => i.id === produtoId);
 
   if (index === -1 && delta > 0) {
-    carrinho.push({ id: produtoId, quantidade: 1 });
+    carrinho.push({ id: produtoId, quantidade: delta });
   } else if (index !== -1) {
     carrinho[index].quantidade += delta;
     if (carrinho[index].quantidade < 1) {
@@ -118,6 +125,8 @@ function atualizarQuantidadeTela(produtoId) {
 // Renderiza os itens do carrinho na tela e total
 function renderCarrinho() {
   const lista = document.getElementById('itens-carrinho');
+  if (!lista) return;
+
   lista.innerHTML = '';
 
   if (carrinho.length === 0) {
@@ -154,7 +163,10 @@ function atualizarTotal() {
     return produto ? acc + produto.preco * item.quantidade : acc;
   }, 0);
 
-  document.getElementById('total').textContent = `Total: R$ ${total.toFixed(2)}`;
+  const elTotal = document.getElementById('total');
+  if (elTotal) {
+    elTotal.textContent = `Total: R$ ${total.toFixed(2)}`;
+  }
 }
 
 // Salva o carrinho no localStorage
@@ -164,7 +176,7 @@ function salvarCarrinho() {
 
 // Gera ID único simples para pedido
 function gerarIdPedido() {
-  return 'PED-' + Date.now().toString(36) + Math.random().toString(36).substr(2, 5).toUpperCase();
+  return 'PED-' + Date.now().toString(36) + Math.random().toString(36).slice(2, 7).toUpperCase();
 }
 
 // Função para finalizar pedido
@@ -196,10 +208,10 @@ function finalizarPedido() {
       const prod = produtos.find(p => p.id === item.id);
       return {
         id: item.id,
-        nome: prod.nome,
+        nome: prod ? prod.nome : 'Produto removido',
         quantidade: item.quantidade,
-        precoUnit: prod.preco,
-        precoTotal: prod.preco * item.quantidade,
+        precoUnit: prod ? prod.preco : 0,
+        precoTotal: prod ? prod.preco * item.quantidade : 0,
       };
     }),
     total: carrinho.reduce((acc, item) => {
@@ -227,11 +239,17 @@ function finalizarPedido() {
 
 // Limpa os campos do formulário
 function limparFormulario() {
-  document.getElementById('nome-cliente').value = '';
-  document.getElementById('endereco').value = '';
-  document.getElementById('forma-pagamento').selectedIndex = 0;
-  document.getElementById('observacoes').value = '';
-  // Reset quantidades dos produtos também
+  const nomeInput = document.getElementById('nome-cliente');
+  const enderecoInput = document.getElementById('endereco');
+  const pagamentoSelect = document.getElementById('forma-pagamento');
+  const observacoesInput = document.getElementById('observacoes');
+
+  if (nomeInput) nomeInput.value = '';
+  if (enderecoInput) enderecoInput.value = '';
+  if (pagamentoSelect) pagamentoSelect.selectedIndex = 0;
+  if (observacoesInput) observacoesInput.value = '';
+
+  // Atualiza quantidades na tela
   categorias.forEach(cat => {
     produtos.filter(p => p.categoria === cat).forEach(produto => {
       atualizarQuantidadeTela(produto.id);
@@ -242,7 +260,7 @@ function limparFormulario() {
 // Renderiza a lista de pedidos para acompanhamento
 function renderStatusPedidos() {
   const container = document.getElementById('status-pedidos');
-  if (!container) return; // pode não existir na admin.html
+  if (!container) return;
 
   container.innerHTML = '<h2>Acompanhamento dos seus pedidos</h2>';
 
@@ -287,7 +305,6 @@ document.addEventListener('DOMContentLoaded', () => {
   renderProdutos();
   renderCarrinho();
 
-  // Se existe container de status, renderiza
   if (document.getElementById('status-pedidos')) {
     renderStatusPedidos();
   }
