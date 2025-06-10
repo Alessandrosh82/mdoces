@@ -1,3 +1,6 @@
+/* Fonte cursiva para o título */
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+
 /* Reset básico */
 * {
   margin: 0;
@@ -16,8 +19,6 @@ body {
 }
 
 /* Fonte cursiva para o título */
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
-
 header {
   background-color: #0b1a38; /* azul marinho bem escuro */
   color: #f0f0f5;
@@ -82,6 +83,8 @@ header p {
   gap: 1rem;
   border-bottom: 1px solid #e2e8f0;
   padding: 0.75rem 0;
+  /* Permitir seleção de texto aqui */
+  user-select: text;
 }
 
 .produto:last-child {
@@ -140,6 +143,12 @@ header p {
 
 .quantidade-container button:hover {
   background-color: #163360;
+  box-shadow: 0 4px 8px rgba(22, 51, 96, 0.4);
+}
+
+.quantidade-container button:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
 }
 
 .quantidade-container span {
@@ -166,6 +175,12 @@ header p {
 
 .produto > button:hover {
   background-color: #163360;
+  box-shadow: 0 4px 8px rgba(22, 51, 96, 0.4);
+}
+
+.produto > button:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
 }
 
 /* Carrinho */
@@ -193,6 +208,27 @@ header p {
   padding-right: 0.25rem;
   border: 1px solid #e2e8f0;
   border-radius: 6px;
+  /* Permitir seleção de texto */
+  user-select: text;
+
+  scrollbar-width: thin;
+  scrollbar-color: #0b1a38 #e2e8f0;
+}
+
+/* Scrollbar para Chrome, Edge e Safari */
+#itens-carrinho::-webkit-scrollbar {
+  width: 6px;
+}
+
+#itens-carrinho::-webkit-scrollbar-track {
+  background: #e2e8f0;
+  border-radius: 6px;
+}
+
+#itens-carrinho::-webkit-scrollbar-thumb {
+  background-color: #0b1a38;
+  border-radius: 6px;
+  border: 2px solid #e2e8f0;
 }
 
 #itens-carrinho li {
@@ -204,6 +240,8 @@ header p {
   font-size: 0.95rem;
   color: #0b1a38;
   gap: 0.5rem;
+  /* Permitir seleção de texto */
+  user-select: text;
 }
 
 #itens-carrinho li:last-child {
@@ -225,6 +263,11 @@ header p {
 
 #itens-carrinho button:hover {
   background-color: #163360;
+}
+
+#itens-carrinho button:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
 }
 
 #total {
@@ -286,6 +329,11 @@ form textarea:focus {
   background-color: #163360;
 }
 
+.btn-finalizar:focus {
+  outline: 2px solid #2563eb;
+  outline-offset: 2px;
+}
+
 /* Acompanhamento de pedido */
 #status-pedidos {
   margin-top: 3rem;
@@ -317,12 +365,14 @@ form textarea:focus {
 .pedido-status h3 {
   margin-bottom: 0.4rem;
   color: #0b1a38;
+  user-select: none;
 }
 
 .pedido-status p {
   font-size: 0.9rem;
   color: #444;
   margin-bottom: 0.5rem;
+  user-select: text;
 }
 
 /* Status badge */
@@ -348,6 +398,7 @@ footer {
   padding: 1rem;
   margin-top: auto;
   font-size: 0.9rem;
+  font-weight: 400;
   user-select: none;
 }
 
@@ -386,6 +437,10 @@ footer {
   .produto img {
     width: 80px;
     height: 80px;
+  }
+
+  .quantidade-container {
+    gap: 0.25rem;
   }
 
   .quantidade-container button {
