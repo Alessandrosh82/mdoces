@@ -1,37 +1,126 @@
-<!-- admin.html atualizado -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Administração MDoces</title>
+  <title>Admin - MDoces</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
-    /* ... (mantém o mesmo estilo que você já tem, pois está ótimo!) ... */
+    :root {
+      --indigo: #3f51b5;
+      --indigo-dark: #303f9f;
+      --light: #f5f5f5;
+      --gray: #888;
+      --white: #fff;
+      --green: #25d366;
+      --red: #e53935;
+      --radius: 12px;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background-color: var(--light);
+      padding: 2rem;
+      color: #333;
+    }
+    .container {
+      max-width: 960px;
+      margin: auto;
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      padding: 2rem;
+    }
+    h1 {
+      font-size: 1.8rem;
+      color: var(--indigo);
+      margin-bottom: 1rem;
+    }
+    .section {
+      margin-bottom: 2rem;
+    }
+    label {
+      font-weight: 600;
+      display: block;
+      margin-top: 1rem;
+    }
+    input, textarea, select {
+      width: 100%;
+      padding: 0.6rem;
+      margin-top: 0.4rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 60px;
+    }
+    button {
+      margin-top: 1rem;
+      padding: 0.6rem 1.2rem;
+      font-weight: 600;
+      color: var(--white);
+      background: var(--indigo);
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: var(--indigo-dark);
+    }
+    .btn-delete {
+      background: var(--red);
+      margin-left: 0.5rem;
+    }
+    .product-list, .order-list {
+      margin-top: 1rem;
+      background: #fafafa;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+      padding: 1rem;
+    }
+    .item {
+      padding: 0.6rem 0;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .item:last-child {
+      border-bottom: none;
+    }
+    .item span {
+      flex: 1;
+    }
+    .whatsapp {
+      background: #e8f5e9;
+      padding: 1rem;
+      border: 1.5px solid var(--green);
+      border-radius: var(--radius);
+    }
+    .status-select {
+      margin-left: 1rem;
+    }
   </style>
 </head>
 <body>
-  <div id="container">
-    <div id="login">
-      <h1>Login Administrativo</h1>
-      <input type="password" id="senha" placeholder="Digite a senha" autocomplete="off" />
-      <button onclick="login()">Entrar</button>
-    </div>
+  <div class="container">
+    <h1>Administração MDoces</h1>
 
-    <div id="admin" style="display:none;">
-      <h1>Administração MDoces</h1>
-
+    <div class="section">
       <h2>Cadastro / Edição de Produtos</h2>
-
-      <label for="nome">Nome do produto</label>
-      <input id="nome" />
-
-      <label for="descricao">Descrição</label>
+      <label>Nome</label>
+      <input id="nome">
+      <label>Descrição</label>
       <textarea id="descricao"></textarea>
-
-      <label for="preco">Preço (R$)</label>
-      <input type="number" id="preco" min="0" step="0.01" />
-
-      <label for="categoria">Categoria</label>
+      <label>Preço (R$)</label>
+      <input id="preco" type="number" min="0" step="0.01">
+      <label>Categoria</label>
       <select id="categoria">
         <option value="">Selecione</option>
         <option value="bolos">Bolos</option>
@@ -39,33 +128,31 @@
         <option value="salgados">Salgados</option>
         <option value="bebidas">Bebidas</option>
       </select>
-
-      <label for="imagem">Imagem (URL)</label>
-      <input id="imagem" type="url" />
-
+      <label>Imagem (URL)</label>
+      <input id="imagem" type="url">
       <button onclick="salvarProduto()">Salvar Produto</button>
-      <button onclick="cancelarEdicao()" id="cancelarEdicao" style="display:none; margin-left: 0.5rem;">Cancelar Edição</button>
+    </div>
 
+    <div class="section">
       <h2>Produtos Cadastrados</h2>
-      <div id="produtos-lista"></div>
+      <div class="product-list" id="produtos-lista"></div>
+    </div>
 
-      <div class="whatsapp-section">
-        <label for="whatsapp">
-          Número do WhatsApp (com DDD)
-        </label>
-        <input type="text" id="whatsapp" placeholder="Ex: 11999998888" maxlength="13" autocomplete="off" />
-        <button onclick="salvarWhatsapp()">Salvar Número WhatsApp</button>
-      </div>
+    <div class="section whatsapp">
+      <label>Número do WhatsApp</label>
+      <input id="whatsapp" placeholder="Ex: 11999998888">
+      <button onclick="salvarWhatsapp()">Salvar</button>
+    </div>
+
+    <div class="section">
+      <h2>Pedidos Recebidos</h2>
+      <div class="order-list" id="pedidos-lista"></div>
     </div>
   </div>
 
   <script>
-    let produtos = [];
-    let produtoEditandoId = null;
-
-    function gerarIdUnico() {
-      return '_' + Math.random().toString(36).substr(2, 9);
-    }
+    let produtos = JSON.parse(localStorage.getItem("produtos") || "[]");
+    let pedidos = JSON.parse(localStorage.getItem("pedidos") || "[]");
 
     function salvarProduto() {
       const nome = document.getElementById("nome").value.trim();
@@ -74,135 +161,77 @@
       const categoria = document.getElementById("categoria").value;
       const imagem = document.getElementById("imagem").value.trim();
 
-      if (!nome || !descricao || isNaN(preco) || preco < 0 || !categoria || !imagem) {
-        alert("Preencha todos os campos corretamente.");
-        return;
+      if (!nome || !descricao || !categoria || !imagem || isNaN(preco)) {
+        return alert("Preencha todos os campos corretamente.");
       }
 
-      if (produtoEditandoId) {
-        const index = produtos.findIndex(p => p.id === produtoEditandoId);
-        if (index >= 0) {
-          produtos[index] = { id: produtoEditandoId, nome, descricao, preco, categoria, imagem };
-        }
-        produtoEditandoId = null;
-        document.getElementById("cancelarEdicao").style.display = "none";
-      } else {
-        produtos.push({ id: gerarIdUnico(), nome, descricao, preco, categoria, imagem });
-      }
+      const i = produtos.findIndex(p => p.nome === nome);
+      if (i >= 0) produtos[i] = { nome, descricao, preco, categoria, imagem };
+      else produtos.push({ nome, descricao, preco, categoria, imagem });
 
-      salvarLocalStorage();
-      limparCampos();
+      localStorage.setItem("produtos", JSON.stringify(produtos));
       listarProdutos();
-      alert("Produto salvo com sucesso!");
     }
 
     function listarProdutos() {
       const lista = document.getElementById("produtos-lista");
-      lista.innerHTML = produtos.length === 0
-        ? "<p>Nenhum produto cadastrado.</p>"
-        : "";
-
-      produtos.forEach((produto) => {
-        const div = document.createElement("div");
-        div.className = "produto-item";
-
-        const nomeSpan = document.createElement("span");
-        nomeSpan.className = "produto-nome";
-        nomeSpan.textContent = produto.nome;
-
-        const acoes = document.createElement("div");
-        acoes.className = "produto-actions";
-
-        const btnEditar = document.createElement("button");
-        btnEditar.textContent = "Editar";
-        btnEditar.onclick = () => editarProduto(produto.id);
-
-        const btnExcluir = document.createElement("button");
-        btnExcluir.textContent = "Excluir";
-        btnExcluir.className = "btn-delete";
-        btnExcluir.onclick = () => excluirProduto(produto.id);
-
-        acoes.appendChild(btnEditar);
-        acoes.appendChild(btnExcluir);
-
-        div.appendChild(nomeSpan);
-        div.appendChild(acoes);
-
-        lista.appendChild(div);
-      });
+      lista.innerHTML = produtos.map((p, i) => `
+        <div class="item">
+          <span>${p.nome}</span>
+          <div>
+            <button onclick="editarProduto(${i})">Editar</button>
+            <button class="btn-delete" onclick="excluirProduto(${i})">Excluir</button>
+          </div>
+        </div>`).join("");
     }
 
-    function editarProduto(id) {
-      const p = produtos.find(p => p.id === id);
-      if (p) {
-        document.getElementById("nome").value = p.nome;
-        document.getElementById("descricao").value = p.descricao;
-        document.getElementById("preco").value = p.preco;
-        document.getElementById("categoria").value = p.categoria;
-        document.getElementById("imagem").value = p.imagem;
-        produtoEditandoId = id;
-        document.getElementById("cancelarEdicao").style.display = "inline-block";
-      }
+    function editarProduto(i) {
+      const p = produtos[i];
+      document.getElementById("nome").value = p.nome;
+      document.getElementById("descricao").value = p.descricao;
+      document.getElementById("preco").value = p.preco;
+      document.getElementById("categoria").value = p.categoria;
+      document.getElementById("imagem").value = p.imagem;
     }
 
-    function cancelarEdicao() {
-      limparCampos();
-      produtoEditandoId = null;
-      document.getElementById("cancelarEdicao").style.display = "none";
-    }
-
-    function excluirProduto(id) {
-      if (confirm("Confirma exclusão do produto?")) {
-        produtos = produtos.filter(p => p.id !== id);
-        salvarLocalStorage();
+    function excluirProduto(i) {
+      if (confirm("Excluir produto?")) {
+        produtos.splice(i, 1);
+        localStorage.setItem("produtos", JSON.stringify(produtos));
         listarProdutos();
       }
-    }
-
-    function salvarLocalStorage() {
-      localStorage.setItem("produtos", JSON.stringify(produtos));
-    }
-
-    function carregarLocalStorage() {
-      const dados = localStorage.getItem("produtos");
-      produtos = dados ? JSON.parse(dados) : [];
-    }
-
-    function limparCampos() {
-      document.getElementById("nome").value = "";
-      document.getElementById("descricao").value = "";
-      document.getElementById("preco").value = "";
-      document.getElementById("categoria").value = "";
-      document.getElementById("imagem").value = "";
     }
 
     function salvarWhatsapp() {
       const numero = document.getElementById("whatsapp").value.trim();
-      if (!numero || !/^\d{10,13}$/.test(numero)) {
-        alert("Digite um número de WhatsApp válido.");
-        return;
-      }
+      if (!/^\d{10,13}$/.test(numero)) return alert("Número inválido.");
       localStorage.setItem("whatsapp", numero);
-      alert("Número salvo!");
+      alert("WhatsApp salvo.");
     }
 
-    function carregarWhatsapp() {
-      const numeroSalvo = localStorage.getItem("whatsapp") || "";
-      document.getElementById("whatsapp").value = numeroSalvo;
+    function listarPedidos() {
+      const lista = document.getElementById("pedidos-lista");
+      lista.innerHTML = pedidos.map((p, i) => `
+        <div class="item">
+          <span><strong>${p.nomeCliente}</strong> - ${p.itens.join(", ")} - <em>${p.status}</em></span>
+          <select class="status-select" onchange="atualizarStatus(${i}, this.value)">
+            <option value="Pendente" ${p.status === "Pendente" ? "selected" : ""}>Pendente</option>
+            <option value="Em preparo" ${p.status === "Em preparo" ? "selected" : ""}>Em preparo</option>
+            <option value="Pronto" ${p.status === "Pronto" ? "selected" : ""}>Pronto</option>
+            <option value="Enviado" ${p.status === "Enviado" ? "selected" : ""}>Enviado</option>
+          </select>
+        </div>`).join("");
     }
 
-    function login() {
-      const senha = document.getElementById("senha").value;
-      if (senha === "mdoces123") {
-        document.getElementById("login").style.display = "none";
-        document.getElementById("admin").style.display = "block";
-        carregarLocalStorage();
-        listarProdutos();
-        carregarWhatsapp();
-      } else {
-        alert("Senha incorreta.");
-      }
+    function atualizarStatus(i, status) {
+      pedidos[i].status = status;
+      localStorage.setItem("pedidos", JSON.stringify(pedidos));
+      listarPedidos();
     }
+
+    listarProdutos();
+    listarPedidos();
+    document.getElementById("whatsapp").value = localStorage.getItem("whatsapp") || "";
   </script>
 </body>
 </html>
