@@ -1,7 +1,12 @@
-// Script.js atualizado e completo para MDoces
+/**
+ * script.js - MDoces Delivery
+ * Código limpo, organizado e autoexplicativo
+ */
 
-// Produtos já cadastrados (pode ser substituído pela lista do admin)
-let produtos = JSON.parse(localStorage.getItem("produtos")) || [
+// --- Dados iniciais ---
+
+// Produtos pré-cadastrados padrão (substituíveis pelo admin)
+const produtosDefault = [
   { id: 1, nome: "Brigadeiro", descricao: "Clássico doce de chocolate", preco: 2.5, imagem: "https://via.placeholder.com/200", categoria: "Docinhos" },
   { id: 2, nome: "Beijinho", descricao: "Doce de coco com cravo", preco: 2.5, imagem: "https://via.placeholder.com/200", categoria: "Docinhos" },
   { id: 3, nome: "Torta de Limão", descricao: "Refrescante e cremosa", preco: 7, imagem: "https://via.placeholder.com/200", categoria: "Tortas" },
@@ -9,37 +14,53 @@ let produtos = JSON.parse(localStorage.getItem("produtos")) || [
   { id: 5, nome: "Brownie", descricao: "Chocolate intenso", preco: 5, imagem: "https://via.placeholder.com/200", categoria: "Bolos" },
 ];
 
-// Dados do carrinho, número WhatsApp, e elementos do DOM
+// Recupera produtos salvos no localStorage ou usa os padrões
+const produtos = JSON.parse(localStorage.getItem("produtos")) || produtosDefault;
+
+// Carrinho de compras salvo no localStorage ou vazio
 let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+// Número do WhatsApp para pedidos (pode ser alterado na área administrativa)
 let numeroWhatsapp = localStorage.getItem("whatsapp") || "96988019993";
 
+// Objeto para controlar quantidades temporárias antes de adicionar ao carrinho
+const quantidadesTemp = {};
+
+// --- Elementos DOM ---
 const produtosEl = document.getElementById("produtos");
 const carrinhoEl = document.getElementById("itens-carrinho");
 const totalEl = document.getElementById("total");
+const nomeClienteEl = document.getElementById("nome-cliente");
 const enderecoEl = document.getElementById("endereco");
 const pagamentoEl = document.getElementById("forma-pagamento");
 const observacoesEl = document.getElementById("observacoes");
-const nomeClienteEl = document.getElementById("nome-cliente");
 
-// Recupera endereço salvo e sincroniza com localStorage
+// --- Inicialização ---
+
+// Preenche o campo endereço com valor salvo (se houver) e atualiza localStorage quando muda
 enderecoEl.value = localStorage.getItem("endereco") || "";
 enderecoEl.addEventListener("input", () => {
   localStorage.setItem("endereco", enderecoEl.value);
 });
 
-// Objeto temporário para controle das quantidades na tela de produtos
-const quantidadesTemp = {};
+// --- Funções principais ---
 
-// Agrupa produtos por categoria para melhor organização visual
-function agruparPorCategoria(produtos) {
-  return produtos.reduce((acc, produto) => {
+/**
+ * Agrupa os produtos por categoria em um objeto
+ * @param {Array} listaProdutos
+ * @returns {Object} categorias agrupadas
+ */
+function agruparPorCategoria(listaProdutos) {
+  return listaProdutos.reduce((acc, produto) => {
     if (!acc[produto.categoria]) acc[produto.categoria] = [];
     acc[produto.categoria].push(produto);
     return acc;
   }, {});
 }
 
-// Renderiza todos os produtos organizados por categoria
+/**
+ * Renderiza a lista de produtos agrupados por categoria, com controles de quantidade e botão adicionar
+ */
 function renderProdutos() {
   produtosEl.innerHTML = "";
   const categorias = agruparPorCategoria(produtos);
@@ -50,21 +71,23 @@ function renderProdutos() {
     titulo.textContent = categoria;
     secao.appendChild(titulo);
 
-    categorias[categoria].forEach((p) => {
+    categorias[categoria].forEach((produto) => {
       const el = document.createElement("div");
       el.className = "produto";
+
       el.innerHTML = `
-        <img src="${p.imagem}" alt="${p.nome}" />
-        <h3>${p.nome}</h3>
-        <p>${p.descricao}</p>
-        <strong>R$ ${p.preco.toFixed(2)}</strong>
+        <img src="${produto.imagem}" alt="${produto.nome}" />
+        <h3>${produto.nome}</h3>
+        <p>${produto.descricao}</p>
+        <strong>R$ ${produto.preco.toFixed(2)}</strong>
         <div class="quantidade-container">
-          <button onclick="alterarQuantidadeTemp(${p.id}, -1)">-</button>
-          <span id="quantidade-${p.id}">0</span>
-          <button onclick="alterarQuantidadeTemp(${p.id}, 1)">+</button>
+          <button aria-label="Diminuir quantidade" onclick="alterarQuantidadeTemp(${produto.id}, -1)">-</button>
+          <span id="quantidade-${produto.id}">0</span>
+          <button aria-label="Aumentar quantidade" onclick="alterarQuantidadeTemp(${produto.id}, 1)">+</button>
         </div>
-        <button onclick="adicionarAoCarrinho(${p.id})">Adicionar ao carrinho</button>
+        <button onclick="adicionarAoCarrinho(${produto.id})">Adicionar ao carrinho</button>
       `;
+
       secao.appendChild(el);
     });
 
@@ -72,25 +95,34 @@ function renderProdutos() {
   }
 }
 
-// Ajusta a quantidade temporária para o produto na tela de produtos
+/**
+ * Altera a quantidade temporária de um produto antes de adicioná-lo ao carrinho
+ * @param {number} id - ID do produto
+ * @param {number} delta - incremento (+1 ou -1)
+ */
 function alterarQuantidadeTemp(id, delta) {
-  if (!quantidadesTemp[id]) quantidadesTemp[id] = 0;
-  quantidadesTemp[id] += delta;
+  quantidadesTemp[id] = (quantidadesTemp[id] || 0) + delta;
   if (quantidadesTemp[id] < 0) quantidadesTemp[id] = 0;
-  document.getElementById(`quantidade-${id}`).textContent = quantidadesTemp[id];
+
+  const quantidadeSpan = document.getElementById(`quantidade-${id}`);
+  if (quantidadeSpan) quantidadeSpan.textContent = quantidadesTemp[id];
 }
 
-// Adiciona produto ao carrinho usando quantidade temporária
+/**
+ * Adiciona o produto com a quantidade temporária selecionada ao carrinho
+ * @param {number} id - ID do produto
+ */
 function adicionarAoCarrinho(id) {
   const quantidade = quantidadesTemp[id] || 0;
   if (quantidade === 0) {
-    alert("Selecione ao menos 1 unidade.");
+    alert("Selecione ao menos 1 unidade para adicionar.");
     return;
   }
 
   const produto = produtos.find(p => p.id === id);
   if (!produto) return;
 
+  // Atualiza quantidade se o produto já está no carrinho
   const itemExistente = carrinho.find(item => item.id === id);
   if (itemExistente) {
     itemExistente.quantidade += quantidade;
@@ -98,23 +130,35 @@ function adicionarAoCarrinho(id) {
     carrinho.push({ ...produto, quantidade });
   }
 
-  // Resetar quantidade temporária e atualizar interface
+  // Reseta quantidade temporária no display
   quantidadesTemp[id] = 0;
-  document.getElementById(`quantidade-${id}`).textContent = 0;
+  const quantidadeSpan = document.getElementById(`quantidade-${id}`);
+  if (quantidadeSpan) quantidadeSpan.textContent = "0";
+
   salvarCarrinho();
   atualizarCarrinho();
 }
 
-// Remove um item do carrinho pelo índice
+/**
+ * Remove um item do carrinho pelo índice
+ * @param {number} index
+ */
 function removerDoCarrinho(index) {
   carrinho.splice(index, 1);
   salvarCarrinho();
   atualizarCarrinho();
 }
 
-// Altera a quantidade do item no carrinho, removendo se zero
+/**
+ * Altera a quantidade de um item no carrinho (incrementa ou decrementa)
+ * Remove o item se a quantidade chegar a zero
+ * @param {number} index
+ * @param {number} delta
+ */
 function alterarQuantidade(index, delta) {
+  if (!carrinho[index]) return;
   carrinho[index].quantidade += delta;
+
   if (carrinho[index].quantidade <= 0) {
     removerDoCarrinho(index);
   } else {
@@ -123,82 +167,106 @@ function alterarQuantidade(index, delta) {
   }
 }
 
-// Atualiza a lista visual do carrinho e calcula o total
+/**
+ * Atualiza a lista do carrinho no DOM e o total do pedido
+ */
 function atualizarCarrinho() {
   carrinhoEl.innerHTML = "";
-  let total = 0;
 
   if (carrinho.length === 0) {
-    carrinhoEl.innerHTML = "<li>Seu carrinho está vazio.</li>";
-  } else {
-    carrinho.forEach((item, index) => {
-      total += item.preco * item.quantidade;
-      const li = document.createElement("li");
-      li.innerHTML = `
-        ${item.nome} - R$ ${item.preco.toFixed(2)} x ${item.quantidade}
-        <button onclick="alterarQuantidade(${index}, -1)">-</button>
-        <button onclick="alterarQuantidade(${index}, 1)">+</button>
-        <button onclick="removerDoCarrinho(${index})">Remover</button>
-      `;
-      carrinhoEl.appendChild(li);
-    });
+    carrinhoEl.innerHTML = "<li>Carrinho vazio.</li>";
+    totalEl.textContent = "Total: R$ 0,00";
+    return;
   }
 
-  totalEl.textContent = "Total: R$ " + total.toFixed(2);
+  let total = 0;
+
+  carrinho.forEach((item, index) => {
+    const li = document.createElement("li");
+
+    li.innerHTML = `
+      <span>${item.quantidade}x ${item.nome}</span>
+      <span>
+        R$ ${(item.preco * item.quantidade).toFixed(2)}
+        <button aria-label="Diminuir quantidade" onclick="alterarQuantidade(${index}, -1)">-</button>
+        <button aria-label="Aumentar quantidade" onclick="alterarQuantidade(${index}, 1)">+</button>
+        <button aria-label="Remover item" onclick="removerDoCarrinho(${index})">✕</button>
+      </span>
+    `;
+
+    carrinhoEl.appendChild(li);
+    total += item.preco * item.quantidade;
+  });
+
+  totalEl.textContent = `Total: R$ ${total.toFixed(2)}`;
 }
 
-// Salva o estado atual do carrinho no localStorage
+/**
+ * Salva o carrinho no localStorage para persistência
+ */
 function salvarCarrinho() {
   localStorage.setItem("carrinho", JSON.stringify(carrinho));
 }
 
-// Função para finalizar pedido e enviar via WhatsApp
+/**
+ * Valida os dados do pedido e gera a mensagem formatada para enviar via WhatsApp
+ * Abre o WhatsApp web com a mensagem pronta para envio
+ */
 function finalizarPedido() {
   if (carrinho.length === 0) {
     alert("Seu carrinho está vazio!");
     return;
   }
   if (!nomeClienteEl.value.trim()) {
-    alert("Digite seu nome antes de finalizar o pedido.");
+    alert("Por favor, digite seu nome.");
+    nomeClienteEl.focus();
     return;
   }
   if (!enderecoEl.value.trim()) {
-    alert("Digite seu endereço antes de finalizar o pedido.");
+    alert("Por favor, informe seu endereço de entrega.");
+    enderecoEl.focus();
     return;
   }
   if (!pagamentoEl.value) {
-    alert("Selecione a forma de pagamento.");
+    alert("Por favor, selecione a forma de pagamento.");
+    pagamentoEl.focus();
     return;
   }
 
-  const resumoPedido =
-    `🍬 Pedido MDoces\n` +
-    `👤 Cliente: ${nomeClienteEl.value}\n` +
-    carrinho
-      .map(i => `- ${i.nome} x ${i.quantidade} = R$ ${(i.preco * i.quantidade).toFixed(2)}`)
-      .join("\n") +
-    `\nTotal: R$ ${carrinho.reduce((t, i) => t + i.preco * i.quantidade, 0).toFixed(2)}` +
-    `\n📍 Endereço: ${enderecoEl.value}` +
-    `\n💳 Pagamento: ${pagamentoEl.value}` +
-    (observacoesEl.value.trim() ? `\n📝 Observações: ${observacoesEl.value.trim()}` : "");
+  // Monta mensagem detalhada do pedido
+  let mensagem = `Olá, gostaria de fazer um pedido:\n\n*Itens:*\n`;
+  carrinho.forEach(item => {
+    mensagem += `- ${item.quantidade} x ${item.nome} (R$ ${(item.preco * item.quantidade).toFixed(2)})\n`;
+  });
 
-  if (confirm("Confirme seu pedido:\n\n" + resumoPedido)) {
-    const mensagem = encodeURIComponent(resumoPedido);
-    window.open(`https://wa.me/${numeroWhatsapp}?text=${mensagem}`, "_blank");
-  }
+  const total = carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
+  mensagem += `\n*Total: R$ ${total.toFixed(2)}*\n\n`;
+  mensagem += `*Nome:* ${nomeClienteEl.value.trim()}\n`;
+  mensagem += `*Endereço:* ${enderecoEl.value.trim()}\n`;
+  mensagem += `*Pagamento:* ${pagamentoEl.value}\n`;
+
+  const obs = observacoesEl.value.trim();
+  if (obs) mensagem += `*Observações:* ${obs}\n`;
+
+  mensagem += `\nObrigado!`;
+
+  // Envia para o WhatsApp
+  const url = `https://wa.me/55${numeroWhatsapp}?text=${encodeURIComponent(mensagem)}`;
+  window.open(url, "_blank");
+
+  // Opcional: limpar carrinho após enviar pedido
+  carrinho = [];
+  salvarCarrinho();
+  atualizarCarrinho();
 }
 
-// Atualiza o número do WhatsApp e salva no localStorage
-function alterarNumeroWhatsapp(novoNumero) {
-  if (!novoNumero || !/^\d{10,13}$/.test(novoNumero)) {
-    alert("Número de WhatsApp inválido. Digite apenas números, com DDD.");
-    return;
-  }
-  numeroWhatsapp = novoNumero;
-  localStorage.setItem("whatsapp", numeroWhatsapp);
-  alert("Número do WhatsApp atualizado!");
-}
-
-// Inicialização do site
+// --- Inicializa a página ---
 renderProdutos();
 atualizarCarrinho();
+
+// --- Exponha funções para o escopo global para uso nos botões inline ---
+window.alterarQuantidadeTemp = alterarQuantidadeTemp;
+window.adicionarAoCarrinho = adicionarAoCarrinho;
+window.removerDoCarrinho = removerDoCarrinho;
+window.alterarQuantidade = alterarQuantidade;
+window.finalizarPedido = finalizarPedido;
