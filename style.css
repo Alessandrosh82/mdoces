@@ -6,30 +6,34 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   padding: 0;
-  background: #fff5f8;
+  background: #f9fafb; /* fundo bege claro */
   color: #333;
 }
 
 header {
-  background: #ff99bb;
-  padding: 1.5rem;
+  background: #4b0082; /* índigo */
+  padding: 2rem 1rem;
   text-align: center;
   color: white;
 }
 
 header h1 {
   margin: 0;
-  font-size: 2rem;
+  font-size: 2.2rem;
+  letter-spacing: 1px;
 }
 
 header p {
   margin: 0.5rem 0 0;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  color: #e0e0e0;
 }
 
 .container {
   padding: 1rem;
-  padding-bottom: 6rem; /* espaço pro footer */
+  padding-bottom: 8rem; /* espaço extra pro footer fixo */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .grid {
@@ -41,66 +45,70 @@ header p {
 .produto {
   background: white;
   padding: 1rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   text-align: center;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .produto:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform: translateY(-6px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
 }
 
 .produto img {
   max-width: 100%;
-  border-radius: 10px;
+  border-radius: 12px;
   margin-bottom: 0.5rem;
 }
 
 .produto h3 {
-  margin: 0.5rem 0 0.2rem;
-  font-size: 1.1rem;
+  margin: 0.5rem 0 0.3rem;
+  font-size: 1.2rem;
+  color: #4b0082;
 }
 
 .produto p {
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   margin: 0.2rem 0 0.5rem;
+  color: #666;
 }
 
 .produto strong {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: bold;
+  color: #000;
 }
 
 .produto button {
-  background: #ff66a3;
+  background: #4b0082;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   transition: background 0.2s;
 }
 
 .produto button:hover {
-  background: #ff3385;
+  background: #3a0068;
 }
 
 #carrinho {
-  margin-top: 2rem;
-  background: #ffe6ee;
+  margin-top: 3rem;
+  background: #e6f0ff; /* azul bebê */
   padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  border-radius: 16px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
 }
 
 #carrinho h2 {
   margin-top: 0;
-  font-size: 1.4rem;
-  color: #cc3366;
+  font-size: 1.5rem;
+  color: #4b0082;
+  text-align: center;
 }
 
 #itens-carrinho {
@@ -110,31 +118,33 @@ header p {
 }
 
 #itens-carrinho li {
-  padding: 0.3rem 0;
-  border-bottom: 1px solid #ddd;
-  font-size: 0.95rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #ccc;
+  font-size: 1rem;
+  color: #444;
 }
 
 input,
 select,
 textarea {
   width: 100%;
-  padding: 0.6rem;
-  margin: 0.5rem 0 1rem;
+  padding: 0.7rem;
+  margin: 0.5rem 0 1.2rem;
   border: 1px solid #ccc;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 1rem;
   font-family: inherit;
+  background: white;
 }
 
 .btn-finalizar {
   width: 100%;
-  padding: 0.75rem;
+  padding: 0.9rem;
   background: #28a745;
   color: white;
   font-size: 1.1rem;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
   margin-top: 1rem;
   transition: background 0.2s;
@@ -147,17 +157,19 @@ textarea {
 footer {
   text-align: center;
   padding: 1rem;
-  background: #ffccdd;
+  background: #f1f1f1;
   position: fixed;
   bottom: 0;
   width: 100%;
   font-size: 0.9rem;
-  box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.08);
+  color: #333;
 }
 
 footer a {
   text-decoration: none;
-  color: #333;
+  color: #4b0082;
+  font-weight: bold;
 }
 
 footer a:hover {
@@ -166,12 +178,12 @@ footer a:hover {
 
 @media (max-width: 600px) {
   .produto h3 {
-    font-size: 1rem;
+    font-size: 1.05rem;
   }
 
   .produto p,
   .produto strong {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
   }
 
   .btn-finalizar {
