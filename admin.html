@@ -1,39 +1,161 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <title>Admin - MDoces</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .admin-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+
+    .produto-admin {
+      background: #ffe6ee;
+      padding: 0.5rem;
+      margin: 0.5rem 0;
+      border-radius: 6px;
+    }
+
+    .produto-admin button {
+      margin-left: 0.5rem;
+      font-size: 0.8rem;
+    }
+
+    .btn-excluir {
+      background: #dc3545;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      padding: 0.3rem 0.6rem;
+    }
+
+    .btn-editar {
+      background: #ffc107;
+      color: black;
+      border: none;
+      border-radius: 4px;
+      padding: 0.3rem 0.6rem;
+    }
+  </style>
 </head>
 <body>
-  <h2>Área Administrativa</h2>
-  <p>Senha: <input type="password" id="senha"><button onclick="login()">Entrar</button></p>
-  <div id="admin" style="display:none;">
-    <h3>Cadastrar Produto</h3>
-    <input placeholder="Nome" id="nome"><br>
-    <input placeholder="Descrição" id="descricao"><br>
-    <input placeholder="Preço" id="preco" type="number" step="0.01"><br>
-    <input placeholder="URL da imagem" id="imagem"><br>
-    <button onclick="salvarProduto()">Salvar</button>
+  <div class="admin-container">
+    <h2>Área Administrativa</h2>
+    <div id="login">
+      <p>
+        Senha: <input type="password" id="senha">
+        <button onclick="login()">Entrar</button>
+      </p>
+    </div>
+
+    <div id="admin" style="display:none;">
+      <h3>Cadastrar ou Editar Produto</h3>
+      <input placeholder="Nome" id="nome"><br>
+      <input placeholder="Descrição" id="descricao"><br>
+      <input placeholder="Preço" id="preco" type="number" step="0.01"><br>
+      <input placeholder="URL da imagem" id="imagem"><br>
+      <input placeholder="Categoria (ex: Doces, Tortas, Bebidas...)" id="categoria"><br>
+      <button onclick="salvarProduto()" class="btn-finalizar">Salvar</button>
+
+      <h3>Produtos Cadastrados</h3>
+      <div id="lista-produtos"></div>
+    </div>
   </div>
+
   <script>
+    let editandoIndex = null;
+
     function login() {
-      if (document.getElementById("senha").value === "mdoces123") {
+      const senha = document.getElementById("senha").value;
+      if (senha === "mdoces123") {
+        document.getElementById("login").style.display = "none";
         document.getElementById("admin").style.display = "block";
+        listarProdutos();
       } else {
         alert("Senha incorreta.");
       }
     }
+
     function salvarProduto() {
+      const nome = document.getElementById("nome").value.trim();
+      const descricao = document.getElementById("descricao").value.trim();
+      const preco = parseFloat(document.getElementById("preco").value);
+      const imagem = document.getElementById("imagem").value.trim();
+      const categoria = document.getElementById("categoria").value.trim();
+
+      if (!nome || !descricao || isNaN(preco) || !imagem) {
+        alert("Preencha todos os campos corretamente.");
+        return;
+      }
+
       const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
-      produtos.push({
-        nome: document.getElementById("nome").value,
-        descricao: document.getElementById("descricao").value,
-        preco: parseFloat(document.getElementById("preco").value),
-        imagem: document.getElementById("imagem").value
-      });
+
+      const novoProduto = { nome, descricao, preco, imagem, categoria };
+
+      if (editandoIndex !== null) {
+        produtos[editandoIndex] = novoProduto;
+        editandoIndex = null;
+      } else {
+        produtos.push(novoProduto);
+      }
+
       localStorage.setItem("produtos", JSON.stringify(produtos));
-      alert("Produto salvo!");
+      alert("Produto salvo com sucesso!");
+      limparCampos();
+      listarProdutos();
+    }
+
+    function listarProdutos() {
+      const lista = document.getElementById("lista-produtos");
+      const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+      lista.innerHTML = "";
+
+      produtos.forEach((p, i) => {
+        const div = document.createElement("div");
+        div.className = "produto-admin";
+        div.innerHTML = `
+          <strong>${p.nome}</strong> - R$ ${p.preco.toFixed(2)}<br>
+          <small>${p.descricao}</small><br>
+          <em>${p.categoria || "Sem categoria"}</em><br>
+          <button class="btn-editar" onclick="editarProduto(${i})">Editar</button>
+          <button class="btn-excluir" onclick="excluirProduto(${i})">Excluir</button>
+        `;
+        lista.appendChild(div);
+      });
+    }
+
+    function excluirProduto(index) {
+      if (confirm("Tem certeza que deseja excluir este produto?")) {
+        const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+        produtos.splice(index, 1);
+        localStorage.setItem("produtos", JSON.stringify(produtos));
+        listarProdutos();
+      }
+    }
+
+    function editarProduto(index) {
+      const produtos = JSON.parse(localStorage.getItem("produtos")) || [];
+      const p = produtos[index];
+      document.getElementById("nome").value = p.nome;
+      document.getElementById("descricao").value = p.descricao;
+      document.getElementById("preco").value = p.preco;
+      document.getElementById("imagem").value = p.imagem;
+      document.getElementById("categoria").value = p.categoria || "";
+      editandoIndex = index;
+    }
+
+    function limparCampos() {
+      document.getElementById("nome").value = "";
+      document.getElementById("descricao").value = "";
+      document.getElementById("preco").value = "";
+      document.getElementById("imagem").value = "";
+      document.getElementById("categoria").value = "";
     }
   </script>
 </body>
