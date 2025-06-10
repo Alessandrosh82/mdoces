@@ -196,3 +196,60 @@ footer .senha-admin {
   font-size: 0.85rem;
   color: #cbd3e0;
 }
+/* Espaçamento e legibilidade para formulários */
+#formulario-produto input,
+#formulario-produto textarea,
+#formulario-produto select {
+  background-color: #f9fafb;
+}
+
+/* Suavidade nos botões */
+#formulario-produto button,
+.botoes-produto button {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+#formulario-produto button:hover,
+.botoes-produto button:hover {
+  background-color: #1a2f56;
+  transform: scale(1.02);
+}
+
+/* Melhor visual para categorias */
+.info-produto .categoria {
+  font-style: italic;
+  font-size: 0.85rem;
+  background-color: #eef2f8;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  display: inline-block;
+  margin-top: 0.25rem;
+}
+
+/* Espaçamento entre cards de produto */
+.item-produto {
+  background-color: #fdfdfd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Formulário: deixar labels acima com mais espaçamento */
+#formulario-produto label {
+  display: block;
+  margin-top: 0.5rem;
+}
+
+/* Input de WhatsApp com ícone visual (se quiser colocar um depois via HTML) */
+#campo-whatsapp input {
+  background-color: #f9fafb;
+}
+
+/* Footer com leve distinção */
+footer {
+  margin-top: 3rem;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.8rem;
+  color: #98a4b9;
+}
