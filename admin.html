@@ -1,496 +1,414 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Admin - MDoces</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --indigo: #3f51b5;
-      --indigo-dark: #303f9f;
-      --light: #f5f5f5;
-      --gray: #888;
-      --white: #fff;
-      --green: #25d366;
-      --red: #e53935;
-      --radius: 12px;
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Admin MDoces - Login</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #1e40af; /* azul índigo */
+    color: white;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #login-container, #admin-container {
+    background: #1e40af;
+    padding: 20px;
+    border-radius: 8px;
+    width: 95%;
+    max-width: 400px;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  }
+  h2 {
+    text-align: center;
+    margin-bottom: 15px;
+  }
+  label {
+    display: block;
+    margin: 10px 0 5px;
+  }
+  input[type=password], input[type=text], input[type=number], select {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    border: none;
+  }
+  button {
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+    background: #2563eb; /* azul claro */
+    border: none;
+    color: white;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background: #1d4ed8;
+  }
+  #logout-btn {
+    background: #dc2626;
+    margin-top: 10px;
+  }
+  .hidden {
+    display: none;
+  }
+  .product-list, .pedido-list {
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 15px;
+    background: #2563eb;
+    padding: 10px;
+    border-radius: 6px;
+  }
+  .product-item, .pedido-item {
+    background: #3b82f6;
+    margin-bottom: 8px;
+    padding: 8px;
+    border-radius: 6px;
+  }
+  .product-item:last-child, .pedido-item:last-child {
+    margin-bottom: 0;
+  }
+  .flex-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .flex-grow {
+    flex-grow: 1;
+  }
+  .small-btn {
+    background: #ef4444;
+    border: none;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 4px 8px;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+  }
+  .small-btn:hover {
+    background: #b91c1c;
+  }
+  label[for="img-url"] {
+    font-size: 0.9rem;
+  }
+  img.product-thumb {
+    max-width: 50px;
+    max-height: 50px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-right: 8px;
+  }
+  select {
+    padding: 6px;
+  }
+  .pedido-status-select {
+    margin-top: 5px;
+    width: 100%;
+    padding: 6px;
+    border-radius: 4px;
+    border: none;
+  }
+  @media (max-width: 500px) {
+    #login-container, #admin-container {
+      max-width: 100%;
     }
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: 'Inter', sans-serif;
-    }
-    body {
-      background-color: var(--light);
-      padding: 2rem;
-      color: #333;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-    }
-    .container {
-      max-width: 960px;
-      width: 100%;
-      background: var(--white);
-      border-radius: var(--radius);
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-      padding: 2rem;
-      margin-bottom: 3rem;
-    }
-    .login-screen {
-      max-width: 400px;
-      width: 100%;
-      margin: 5rem auto;
-      padding: 2rem;
-      background: white;
-      border-radius: 12px;
-      box-shadow: 0 0 20px rgba(0,0,0,0.1);
-      text-align: center;
-    }
-    .login-screen input {
-      width: 100%;
-      padding: 0.7rem;
-      margin: 1rem 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 1rem;
-    }
-    .login-screen button {
-      padding: 0.7rem 1.5rem;
-      background: var(--indigo);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .login-screen button:hover {
-      background: var(--indigo-dark);
-    }
-    .hidden {
-      display: none;
-    }
-    h1, h2 {
-      font-weight: 700;
-      color: var(--indigo);
-      margin-bottom: 1rem;
-    }
-    .section {
-      margin-bottom: 2rem;
-    }
-    label {
-      font-weight: 600;
-      display: block;
-      margin-top: 1rem;
-    }
-    input, textarea, select {
-      width: 100%;
-      padding: 0.6rem;
-      margin-top: 0.4rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
-      transition: border-color 0.3s ease;
-    }
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: var(--indigo);
-      box-shadow: 0 0 6px var(--indigo);
-    }
-    textarea {
-      resize: vertical;
-      min-height: 60px;
-    }
-    button {
-      margin-top: 1rem;
-      padding: 0.6rem 1.2rem;
-      font-weight: 600;
-      color: var(--white);
-      background: var(--indigo);
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background: var(--indigo-dark);
-    }
-    .btn-delete {
-      background: var(--red);
-      margin-left: 0.5rem;
-    }
-    .btn-delete:hover {
-      background: #b71c1c;
-    }
-    .product-list, .order-list {
-      margin-top: 1rem;
-      background: #fafafa;
-      border-radius: 6px;
-      border: 1px solid #ddd;
-      padding: 1rem;
-      max-height: 320px;
-      overflow-y: auto;
-      box-shadow: inset 0 0 5px #ddd;
-    }
-    .item {
-      padding: 0.6rem 0;
-      border-bottom: 1px solid #eee;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-    .item:last-child {
-      border-bottom: none;
-    }
-    .item span {
-      flex: 1;
-      font-weight: 600;
-      color: #222;
-      word-break: break-word;
-    }
-    .item div {
-      display: flex;
-      gap: 0.5rem;
-      margin-top: 0.3rem;
-    }
-    .whatsapp {
-      background: #e8f5e9;
-      padding: 1rem;
-      border: 1.5px solid var(--green);
-      border-radius: var(--radius);
-    }
-    .status-select {
-      margin-left: 1rem;
-      border-radius: 6px;
-      padding: 0.3rem 0.6rem;
-      font-weight: 600;
-      border: 1px solid #ccc;
-      cursor: pointer;
-      transition: border-color 0.3s ease;
-    }
-    .status-select:hover, .status-select:focus {
-      border-color: var(--indigo);
-      outline: none;
-      box-shadow: 0 0 5px var(--indigo);
-    }
-    .img-preview {
-      margin-top: 0.5rem;
-      max-width: 150px;
-      max-height: 120px;
-      border-radius: 8px;
-      object-fit: cover;
-      border: 1px solid #ccc;
-      display: block;
-      transition: box-shadow 0.3s ease;
-    }
-    .img-preview:hover {
-      box-shadow: 0 0 8px var(--indigo);
-    }
-    .export-btn {
-      margin-top: 0.5rem;
-      background: var(--green);
-      color: white;
-      font-weight: 700;
-      border-radius: 6px;
-    }
-    .export-btn:hover {
-      background: #128c4a;
-    }
-  </style>
+  }
+</style>
 </head>
 <body>
-  <div id="login" class="login-screen">
-    <h2>Área Administrativa</h2>
-    <p>Digite a senha para acessar:</p>
-    <input type="password" id="adminPassword" placeholder="Senha" autocomplete="off" />
-    <button onclick="checkPassword()">Entrar</button>
-    <p id="loginError" style="color: red; display: none;">Senha incorreta!</p>
-  </div>
 
-  <div id="adminPanel" class="container hidden" role="main" aria-label="Painel Administrativo">
-    <h1>Administração MDoces</h1>
+<div id="login-container">
+  <h2>Login Admin MDoces</h2>
+  <label for="admin-password">Senha:</label>
+  <input type="password" id="admin-password" placeholder="Digite a senha" />
+  <button id="btn-login">Entrar</button>
+  <p style="margin-top:15px; font-size: 0.85rem; color: #a5b4fc;">Senha padrão: <strong>mdoces123</strong></p>
+</div>
 
-    <div class="section" aria-labelledby="productFormTitle">
-      <h2 id="productFormTitle">Cadastro / Edição de Produtos</h2>
-      <label for="nome">Nome</label>
-      <input id="nome" autocomplete="off" />
-      <label for="descricao">Descrição</label>
-      <textarea id="descricao" autocomplete="off"></textarea>
-      <label for="preco">Preço (R$)</label>
-      <input id="preco" type="number" min="0" step="0.01" autocomplete="off" />
-      <label for="categoria">Categoria</label>
-      <select id="categoria" autocomplete="off">
-        <option value="">Selecione</option>
-        <option value="bolos">Bolos</option>
-        <option value="docinhos">Docinhos</option>
-        <option value="salgados">Salgados</option>
-        <option value="bebidas">Bebidas</option>
+<div id="admin-container" class="hidden">
+  <h2>Administração MDoces</h2>
+  <button id="logout-btn">Sair</button>
+
+  <section id="produtos-section">
+    <h3>Gerenciar Produtos</h3>
+    <form id="produto-form">
+      <input type="hidden" id="produto-id" />
+      <label for="produto-nome">Nome</label>
+      <input type="text" id="produto-nome" required />
+      <label for="produto-descricao">Descrição</label>
+      <input type="text" id="produto-descricao" />
+      <label for="produto-preco">Preço (R$)</label>
+      <input type="number" id="produto-preco" step="0.01" min="0" required />
+      <label for="produto-categoria">Categoria</label>
+      <select id="produto-categoria" required>
+        <option value="">Selecione...</option>
+        <option value="Doces">Doces</option>
+        <option value="Bolos">Bolos</option>
+        <option value="Salgados">Salgados</option>
+        <option value="Bebidas">Bebidas</option>
       </select>
-      <label for="imagem">Imagem (URL)</label>
-      <input id="imagem" type="url" autocomplete="off" />
-      <img id="imgPreview" class="img-preview hidden" alt="Prévia da imagem do produto" />
-      <button onclick="salvarProduto()">Salvar Produto</button>
-      <button onclick="limparFormulario()" style="background:#888; margin-left:0.5rem;">Limpar</button>
-    </div>
+      <label for="produto-img-url">URL da Imagem</label>
+      <input type="text" id="produto-img-url" placeholder="https://..." />
+      <button type="submit" id="btn-salvar-produto">Salvar Produto</button>
+      <button type="button" id="btn-limpar-form" style="background:#2563eb; margin-top:5px;">Limpar Formulário</button>
+    </form>
+    <div class="product-list" id="lista-produtos"></div>
+  </section>
 
-    <div class="section" aria-labelledby="productListTitle">
-      <h2 id="productListTitle">Produtos Cadastrados</h2>
-      <div class="product-list" id="produtos-lista" role="list" aria-live="polite" aria-relevant="additions removals"></div>
-    </div>
-
-    <div class="section whatsapp" aria-labelledby="whatsappLabel">
-      <label id="whatsappLabel" for="whatsapp">Número do WhatsApp</label>
-      <input id="whatsapp" placeholder="Ex: 11999998888" autocomplete="off" />
-      <button onclick="salvarWhatsapp()">Salvar</button>
-    </div>
-
-    <div class="section" aria-labelledby="orderListTitle">
-      <h2 id="orderListTitle">Pedidos Recebidos</h2>
-      <button class="export-btn" onclick="exportarPedidosCSV()" title="Exportar pedidos para arquivo CSV">Exportar Pedidos CSV</button>
-      <div class="order-list" id="pedidos-lista" role="list" aria-live="polite" aria-relevant="additions removals"></div>
-    </div>
-  </div>
+  <section id="pedidos-section" style="margin-top: 30px;">
+    <h3>Gerenciar Pedidos</h3>
+    <div class="pedido-list" id="lista-pedidos"></div>
+  </section>
+</div>
 
 <script>
-  const senhaCorreta = "mdoces123";
-  let produtos = JSON.parse(localStorage.getItem("produtos") || "[]");
-  let pedidos = JSON.parse(localStorage.getItem("pedidos") || "[]");
-  let produtoEditIndex = -1; // índice do produto que está sendo editado, -1 para novo
+  const senhaAdmin = 'mdoces123'; // senha simples para demo
+  const loginContainer = document.getElementById('login-container');
+  const adminContainer = document.getElementById('admin-container');
+  const btnLogin = document.getElementById('btn-login');
+  const logoutBtn = document.getElementById('logout-btn');
 
-  // Ao carregar, verifica se está logado
-  window.onload = () => {
-    if (sessionStorage.getItem("adminLogado") === "true") {
-      mostrarPainel();
-    }
-  };
+  const produtoForm = document.getElementById('produto-form');
+  const inputProdutoId = document.getElementById('produto-id');
+  const inputNome = document.getElementById('produto-nome');
+  const inputDescricao = document.getElementById('produto-descricao');
+  const inputPreco = document.getElementById('produto-preco');
+  const selectCategoria = document.getElementById('produto-categoria');
+  const inputImgUrl = document.getElementById('produto-img-url');
+  const btnLimparForm = document.getElementById('btn-limpar-form');
 
-  function checkPassword() {
-    const senhaDigitada = document.getElementById("adminPassword").value;
-    const erro = document.getElementById("loginError");
-    if (senhaDigitada === senhaCorreta) {
-      sessionStorage.setItem("adminLogado", "true");
-      mostrarPainel();
+  const listaProdutosDiv = document.getElementById('lista-produtos');
+  const listaPedidosDiv = document.getElementById('lista-pedidos');
+
+  let produtos = [];
+  let pedidos = [];
+
+  // Verifica se admin está logado
+  function checkLogin() {
+    const logado = localStorage.getItem('mdoces-admin-logado');
+    if (logado === 'true') {
+      loginContainer.classList.add('hidden');
+      adminContainer.classList.remove('hidden');
+      carregarProdutos();
+      carregarPedidos();
+      renderProdutos();
+      renderPedidos();
     } else {
-      erro.style.display = "block";
-      setTimeout(() => erro.style.display = "none", 3000);
+      loginContainer.classList.remove('hidden');
+      adminContainer.classList.add('hidden');
     }
   }
 
-  function mostrarPainel() {
-    document.getElementById("login").classList.add("hidden");
-    document.getElementById("adminPanel").classList.remove("hidden");
-    listarProdutos();
-    listarPedidos();
-    document.getElementById("whatsapp").value = localStorage.getItem("whatsapp") || "";
-  }
-
-  // Limpar formulário e resetar edição
-  function limparFormulario() {
-    produtoEditIndex = -1;
-    document.getElementById("nome").value = "";
-    document.getElementById("descricao").value = "";
-    document.getElementById("preco").value = "";
-    document.getElementById("categoria").value = "";
-    document.getElementById("imagem").value = "";
-    document.getElementById("imgPreview").classList.add("hidden");
-    document.getElementById("imgPreview").src = "";
-  }
-
-  // Atualiza a prévia da imagem quando muda o campo URL
-  document.getElementById("imagem").addEventListener("input", () => {
-    const url = document.getElementById("imagem").value.trim();
-    const preview = document.getElementById("imgPreview");
-    if (url && validaURL(url)) {
-      preview.src = url;
-      preview.classList.remove("hidden");
+  // Login
+  btnLogin.addEventListener('click', () => {
+    const senha = document.getElementById('admin-password').value;
+    if (senha === senhaAdmin) {
+      localStorage.setItem('mdoces-admin-logado', 'true');
+      checkLogin();
     } else {
-      preview.src = "";
-      preview.classList.add("hidden");
+      alert('Senha incorreta!');
     }
   });
 
-  // Valida URL simples para imagem (https + termina com jpg/png/gif/webp)
-  function validaURL(url) {
-    try {
-      const valid = /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/i.test(url);
-      return valid;
-    } catch {
-      return false;
-    }
-  }
+  // Logout
+  logoutBtn.addEventListener('click', () => {
+    localStorage.removeItem('mdoces-admin-logado');
+    checkLogin();
+  });
 
-  function salvarProduto() {
-    const nome = document.getElementById("nome").value.trim();
-    const descricao = document.getElementById("descricao").value.trim();
-    const precoStr = document.getElementById("preco").value;
-    const preco = parseFloat(precoStr);
-    const categoria = document.getElementById("categoria").value;
-    const imagem = document.getElementById("imagem").value.trim();
-
-    if (!nome || !descricao || !categoria || !imagem || isNaN(preco)) {
-      alert("Preencha todos os campos corretamente.");
-      return;
-    }
-
-    if (preco < 0) {
-      alert("O preço deve ser maior ou igual a zero.");
-      return;
-    }
-
-    if (!validaURL(imagem)) {
-      alert("A URL da imagem deve ser válida e terminar com jpg, jpeg, png, gif ou webp.");
-      return;
-    }
-
-    // Evita duplicidade de nome em produtos diferentes
-    const existeOutro = produtos.findIndex((p, idx) => p.nome.toLowerCase() === nome.toLowerCase() && idx !== produtoEditIndex);
-    if (existeOutro >= 0) {
-      alert("Já existe um produto com esse nome. Use outro nome ou edite o produto existente.");
-      return;
-    }
-
-    const produto = { nome, descricao, preco, categoria, imagem };
-
-    if (produtoEditIndex >= 0) {
-      produtos[produtoEditIndex] = produto;
-      alert("Produto atualizado com sucesso!");
+  // Carregar produtos do localStorage
+  function carregarProdutos() {
+    const dados = localStorage.getItem('mdoces-produtos');
+    if (dados) {
+      produtos = JSON.parse(dados);
     } else {
-      produtos.push(produto);
-      alert("Produto cadastrado com sucesso!");
+      produtos = [];
+      salvarProdutos();
     }
-
-    localStorage.setItem("produtos", JSON.stringify(produtos));
-    listarProdutos();
-    limparFormulario();
   }
 
-  function listarProdutos() {
-    const lista = document.getElementById("produtos-lista");
+  // Salvar produtos no localStorage
+  function salvarProdutos() {
+    localStorage.setItem('mdoces-produtos', JSON.stringify(produtos));
+  }
+
+  // Renderizar lista de produtos
+  function renderProdutos() {
+    listaProdutosDiv.innerHTML = '';
     if (produtos.length === 0) {
-      lista.innerHTML = "<p>Nenhum produto cadastrado.</p>";
+      listaProdutosDiv.innerHTML = '<p>Nenhum produto cadastrado.</p>';
       return;
     }
-    lista.innerHTML = produtos.map((p, i) => `
-      <div class="item" role="listitem" aria-label="Produto ${p.nome}">
-        <span>${p.nome}</span>
-        <div>
-          <button aria-label="Editar produto ${p.nome}" onclick="editarProduto(${i})">Editar</button>
-          <button aria-label="Excluir produto ${p.nome}" class="btn-delete" onclick="excluirProduto(${i})">Excluir</button>
+    produtos.forEach(prod => {
+      const div = document.createElement('div');
+      div.className = 'product-item flex-row';
+      div.innerHTML = `
+        <img src="${prod.imagem || 'https://via.placeholder.com/50'}" alt="${prod.nome}" class="product-thumb" />
+        <div class="flex-grow">
+          <strong>${prod.nome}</strong> <br />
+          R$ ${prod.preco.toFixed(2)} - <em>${prod.categoria}</em><br />
+          ${prod.descricao || ''}
         </div>
-      </div>`).join("");
-  }
-
-  function editarProduto(i) {
-    const p = produtos[i];
-    produtoEditIndex = i;
-    document.getElementById("nome").value = p.nome;
-    document.getElementById("descricao").value = p.descricao;
-    document.getElementById("preco").value = p.preco;
-    document.getElementById("categoria").value = p.categoria;
-    document.getElementById("imagem").value = p.imagem;
-
-    // Atualiza preview imagem
-    const preview = document.getElementById("imgPreview");
-    if (validaURL(p.imagem)) {
-      preview.src = p.imagem;
-      preview.classList.remove("hidden");
-    } else {
-      preview.src = "";
-      preview.classList.add("hidden");
-    }
-  }
-
-  function excluirProduto(i) {
-    if (confirm("Excluir produto?")) {
-      produtos.splice(i, 1);
-      localStorage.setItem("produtos", JSON.stringify(produtos));
-      listarProdutos();
-      if (produtoEditIndex === i) limparFormulario();
-    }
-  }
-
-  // Salvar número do WhatsApp
-  function salvarWhatsapp() {
-    const num = document.getElementById("whatsapp").value.trim();
-    if (!/^\d{10,13}$/.test(num)) {
-      alert("Digite um número de WhatsApp válido (somente números, 10 a 13 dígitos).");
-      return;
-    }
-    localStorage.setItem("whatsapp", num);
-    alert("Número do WhatsApp salvo!");
-  }
-
-  // Pedidos listagem e edição
-  function listarPedidos() {
-    const lista = document.getElementById("pedidos-lista");
-    if (pedidos.length === 0) {
-      lista.innerHTML = "<p>Nenhum pedido recebido.</p>";
-      return;
-    }
-    lista.innerHTML = pedidos.map((p, i) => {
-      const status = p.status || "Recebido";
-      return `
-      <div class="item" role="listitem" aria-label="Pedido de ${p.nomeCliente}">
-        <span><strong>${p.nomeCliente}</strong> - ${p.data}</span>
-        <span>Produtos: ${p.itens.map(it => it.nome).join(", ")}</span>
-        <span>Endereço: ${p.endereco}</span>
-        <label for="status${i}">Status:</label>
-        <select id="status${i}" class="status-select" onchange="alterarStatus(${i}, this.value)" aria-label="Alterar status do pedido ${p.nomeCliente}">
-          <option${status === "Recebido" ? " selected" : ""}>Recebido</option>
-          <option${status === "Em preparo" ? " selected" : ""}>Em preparo</option>
-          <option${status === "Saiu para entrega" ? " selected" : ""}>Saiu para entrega</option>
-          <option${status === "Entregue" ? " selected" : ""}>Entregue</option>
-          <option${status === "Cancelado" ? " selected" : ""}>Cancelado</option>
-        </select>
-        <button class="btn-delete" onclick="excluirPedido(${i})" aria-label="Excluir pedido de ${p.nomeCliente}">Excluir</button>
-      </div>`;
-    }).join("");
-  }
-
-  function alterarStatus(i, novoStatus) {
-    pedidos[i].status = novoStatus;
-    localStorage.setItem("pedidos", JSON.stringify(pedidos));
-    alert(`Status do pedido de ${pedidos[i].nomeCliente} alterado para "${novoStatus}".`);
-    listarPedidos();
-  }
-
-  function excluirPedido(i) {
-    if (confirm("Excluir este pedido?")) {
-      pedidos.splice(i, 1);
-      localStorage.setItem("pedidos", JSON.stringify(pedidos));
-      listarPedidos();
-    }
-  }
-
-  // Exportar pedidos para CSV
-  function exportarPedidosCSV() {
-    if (pedidos.length === 0) {
-      alert("Não há pedidos para exportar.");
-      return;
-    }
-    const csvHeader = ['Nome Cliente', 'Data', 'Endereço', 'Status', 'Itens', 'Quantidade'];
-    const csvRows = [csvHeader.join(",")];
-
-    pedidos.forEach(p => {
-      const itensDesc = p.itens.map(it => `${it.nome} (x${it.quantidade || 1})`).join(" | ");
-      csvRows.push(`"${p.nomeCliente}","${p.data}","${p.endereco}","${p.status || "Recebido"}","${itensDesc}"`);
+        <button class="small-btn" data-id="${prod.id}" data-action="editar">Editar</button>
+        <button class="small-btn" data-id="${prod.id}" data-action="excluir">Excluir</button>
+      `;
+      listaProdutosDiv.appendChild(div);
     });
-
-    const csvString = csvRows.join("\n");
-    const blob = new Blob([csvString], {type: 'text/csv;charset=utf-8;'});
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "pedidos_mdoces.csv";
-    link.style.display = 'none';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
   }
+
+  // Editar produto
+  listaProdutosDiv.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn) return;
+
+    const id = btn.getAttribute('data-id');
+    const action = btn.getAttribute('data-action');
+    if (action === 'editar') {
+      const prod = produtos.find(p => p.id === id);
+      if (!prod) return;
+      inputProdutoId.value = prod.id;
+      inputNome.value = prod.nome;
+      inputDescricao.value = prod.descricao || '';
+      inputPreco.value = prod.preco;
+      selectCategoria.value = prod.categoria;
+      inputImgUrl.value = prod.imagem || '';
+    }
+    if (action === 'excluir') {
+      if (confirm('Confirma exclusão do produto?')) {
+        produtos = produtos.filter(p => p.id !== id);
+        salvarProdutos();
+        renderProdutos();
+      }
+    }
+  });
+
+  // Limpar formulário
+  btnLimparForm.addEventListener('click', () => {
+    limparFormularioProduto();
+  });
+
+  function limparFormularioProduto() {
+    inputProdutoId.value = '';
+    inputNome.value = '';
+    inputDescricao.value = '';
+    inputPreco.value = '';
+    selectCategoria.value = '';
+    inputImgUrl.value = '';
+  }
+
+  // Salvar produto (novo ou editado)
+  produtoForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const id = inputProdutoId.value;
+    const nome = inputNome.value.trim();
+    const descricao = inputDescricao.value.trim();
+    const preco = parseFloat(inputPreco.value);
+    const categoria = selectCategoria.value;
+    const imagem = inputImgUrl.value.trim();
+
+    if (!nome || !categoria || isNaN(preco)) {
+      alert('Preencha nome, categoria e preço corretamente.');
+      return;
+    }
+
+    if (id) {
+      // Editar
+      const idx = produtos.findIndex(p => p.id === id);
+      if (idx >= 0) {
+        produtos[idx] = { id, nome, descricao, preco, categoria, imagem };
+      }
+    } else {
+      // Novo
+      const novoId = 'p' + Date.now();
+      produtos.push({ id: novoId, nome, descricao, preco, categoria, imagem });
+    }
+    salvarProdutos();
+    renderProdutos();
+    limparFormularioProduto();
+  });
+
+  // --- Pedidos ---
+
+  // Carregar pedidos do localStorage
+  function carregarPedidos() {
+    const dados = localStorage.getItem('mdoces-pedidos');
+    if (dados) {
+      pedidos = JSON.parse(dados);
+    } else {
+      pedidos = [];
+      salvarPedidos();
+    }
+  }
+
+  // Salvar pedidos no localStorage
+  function salvarPedidos() {
+    localStorage.setItem('mdoces-pedidos', JSON.stringify(pedidos));
+  }
+
+  // Renderizar pedidos
+  function renderPedidos() {
+    listaPedidosDiv.innerHTML = '';
+    if (pedidos.length === 0) {
+      listaPedidosDiv.innerHTML = '<p>Nenhum pedido realizado.</p>';
+      return;
+    }
+
+    pedidos.forEach(pedido => {
+      const div = document.createElement('div');
+      div.className = 'pedido-item';
+
+      // Produtos texto
+      let produtosTexto = pedido.produtos.map(item => {
+        return `${item.nome} x${item.quantidade}`;
+      }).join(', ');
+
+      div.innerHTML = `
+        <p><strong>Pedido:</strong> ${pedido.id}</p>
+        <p><strong>Cliente:</strong> ${pedido.cliente}</p>
+        <p><strong>Produtos:</strong> ${produtosTexto}</p>
+        <p><strong>Endereço:</strong> ${pedido.endereco}</p>
+        <p><strong>Pagamento:</strong> ${pedido.formaPagamento}</p>
+        <p><strong>Observações:</strong> ${pedido.observacoes || '-'}</p>
+        <p><strong>Data:</strong> ${new Date(pedido.dataHora).toLocaleString('pt-BR')}</p>
+        <label for="status-${pedido.id}">Status:</label>
+        <select class="pedido-status-select" id="status-${pedido.id}" data-id="${pedido.id}">
+          <option value="0" ${pedido.status === 0 ? 'selected' : ''}>Pedido Recebido</option>
+          <option value="1" ${pedido.status === 1 ? 'selected' : ''}>Em Preparo</option>
+          <option value="2" ${pedido.status === 2 ? 'selected' : ''}>Saiu para Entrega</option>
+          <option value="3" ${pedido.status === 3 ? 'selected' : ''}>Entregue</option>
+        </select>
+      `;
+
+      listaPedidosDiv.appendChild(div);
+    });
+  }
+
+  // Alterar status pedido
+  listaPedidosDiv.addEventListener('change', (e) => {
+    if (e.target.classList.contains('pedido-status-select')) {
+      const id = e.target.getAttribute('data-id');
+      const novoStatus = parseInt(e.target.value);
+      const idx = pedidos.findIndex(p => p.id === id);
+      if (idx >= 0) {
+        pedidos[idx].status = novoStatus;
+        salvarPedidos();
+        alert('Status atualizado!');
+      }
+    }
+  });
+
+  // Inicialização
+  checkLogin();
+
 </script>
 </body>
 </html>
