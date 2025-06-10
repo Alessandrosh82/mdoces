@@ -9,8 +9,9 @@
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap');
 
     :root {
-      --indigo: #3f51b5;
-      --indigo-dark: #303f9f;
+      --azul-base: #011941;
+      --azul-base-dark: #000f2a;
+      --azul-base-light: #0a2a74;
       --white: #fff;
       --gray-light: #f5f5f5;
       --gray-dark: #555;
@@ -35,7 +36,7 @@
     }
 
     header {
-      background: var(--indigo);
+      background: var(--azul-base);
       color: var(--white);
       text-align: center;
       padding: 1.8rem 1rem 1.2rem;
@@ -85,9 +86,11 @@
       transition: transform 0.2s ease;
     }
 
-    .produto-card:hover {
+    .produto-card:hover,
+    .produto-card:focus {
       transform: translateY(-5px);
       box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      outline: none;
     }
 
     .produto-img {
@@ -102,7 +105,7 @@
       font-weight: 600;
       font-size: 1.1rem;
       margin-bottom: 0.3rem;
-      color: var(--indigo-dark);
+      color: var(--azul-base-dark);
     }
 
     .produto-descricao {
@@ -116,12 +119,12 @@
     .produto-preco {
       font-weight: 700;
       font-size: 1rem;
-      color: var(--indigo);
+      color: var(--azul-base-light);
       margin-bottom: 0.5rem;
     }
 
     .btn-add {
-      background: var(--indigo);
+      background: var(--azul-base-light);
       color: var(--white);
       border: none;
       border-radius: 6px;
@@ -131,8 +134,10 @@
       transition: background-color 0.3s ease;
     }
 
-    .btn-add:hover {
-      background: var(--indigo-dark);
+    .btn-add:hover,
+    .btn-add:focus {
+      background: var(--azul-base-dark);
+      outline: none;
     }
 
     /* Carrinho e formulário */
@@ -151,7 +156,7 @@
     #carrinho h2 {
       margin-top: 0;
       margin-bottom: 1rem;
-      color: var(--indigo);
+      color: var(--azul-base);
       font-weight: 700;
     }
 
@@ -199,15 +204,17 @@
       transition: background-color 0.2s ease;
     }
 
-    .btn-remove-item:hover {
+    .btn-remove-item:hover,
+    .btn-remove-item:focus {
       background: #b71c1c;
+      outline: none;
     }
 
     #total {
       font-weight: 700;
       font-size: 1.2rem;
       margin-bottom: 1rem;
-      color: var(--indigo);
+      color: var(--azul-base-light);
       text-align: right;
     }
 
@@ -220,7 +227,7 @@
     form#form-pedido label {
       font-weight: 600;
       font-size: 0.9rem;
-      color: var(--indigo-dark);
+      color: var(--azul-base-dark);
     }
 
     form#form-pedido input,
@@ -232,6 +239,14 @@
       font-size: 1rem;
       font-family: inherit;
       resize: vertical;
+      transition: border-color 0.3s ease;
+    }
+
+    form#form-pedido input:focus,
+    form#form-pedido select:focus,
+    form#form-pedido textarea:focus {
+      border-color: var(--azul-base-light);
+      outline: none;
     }
 
     form#form-pedido button.btn-finalizar {
@@ -246,8 +261,10 @@
       margin-top: 0.5rem;
     }
 
-    form#form-pedido button.btn-finalizar:hover {
+    form#form-pedido button.btn-finalizar:hover,
+    form#form-pedido button.btn-finalizar:focus {
       background: #1ebe51;
+      outline: none;
     }
 
     /* Status do pedido */
@@ -258,7 +275,7 @@
     }
 
     #status-pedidos h2 {
-      color: var(--indigo);
+      color: var(--azul-base);
       font-weight: 700;
       margin-bottom: 1rem;
     }
@@ -270,7 +287,7 @@
 
     /* Footer */
     footer {
-      background: var(--indigo);
+      background: var(--azul-base);
       color: var(--white);
       text-align: center;
       padding: 1rem 0.5rem;
@@ -287,8 +304,10 @@
       text-decoration: none;
     }
 
-    footer a.admin-link:hover {
+    footer a.admin-link:hover,
+    footer a.admin-link:focus {
       text-decoration: underline;
+      outline: none;
     }
 
     /* Responsividade */
@@ -325,147 +344,174 @@
     <section id="carrinho" aria-label="Carrinho e formulário de finalização do pedido">
       <h2>🛒 Carrinho</h2>
       <ul id="itens-carrinho" aria-live="polite" aria-relevant="additions removals"></ul>
-      <p id="total">Total: R$ 0,00</p>
+      <div id="total">Total: R$ 0,00</div>
+      <form id="form-pedido" aria-label="Formulário para finalizar o pedido">
+        <label for="nome-cliente">Nome</label>
+        <input type="text" id="nome-cliente" name="nome-cliente" required autocomplete="name" />
 
-      <form id="form-pedido" novalidate>
-        <label for="nome-cliente">👤 Seu nome:</label>
-        <input
-          type="text"
-          id="nome-cliente"
-          name="nomeCliente"
-          placeholder="Digite seu nome"
-          autocomplete="name"
-          required
-          minlength="2"
-        />
+        <label for="endereco-cliente">Endereço</label>
+        <textarea id="endereco-cliente" name="endereco-cliente" rows="2" required autocomplete="street-address"></textarea>
 
-        <label for="endereco">📍 Endereço de entrega:</label>
-        <input
-          type="text"
-          id="endereco"
-          name="endereco"
-          placeholder="Rua, número, bairro, cidade"
-          autocomplete="address-line1"
-          required
-          minlength="5"
-        />
+        <label for="telefone-cliente">Telefone</label>
+        <input type="tel" id="telefone-cliente" name="telefone-cliente" required placeholder="(99) 99999-9999" pattern="\(?\d{2}\)?\s?\d{4,5}-?\d{4}" autocomplete="tel" />
 
-        <label for="forma-pagamento">💳 Forma de pagamento:</label>
-        <select id="forma-pagamento" name="formaPagamento" required>
-          <option value="" disabled selected>Escolha uma opção</option>
-          <option value="Dinheiro">Dinheiro</option>
-          <option value="Cartão na entrega">Cartão na entrega</option>
-          <option value="Pix">Pix</option>
-        </select>
-
-        <label for="observacoes">📝 Observações:</label>
-        <textarea
-          id="observacoes"
-          name="observacoes"
-          rows="3"
-          placeholder="Ex: sem açúcar, entregar na portaria"
-        ></textarea>
-
-        <button type="submit" class="btn-finalizar">Finalizar pedido</button>
+        <button type="submit" class="btn-finalizar" aria-label="Finalizar pedido">Finalizar pedido via WhatsApp</button>
       </form>
-    </section>
-
-    <!-- Acompanhamento do Pedido -->
-    <section id="status-pedidos" aria-label="Acompanhamento do status do pedido">
-      <h2>📦 Acompanhe seu pedido</h2>
-      <div id="lista-status-pedidos">
-        <p>Você ainda não fez nenhum pedido.</p>
-      </div>
     </section>
   </main>
 
+  <!-- Status dos pedidos -->
+  <section id="status-pedidos" aria-label="Status dos pedidos">
+    <h2>Status dos Pedidos</h2>
+    <div id="lista-status-pedidos">
+      <p>Nenhum pedido realizado ainda.</p>
+    </div>
+  </section>
+
   <footer>
-    <p>MDoces - Feito com amor</p>
-    <a href="admin.html" class="admin-link">🔒 Área Administrativa</a>
+    <div>© 2025 MDoces — Doces Delivery</div>
+    <a href="admin.html" class="admin-link" aria-label="Acessar área administrativa">Área Administrativa</a>
   </footer>
 
   <script>
-    // Função para formatar preço em moeda BRL
+    // Dados dos produtos — ex: id, nome, descrição, preço, imagem
+    const produtos = [
+      {
+        id: 1,
+        nome: 'Brigadeiro',
+        descricao: 'Brigadeiro clássico com chocolate belga.',
+        preco: 4.5,
+        imagem: 'https://i.imgur.com/Crb60Ul.jpg'
+      },
+      {
+        id: 2,
+        nome: 'Beijinho',
+        descricao: 'Doce de coco com cobertura de açúcar cristal.',
+        preco: 4.0,
+        imagem: 'https://i.imgur.com/N5uCbDu.jpg'
+      },
+      {
+        id: 3,
+        nome: 'Cajuzinho',
+        descricao: 'Doce de amendoim com cobertura de açúcar.',
+        preco: 4.5,
+        imagem: 'https://i.imgur.com/X8X6LTO.jpg'
+      },
+      {
+        id: 4,
+        nome: 'Palha Italiana',
+        descricao: 'Mistura de brigadeiro com biscoito, delicioso!',
+        preco: 6.0,
+        imagem: 'https://i.imgur.com/BvM8X0L.jpg'
+      }
+    ];
+
+    // Estado do carrinho — array de { produtoId, quantidade }
+    let carrinho = [];
+
+    // Elementos DOM
+    const produtosContainer = document.getElementById('produtos');
+    const itensCarrinho = document.getElementById('itens-carrinho');
+    const totalDisplay = document.getElementById('total');
+    const formPedido = document.getElementById('form-pedido');
+    const listaStatusPedidos = document.getElementById('lista-status-pedidos');
+
+    // Função para formatar preço em reais
     function formatarPreco(valor) {
       return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
     }
 
-    // Busca produtos do localStorage ou lista vazia
-    let produtos = JSON.parse(localStorage.getItem('produtos') || '[]');
-
-    // Carrinho - array de itens { nome, preco, quantidade }
-    let carrinho = JSON.parse(localStorage.getItem('carrinho') || '[]');
-
-    // Função para salvar carrinho no localStorage
-    function salvarCarrinho() {
-      localStorage.setItem('carrinho', JSON.stringify(carrinho));
-    }
-
-    // Atualiza o total do carrinho
-    function atualizarTotal() {
-      const total = carrinho.reduce((acc, item) => acc + item.preco * item.quantidade, 0);
-      document.getElementById('total').textContent = 'Total: ' + formatarPreco(total);
-    }
-
-    // Renderiza lista de produtos
+    // Renderizar produtos na página
     function renderizarProdutos() {
-      const container = document.getElementById('produtos');
-      if (produtos.length === 0) {
-        container.innerHTML = '<p>Nenhum produto disponível no momento.</p>';
-        return;
-      }
+      produtosContainer.innerHTML = '';
+      produtos.forEach(produto => {
+        const card = document.createElement('article');
+        card.className = 'produto-card';
+        card.tabIndex = 0;
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-pressed', 'false');
+        card.setAttribute('aria-label', `Adicionar ${produto.nome} ao carrinho`);
 
-      container.innerHTML = produtos.map((p, i) => `
-        <article class="produto-card" tabindex="0" aria-label="${p.nome}, R$ ${p.preco.toFixed(2)}">
-          <img src="${p.imagem}" alt="${p.nome}" class="produto-img" />
-          <h3 class="produto-nome">${p.nome}</h3>
-          <p class="produto-descricao">${p.descricao}</p>
-          <div class="produto-preco">${formatarPreco(p.preco)}</div>
-          <button class="btn-add" aria-label="Adicionar ${p.nome} ao carrinho" onclick="adicionarAoCarrinho(${i})">Adicionar</button>
-        </article>
-      `).join('');
+        card.innerHTML = `
+          <img src="${produto.imagem}" alt="${produto.nome}" class="produto-img" />
+          <div class="produto-nome">${produto.nome}</div>
+          <div class="produto-descricao">${produto.descricao}</div>
+          <div class="produto-preco">${formatarPreco(produto.preco)}</div>
+          <button class="btn-add" aria-label="Adicionar ${produto.nome} ao carrinho">+</button>
+        `;
+
+        // Clique no card ou no botão adiciona ao carrinho
+        card.querySelector('.btn-add').addEventListener('click', e => {
+          e.stopPropagation();
+          adicionarAoCarrinho(produto.id);
+        });
+        card.addEventListener('click', () => {
+          adicionarAoCarrinho(produto.id);
+        });
+
+        produtosContainer.appendChild(card);
+      });
     }
 
-    // Adiciona produto ao carrinho
-    function adicionarAoCarrinho(indice) {
-      const produto = produtos[indice];
-      const existente = carrinho.find(item => item.nome === produto.nome);
-      if (existente) {
-        existente.quantidade++;
-      } else {
-        carrinho.push({ nome: produto.nome, preco: produto.preco, quantidade: 1 });
-      }
-      salvarCarrinho();
-      renderizarCarrinho();
-    }
-
-    // Remove item do carrinho
-    function removerDoCarrinho(indice) {
-      carrinho.splice(indice, 1);
-      salvarCarrinho();
-      renderizarCarrinho();
-    }
-
-    // Renderiza o carrinho
+    // Atualizar carrinho na tela
     function renderizarCarrinho() {
-      const lista = document.getElementById('itens-carrinho');
+      itensCarrinho.innerHTML = '';
       if (carrinho.length === 0) {
-        lista.innerHTML = '<li>Seu carrinho está vazio.</li>';
-        atualizarTotal();
+        itensCarrinho.innerHTML = '<li>O carrinho está vazio.</li>';
+        totalDisplay.textContent = 'Total: R$ 0,00';
         return;
       }
-      lista.innerHTML = carrinho.map((item, i) => `
-        <li>
-          <span class="item-info">${item.nome} (${item.quantidade}x)</span>
-          <span class="item-quantidade">${formatarPreco(item.preco * item.quantidade)}</span>
-          <button class="btn-remove-item" aria-label="Remover ${item.nome}" onclick="removerDoCarrinho(${i})">×</button>
-        </li>
-      `).join('');
-      atualizarTotal();
+
+      let total = 0;
+      carrinho.forEach(item => {
+        const produto = produtos.find(p => p.id === item.produtoId);
+        if (!produto) return;
+
+        const li = document.createElement('li');
+
+        li.innerHTML = `
+          <span class="item-info">${produto.nome} (x${item.quantidade})</span>
+          <span class="item-quantidade">${formatarPreco(produto.preco * item.quantidade)}</span>
+          <button class="btn-remove-item" aria-label="Remover ${produto.nome} do carrinho">×</button>
+        `;
+
+        li.querySelector('.btn-remove-item').addEventListener('click', () => {
+          removerDoCarrinho(produto.id);
+        });
+
+        itensCarrinho.appendChild(li);
+        total += produto.preco * item.quantidade;
+      });
+
+      totalDisplay.textContent = `Total: ${formatarPreco(total)}`;
     }
 
-    // Manipula submissão do formulário de pedido
-    document.getElementById('form-pedido').addEventListener('submit', function(e) {
+    // Adicionar produto ao carrinho (incrementa quantidade)
+    function adicionarAoCarrinho(produtoId) {
+      const item = carrinho.find(i => i.produtoId === produtoId);
+      if (item) {
+        item.quantidade++;
+      } else {
+        carrinho.push({ produtoId, quantidade: 1 });
+      }
+      renderizarCarrinho();
+    }
+
+    // Remover produto do carrinho (decrementa quantidade ou remove)
+    function removerDoCarrinho(produtoId) {
+      const index = carrinho.findIndex(i => i.produtoId === produtoId);
+      if (index === -1) return;
+
+      if (carrinho[index].quantidade > 1) {
+        carrinho[index].quantidade--;
+      } else {
+        carrinho.splice(index, 1);
+      }
+      renderizarCarrinho();
+    }
+
+    // Enviar pedido via WhatsApp
+    formPedido.addEventListener('submit', e => {
       e.preventDefault();
 
       if (carrinho.length === 0) {
@@ -473,73 +519,46 @@
         return;
       }
 
-      const nome = this.nomeCliente.value.trim();
-      const endereco = this.endereco.value.trim();
-      const formaPagamento = this.formaPagamento.value;
-      const observacoes = this.observacoes.value.trim();
+      const nome = formPedido['nome-cliente'].value.trim();
+      const endereco = formPedido['endereco-cliente'].value.trim();
+      const telefone = formPedido['telefone-cliente'].value.trim();
 
-      if (nome.length < 2 || endereco.length < 5 || !formaPagamento) {
-        alert('Por favor, preencha todos os campos obrigatórios corretamente.');
+      if (!nome || !endereco || !telefone) {
+        alert('Por favor, preencha todos os campos corretamente.');
         return;
       }
 
-      // Criar pedido
-      const pedido = {
-        id: Date.now(),
-        cliente: nome,
-        endereco,
-        formaPagamento,
-        observacoes,
-        itens: carrinho,
-        status: 'Pedido recebido',
-        criadoEm: new Date().toISOString()
-      };
+      // Montar texto do pedido
+      let mensagem = `*Pedido - MDoces*\n\n*Cliente:* ${nome}\n*Endereço:* ${endereco}\n*Telefone:* ${telefone}\n\n*Itens:*\n`;
 
-      // Salvar pedido no localStorage
-      let pedidos = JSON.parse(localStorage.getItem('pedidos') || '[]');
-      pedidos.push(pedido);
-      localStorage.setItem('pedidos', JSON.stringify(pedidos));
+      let totalPedido = 0;
+      carrinho.forEach(item => {
+        const produto = produtos.find(p => p.id === item.produtoId);
+        if (!produto) return;
+        mensagem += `- ${produto.nome} x${item.quantidade} = R$ ${(produto.preco * item.quantidade).toFixed(2)}\n`;
+        totalPedido += produto.preco * item.quantidade;
+      });
 
-      // Limpar carrinho e formulário
+      mensagem += `\n*Total:* R$ ${totalPedido.toFixed(2)}`;
+
+      // Número do WhatsApp para onde enviar (coloque o seu número com DDD, só números)
+      const numeroWhats = '5599999999999';
+
+      // Abrir WhatsApp Web ou app via link
+      const urlWhatsapp = `https://wa.me/${numeroWhats}?text=${encodeURIComponent(mensagem)}`;
+
+      window.open(urlWhatsapp, '_blank');
+
+      // Limpar formulário e carrinho
+      formPedido.reset();
       carrinho = [];
-      salvarCarrinho();
       renderizarCarrinho();
-      this.reset();
-
-      alert('Pedido realizado com sucesso! Você pode acompanhar o status abaixo.');
-
-      carregarStatusPedidos();
+      alert('Pedido enviado! Obrigado por comprar com a MDoces.');
     });
 
-    // Carregar e mostrar status dos pedidos
-    function carregarStatusPedidos() {
-      const container = document.getElementById('lista-status-pedidos');
-      let pedidos = JSON.parse(localStorage.getItem('pedidos') || '[]');
-      if (pedidos.length === 0) {
-        container.innerHTML = '<p>Você ainda não fez nenhum pedido.</p>';
-        return;
-      }
-
-      // Mostra os últimos 5 pedidos (mais recentes primeiro)
-      pedidos = pedidos.slice(-5).reverse();
-
-      container.innerHTML = pedidos.map(pedido => `
-        <article style="background:#fff;padding:1rem;margin-bottom:0.8rem; border-radius: var(--radius); box-shadow: var(--shadow);">
-          <p><strong>Pedido #${pedido.id}</strong> - <em>${pedido.status}</em></p>
-          <p><strong>Cliente:</strong> ${pedido.cliente}</p>
-          <p><strong>Endereço:</strong> ${pedido.endereco}</p>
-          <p><strong>Pagamento:</strong> ${pedido.formaPagamento}</p>
-          <p><strong>Itens:</strong> ${pedido.itens.map(i => `${i.nome} (${i.quantidade})`).join(', ')}</p>
-          ${pedido.observacoes ? `<p><strong>Obs:</strong> ${pedido.observacoes}</p>` : ''}
-          <small style="color:#666;">Feito em: ${new Date(pedido.criadoEm).toLocaleString('pt-BR')}</small>
-        </article>
-      `).join('');
-    }
-
-    // Inicialização
+    // Inicializar
     renderizarProdutos();
     renderizarCarrinho();
-    carregarStatusPedidos();
   </script>
 </body>
 </html>
