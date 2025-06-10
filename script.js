@@ -26,28 +26,33 @@ function renderProdutos() {
   categorias.forEach(categoria => {
     const section = document.createElement('section');
     const h2 = document.createElement('h2');
-    h2.textContent = categoria;
+    h2.textContent = categoria.charAt(0).toUpperCase() + categoria.slice(1);
     section.appendChild(h2);
 
-    produtos.filter(p => p.categoria === categoria).forEach(produto => {
-      const div = document.createElement('div');
-      div.className = 'produto';
-      div.innerHTML = `
-        <img src="${produto.imagem}" alt="${produto.nome}" />
-        <div>
-          <h3>${produto.nome}</h3>
-          <p>${produto.descricao}</p>
-          <strong>R$ ${produto.preco.toFixed(2)}</strong>
-        </div>
-        <div class="quantidade-container">
-          <button onclick="alterarQuantidade('${produto.id}', -1)">-</button>
-          <span id="qtd-${produto.id}">${getQuantidade(produto.id)}</span>
-          <button onclick="alterarQuantidade('${produto.id}', 1)">+</button>
-        </div>
-        <button onclick="adicionarAoCarrinho('${produto.id}')">Adicionar</button>
-      `;
-      section.appendChild(div);
-    });
+    produtos
+      .filter(p => p.categoria === categoria)
+      .forEach(produto => {
+        if (!produto.nome || !produto.preco || !produto.imagem) return;
+
+        const div = document.createElement('div');
+        div.className = 'produto';
+        div.innerHTML = `
+          <img src="${produto.imagem}" alt="${produto.nome}" />
+          <div>
+            <h3>${produto.nome}</h3>
+            <p>${produto.descricao}</p>
+            <strong>R$ ${produto.preco.toFixed(2)}</strong>
+          </div>
+          <div class="quantidade-container">
+            <button onclick="alterarQuantidade('${produto.id}', -1)">-</button>
+            <span id="qtd-${produto.id}">${getQuantidade(produto.id)}</span>
+            <button onclick="alterarQuantidade('${produto.id}', 1)">+</button>
+          </div>
+          <button onclick="adicionarAoCarrinho('${produto.id}')">Adicionar</button>
+        `;
+        section.appendChild(div);
+      });
+
     container.appendChild(section);
   });
 }
@@ -73,7 +78,15 @@ function alterarQuantidade(produtoId, delta) {
 }
 
 function adicionarAoCarrinho(produtoId) {
-  alterarQuantidade(produtoId, 1);
+  const index = carrinho.findIndex(i => i.id === produtoId);
+  if (index === -1) {
+    carrinho.push({ id: produtoId, quantidade: 1 });
+  } else {
+    carrinho[index].quantidade += 1;
+  }
+  salvarCarrinho();
+  atualizarQuantidadeTela(produtoId);
+  renderCarrinho();
 }
 
 function atualizarQuantidadeTela(produtoId) {
@@ -85,6 +98,7 @@ function atualizarQuantidadeTela(produtoId) {
 
 function renderCarrinho() {
   const lista = document.getElementById('itens-carrinho');
+  if (!lista) return;
   lista.innerHTML = '';
   if (carrinho.length === 0) {
     lista.innerHTML = '<li>Seu carrinho está vazio.</li>';
@@ -94,7 +108,7 @@ function renderCarrinho() {
       if (!produto) return;
       const li = document.createElement('li');
       li.innerHTML = `
-        ${produto.nome} x${item.quantidade}
+        ${produto.nome} x${item.quantidade} - R$ ${(produto.preco * item.quantidade).toFixed(2)}
         <button onclick="removerDoCarrinho('${produto.id}')">✕</button>
       `;
       lista.appendChild(li);
@@ -115,7 +129,10 @@ function atualizarTotal() {
     const produto = produtos.find(p => p.id === item.id);
     return produto ? acc + produto.preco * item.quantidade : acc;
   }, 0);
-  document.getElementById('total').textContent = `Total: R$ ${total.toFixed(2)}`;
+  const totalEl = document.getElementById('total');
+  if (totalEl) {
+    totalEl.textContent = `Total: R$ ${total.toFixed(2)}`;
+  }
 }
 
 function finalizarPedido() {
@@ -123,24 +140,49 @@ function finalizarPedido() {
   const endereco = document.getElementById('endereco').value.trim();
   const pagamento = document.getElementById('forma-pagamento').value;
   const observacoes = document.getElementById('observacoes').value.trim();
+
   if (!nome || !endereco || !pagamento || carrinho.length === 0) {
     alert('Preencha todos os campos e adicione ao menos um item.');
     return;
   }
+  if (nome.length < 2 || endereco.length < 5) {
+    alert('Preencha nome e endereço corretamente.');
+    return;
+  }
+
+  const total = carrinho.reduce((soma, item) => {
+    const p = produtos.find(p => p.id === item.id);
+    return p ? soma + p.preco * item.quantidade : soma;
+  }, 0);
+
   const pedido = {
     id: Date.now(),
-    nome, endereco, pagamento, observacoes,
+    nome,
+    endereco,
+    pagamento,
+    observacoes,
     carrinho: [...carrinho],
     status: 0,
-    criadoEm: new Date().toISOString()
+    criadoEm: new Date().toISOString(),
+    total
   };
+
   pedidos.push(pedido);
   salvarPedidos();
+
   carrinho = [];
   salvarCarrinho();
+
   renderCarrinho();
   renderStatusPedidos();
-  document.getElementById('finalizar-pedido').reset();
+
+  // Resetar o formulário (ID do form deve ser "form-pedido")
+  const form = document.getElementById('form-pedido');
+  if (form) form.reset();
+
+  // Salvar a forma de pagamento para próxima vez
+  localStorage.setItem('mdoces-pagamento', pagamento);
+
   alert('Pedido enviado com sucesso!');
   enviarPedidoWhatsApp(pedido);
 }
@@ -150,21 +192,27 @@ function renderStatusPedidos() {
   if (!container) return;
   container.innerHTML = '<h2>Status dos Pedidos</h2>';
 
+  const statusTextos = ['Pendente', 'Em preparo', 'Saiu para entrega', 'Entregue'];
+
   pedidos.slice().reverse().forEach(pedido => {
     const div = document.createElement('div');
     div.className = 'pedido-status';
     const produtosTexto = pedido.carrinho.map(item => {
       const prod = produtos.find(p => p.id === item.id);
       return prod ? `${prod.nome} x${item.quantidade}` : '';
-    }).join(', ');
+    }).filter(Boolean).join(', ');
+
+    const data = new Date(pedido.criadoEm).toLocaleString('pt-BR');
 
     div.innerHTML = `
       <h3>${pedido.nome}</h3>
+      <p><strong>Data:</strong> ${data}</p>
       <p><strong>Endereço:</strong> ${pedido.endereco}</p>
       <p><strong>Pagamento:</strong> ${pedido.pagamento}</p>
       <p><strong>Observações:</strong> ${pedido.observacoes || 'Nenhuma'}</p>
       <p><strong>Itens:</strong> ${produtosTexto}</p>
-      <p><span class="status-badge status-${pedido.status}">Status ${pedido.status}</span></p>
+      <p><strong>Total:</strong> R$ ${pedido.total.toFixed(2)}</p>
+      <p><span class="status-badge status-${pedido.status}">${statusTextos[pedido.status] || 'Desconhecido'}</span></p>
     `;
 
     container.appendChild(div);
@@ -184,15 +232,21 @@ function enviarPedidoWhatsApp(pedido) {
       return p ? `- ${p.nome} x${item.quantidade}` : '';
     }),
     '',
-    `Total: R$ ${pedido.carrinho.reduce((soma, item) => {
-      const p = produtos.find(p => p.id === item.id);
-      return p ? soma + p.preco * item.quantidade : soma;
-    }, 0).toFixed(2)}`
+    `Total: R$ ${pedido.total.toFixed(2)}`
   ].filter(Boolean).join('\n');
 
   const url = `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`;
   window.open(url, '_blank');
 }
+
+// Ao carregar, pré-carregar forma de pagamento se disponível
+window.addEventListener('DOMContentLoaded', () => {
+  const pagamentoSalvo = localStorage.getItem('mdoces-pagamento');
+  if (pagamentoSalvo) {
+    const formaPagamento = document.getElementById('forma-pagamento');
+    if (formaPagamento) formaPagamento.value = pagamentoSalvo;
+  }
+});
 
 // Inicialização
 renderProdutos();
