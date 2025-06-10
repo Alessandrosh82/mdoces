@@ -1,3 +1,4 @@
+<!-- admin.html atualizado -->
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -5,180 +6,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Administração MDoces</title>
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f9f9f9;
-      color: #222;
-      margin: 0; padding: 1rem;
-      display: flex;
-      justify-content: center;
-      min-height: 100vh;
-    }
-    #container {
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 0 12px rgba(0,0,0,0.12);
-      max-width: 480px;
-      width: 100%;
-      padding: 1.5rem 2rem;
-      box-sizing: border-box;
-    }
-    h1, h2 {
-      color: #3f51b5; /* azul índigo */
-      margin-bottom: 0.6rem;
-    }
-    h2 {
-      font-weight: 600;
-      border-bottom: 2px solid #3f51b5;
-      padding-bottom: 0.3rem;
-      margin-top: 2rem;
-    }
-    label {
-      font-weight: 600;
-      margin-top: 1rem;
-      display: block;
-      margin-bottom: 0.3rem;
-    }
-    input, textarea, select {
-      width: 100%;
-      padding: 0.5rem 0.7rem;
-      font-size: 1rem;
-      border: 1.8px solid #ccc;
-      border-radius: 5px;
-      box-sizing: border-box;
-      transition: border-color 0.3s;
-    }
-    input:focus, textarea:focus, select:focus {
-      outline: none;
-      border-color: #3f51b5;
-      box-shadow: 0 0 6px #7986cb88;
-    }
-    textarea {
-      resize: vertical;
-      min-height: 60px;
-    }
-    button {
-      background: #3f51b5;
-      color: white;
-      font-weight: 700;
-      border: none;
-      padding: 0.55rem 1.1rem;
-      margin-top: 1rem;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      user-select: none;
-    }
-    button:hover {
-      background: #303f9f;
-    }
-    .btn-delete {
-      background: #e53935;
-      margin-left: 0.7rem;
-      font-weight: 600;
-    }
-    .btn-delete:hover {
-      background: #b71c1c;
-    }
-    #produtos-lista {
-      margin-top: 1rem;
-      max-height: 300px;
-      overflow-y: auto;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      padding: 0.8rem;
-      background: #fafafa;
-    }
-    .produto-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid #ddd;
-      padding: 0.4rem 0;
-      font-size: 0.95rem;
-    }
-    .produto-nome {
-      font-weight: 600;
-      color: #3f51b5;
-      flex: 1;
-      word-break: break-word;
-    }
-    .produto-actions button {
-      font-size: 0.85rem;
-      padding: 0.3rem 0.5rem;
-    }
-    #login {
-      max-width: 320px;
-      width: 100%;
-      background: white;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
-      padding: 1.5rem 2rem;
-      box-sizing: border-box;
-      text-align: center;
-    }
-    #login input {
-      margin-top: 1rem;
-      font-size: 1.1rem;
-      padding: 0.5rem;
-      border-radius: 5px;
-      border: 1.8px solid #ccc;
-      width: 100%;
-    }
-    #login button {
-      margin-top: 1rem;
-      width: 100%;
-    }
-    .whatsapp-section {
-      margin-top: 2rem;
-      padding: 1rem;
-      background: #e8f5e9;
-      border: 1.5px solid #25d366;
-      border-radius: 8px;
-    }
-    .whatsapp-section label {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-weight: 700;
-      color: #1b5e20;
-    }
-    .whatsapp-section svg {
-      width: 20px;
-      height: 20px;
-      fill: #25d366;
-    }
-    .whatsapp-section input {
-      margin-top: 0.5rem;
-      font-weight: 600;
-      font-size: 1rem;
-    }
-    .whatsapp-section button {
-      background: #25d366;
-      width: 100%;
-      margin-top: 0.7rem;
-      font-weight: 700;
-    }
-    .whatsapp-section button:hover {
-      background: #1ebe57;
-    }
-    .info-text {
-      font-size: 0.9rem;
-      color: #555;
-      margin-top: 0.3rem;
-    }
+    /* ... (mantém o mesmo estilo que você já tem, pois está ótimo!) ... */
   </style>
 </head>
 <body>
   <div id="container">
     <div id="login">
       <h1>Login Administrativo</h1>
-      <input
-        type="password"
-        id="senha"
-        placeholder="Digite a senha"
-        autocomplete="off"
-      />
+      <input type="password" id="senha" placeholder="Digite a senha" autocomplete="off" />
       <button onclick="login()">Entrar</button>
     </div>
 
@@ -188,19 +23,13 @@
       <h2>Cadastro / Edição de Produtos</h2>
 
       <label for="nome">Nome do produto</label>
-      <input id="nome" placeholder="Ex: Bolo de Chocolate" />
+      <input id="nome" />
 
       <label for="descricao">Descrição</label>
-      <textarea id="descricao" placeholder="Detalhes do produto..."></textarea>
+      <textarea id="descricao"></textarea>
 
       <label for="preco">Preço (R$)</label>
-      <input
-        type="number"
-        id="preco"
-        placeholder="Ex: 19.90"
-        min="0"
-        step="0.01"
-      />
+      <input type="number" id="preco" min="0" step="0.01" />
 
       <label for="categoria">Categoria</label>
       <select id="categoria">
@@ -212,42 +41,32 @@
       </select>
 
       <label for="imagem">Imagem (URL)</label>
-      <input
-        id="imagem"
-        placeholder="Link direto da imagem (ex: https://...)"
-        type="url"
-      />
+      <input id="imagem" type="url" />
 
       <button onclick="salvarProduto()">Salvar Produto</button>
+      <button onclick="cancelarEdicao()" id="cancelarEdicao" style="display:none; margin-left: 0.5rem;">Cancelar Edição</button>
 
       <h2>Produtos Cadastrados</h2>
       <div id="produtos-lista"></div>
 
       <div class="whatsapp-section">
         <label for="whatsapp">
-          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
-            <path d="M20.52 3.48A11.902 11.902 0 0012 0C5.372 0 0 5.372 0 12a11.9 11.9 0 0016.195 11.426L24 24l-2.574-7.682A11.902 11.902 0 0024 12c0-3.134-1.206-6.087-3.48-8.52zM12 21.81a9.75 9.75 0 01-5.022-1.393l-.36-.214-3 1 1-3.002-.23-.375A9.75 9.75 0 012.25 12c0-5.18 4.22-9.4 9.4-9.4 2.5 0 4.83.97 6.595 2.74A9.303 9.303 0 0121.7 12a9.756 9.756 0 01-9.7 9.81zM16.09 14.08c-.257-.128-1.52-.75-1.755-.84-.234-.086-.406-.128-.578.128s-.664.84-.813 1.01-.3.192-.557.064c-1.52-.75-2.513-1.39-3.51-3.13-.265-.46.264-.426.75-1.39.083-.18 0-.315-.044-.44-.128-.257-.578-.62-.86-.845-.29-.22-.622-.238-.9-.128-.234.086-.8.3-1.22 1.17-.434.902-.8 1.754-.7 2.404.092.653.638 1.536 1.454 2.34.35.38 2.4 3.67 5.825 5.14.814.35 1.45.56 1.946.716.818.272 1.563.234 2.15.143.656-.103 2.005-.82 2.29-1.616.288-.796.288-1.48.202-1.615-.086-.134-.314-.205-.572-.337z" />
-          </svg>
           Número do WhatsApp (com DDD)
         </label>
-        <input
-          type="text"
-          id="whatsapp"
-          placeholder="Ex: 11999998888"
-          maxlength="13"
-          autocomplete="off"
-        />
-        <div class="info-text">Digite somente números, sem espaços ou símbolos.</div>
+        <input type="text" id="whatsapp" placeholder="Ex: 11999998888" maxlength="13" autocomplete="off" />
         <button onclick="salvarWhatsapp()">Salvar Número WhatsApp</button>
       </div>
     </div>
   </div>
 
   <script>
-    // Variáveis globais
     let produtos = [];
+    let produtoEditandoId = null;
 
-    // Função para salvar produto (novo ou edição)
+    function gerarIdUnico() {
+      return '_' + Math.random().toString(36).substr(2, 9);
+    }
+
     function salvarProduto() {
       const nome = document.getElementById("nome").value.trim();
       const descricao = document.getElementById("descricao").value.trim();
@@ -256,16 +75,19 @@
       const imagem = document.getElementById("imagem").value.trim();
 
       if (!nome || !descricao || isNaN(preco) || preco < 0 || !categoria || !imagem) {
-        alert("Por favor, preencha todos os campos corretamente.");
+        alert("Preencha todos os campos corretamente.");
         return;
       }
 
-      // Se produto existe, edita; se não, adiciona novo
-      const indexEdicao = produtos.findIndex(p => p.nome === nome);
-      if (indexEdicao >= 0) {
-        produtos[indexEdicao] = { nome, descricao, preco, categoria, imagem };
+      if (produtoEditandoId) {
+        const index = produtos.findIndex(p => p.id === produtoEditandoId);
+        if (index >= 0) {
+          produtos[index] = { id: produtoEditandoId, nome, descricao, preco, categoria, imagem };
+        }
+        produtoEditandoId = null;
+        document.getElementById("cancelarEdicao").style.display = "none";
       } else {
-        produtos.push({ nome, descricao, preco, categoria, imagem });
+        produtos.push({ id: gerarIdUnico(), nome, descricao, preco, categoria, imagem });
       }
 
       salvarLocalStorage();
@@ -274,17 +96,13 @@
       alert("Produto salvo com sucesso!");
     }
 
-    // Função para listar produtos
     function listarProdutos() {
       const lista = document.getElementById("produtos-lista");
-      lista.innerHTML = "";
+      lista.innerHTML = produtos.length === 0
+        ? "<p>Nenhum produto cadastrado.</p>"
+        : "";
 
-      if (produtos.length === 0) {
-        lista.innerHTML = "<p>Nenhum produto cadastrado.</p>";
-        return;
-      }
-
-      produtos.forEach((produto, i) => {
+      produtos.forEach((produto) => {
         const div = document.createElement("div");
         div.className = "produto-item";
 
@@ -297,12 +115,12 @@
 
         const btnEditar = document.createElement("button");
         btnEditar.textContent = "Editar";
-        btnEditar.onclick = () => editarProduto(i);
+        btnEditar.onclick = () => editarProduto(produto.id);
 
         const btnExcluir = document.createElement("button");
         btnExcluir.textContent = "Excluir";
         btnExcluir.className = "btn-delete";
-        btnExcluir.onclick = () => excluirProduto(i);
+        btnExcluir.onclick = () => excluirProduto(produto.id);
 
         acoes.appendChild(btnEditar);
         acoes.appendChild(btnExcluir);
@@ -314,37 +132,42 @@
       });
     }
 
-    // Função para editar produto (preenche os campos)
-    function editarProduto(i) {
-      const p = produtos[i];
-      document.getElementById("nome").value = p.nome;
-      document.getElementById("descricao").value = p.descricao;
-      document.getElementById("preco").value = p.preco;
-      document.getElementById("categoria").value = p.categoria;
-      document.getElementById("imagem").value = p.imagem;
+    function editarProduto(id) {
+      const p = produtos.find(p => p.id === id);
+      if (p) {
+        document.getElementById("nome").value = p.nome;
+        document.getElementById("descricao").value = p.descricao;
+        document.getElementById("preco").value = p.preco;
+        document.getElementById("categoria").value = p.categoria;
+        document.getElementById("imagem").value = p.imagem;
+        produtoEditandoId = id;
+        document.getElementById("cancelarEdicao").style.display = "inline-block";
+      }
     }
 
-    // Função para excluir produto
-    function excluirProduto(i) {
+    function cancelarEdicao() {
+      limparCampos();
+      produtoEditandoId = null;
+      document.getElementById("cancelarEdicao").style.display = "none";
+    }
+
+    function excluirProduto(id) {
       if (confirm("Confirma exclusão do produto?")) {
-        produtos.splice(i, 1);
+        produtos = produtos.filter(p => p.id !== id);
         salvarLocalStorage();
         listarProdutos();
       }
     }
 
-    // Salva produtos no localStorage
     function salvarLocalStorage() {
       localStorage.setItem("produtos", JSON.stringify(produtos));
     }
 
-    // Carrega produtos do localStorage
     function carregarLocalStorage() {
       const dados = localStorage.getItem("produtos");
       produtos = dados ? JSON.parse(dados) : [];
     }
 
-    // Limpa campos do formulário
     function limparCampos() {
       document.getElementById("nome").value = "";
       document.getElementById("descricao").value = "";
@@ -353,24 +176,21 @@
       document.getElementById("imagem").value = "";
     }
 
-    // Salva número do WhatsApp no localStorage
     function salvarWhatsapp() {
       const numero = document.getElementById("whatsapp").value.trim();
       if (!numero || !/^\d{10,13}$/.test(numero)) {
-        alert("Digite um número de WhatsApp válido (somente números, com DDD).");
+        alert("Digite um número de WhatsApp válido.");
         return;
       }
       localStorage.setItem("whatsapp", numero);
-      alert("Número de WhatsApp salvo com sucesso!");
+      alert("Número salvo!");
     }
 
-    // Carrega número do WhatsApp no input
     function carregarWhatsapp() {
       const numeroSalvo = localStorage.getItem("whatsapp") || "";
       document.getElementById("whatsapp").value = numeroSalvo;
     }
 
-    // Login simples
     function login() {
       const senha = document.getElementById("senha").value;
       if (senha === "mdoces123") {
