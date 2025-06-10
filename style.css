@@ -11,7 +11,7 @@ body {
 }
 
 header {
-  background: #011941; /* índigo */
+  background: #011941; /* azul escuro */
   padding: 2rem 1rem;
   text-align: center;
   color: white;
@@ -86,9 +86,9 @@ header p {
   color: white;
   border: none;
   padding: 0.5rem 1rem;
-  border-radius: 8px;
+  border-radius: 7px;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: 0.7rem;
   transition: background 0.2s;
 }
 
