@@ -13,49 +13,67 @@
   </header>
 
   <main class="container">
-    <section id="produtos" class="grid">
-      <!-- Produtos renderizados dinamicamente por categoria -->
+    <!-- Produtos -->
+    <section id="produtos" class="grid" aria-label="Lista de produtos disponíveis">
+      <!-- Produtos renderizados aqui -->
     </section>
 
-    <section id="carrinho">
+    <!-- Carrinho + Checkout -->
+    <section id="carrinho" aria-label="Carrinho e formulário de finalização do pedido">
       <h2>🛒 Carrinho</h2>
-      <ul id="itens-carrinho"></ul>
+      <ul id="itens-carrinho" aria-live="polite" aria-relevant="additions removals"></ul>
       <p id="total">Total: R$ 0,00</p>
 
-      <label for="nome-cliente">👤 Seu nome:</label>
-      <input
-        type="text"
-        id="nome-cliente"
-        placeholder="Digite seu nome"
-        autocomplete="name"
-        required
-      />
+      <form id="form-pedido" novalidate>
+        <label for="nome-cliente">👤 Seu nome:</label>
+        <input
+          type="text"
+          id="nome-cliente"
+          name="nomeCliente"
+          placeholder="Digite seu nome"
+          autocomplete="name"
+          required
+          minlength="2"
+        />
 
-      <label for="endereco">📍 Endereço de entrega:</label>
-      <input
-        type="text"
-        id="endereco"
-        placeholder="Rua, número, bairro, cidade"
-        autocomplete="address-line1"
-        required
-      />
+        <label for="endereco">📍 Endereço de entrega:</label>
+        <input
+          type="text"
+          id="endereco"
+          name="endereco"
+          placeholder="Rua, número, bairro, cidade"
+          autocomplete="address-line1"
+          required
+          minlength="5"
+        />
 
-      <label for="forma-pagamento">💳 Forma de pagamento:</label>
-      <select id="forma-pagamento" required>
-        <option value="" disabled selected>Escolha uma opção</option>
-        <option value="Dinheiro">Dinheiro</option>
-        <option value="Cartão na entrega">Cartão na entrega</option>
-        <option value="Pix">Pix</option>
-      </select>
+        <label for="forma-pagamento">💳 Forma de pagamento:</label>
+        <select id="forma-pagamento" name="formaPagamento" required>
+          <option value="" disabled selected>Escolha uma opção</option>
+          <option value="Dinheiro">Dinheiro</option>
+          <option value="Cartão na entrega">Cartão na entrega</option>
+          <option value="Pix">Pix</option>
+        </select>
 
-      <label for="observacoes">📝 Observações:</label>
-      <textarea
-        id="observacoes"
-        rows="3"
-        placeholder="Ex: sem açúcar, entregar na portaria"
-      ></textarea>
+        <label for="observacoes">📝 Observações:</label>
+        <textarea
+          id="observacoes"
+          name="observacoes"
+          rows="3"
+          placeholder="Ex: sem açúcar, entregar na portaria"
+        ></textarea>
 
-      <button class="btn-finalizar" onclick="finalizarPedido()">Finalizar pedido no WhatsApp</button>
+        <button type="submit" class="btn-finalizar">Finalizar pedido</button>
+      </form>
+    </section>
+
+    <!-- Acompanhamento do Pedido -->
+    <section id="status-pedidos" aria-label="Acompanhamento do status do pedido">
+      <h2>📦 Acompanhe seu pedido</h2>
+      <div id="lista-status-pedidos">
+        <!-- Status dos pedidos aparecerão aqui -->
+        <p>Você ainda não fez nenhum pedido.</p>
+      </div>
     </section>
   </main>
 
