@@ -1,414 +1,417 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Admin MDoces - Login</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: #1e40af; /* azul índigo */
-    color: white;
-    margin: 0;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  #login-container, #admin-container {
-    background: #1e40af;
-    padding: 20px;
-    border-radius: 8px;
-    width: 95%;
-    max-width: 400px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.3);
-  }
-  h2 {
-    text-align: center;
-    margin-bottom: 15px;
-  }
-  label {
-    display: block;
-    margin: 10px 0 5px;
-  }
-  input[type=password], input[type=text], input[type=number], select {
-    width: 100%;
-    padding: 8px;
-    border-radius: 4px;
-    border: none;
-  }
-  button {
-    margin-top: 15px;
-    width: 100%;
-    padding: 10px;
-    background: #2563eb; /* azul claro */
-    border: none;
-    color: white;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-  }
-  button:hover {
-    background: #1d4ed8;
-  }
-  #logout-btn {
-    background: #dc2626;
-    margin-top: 10px;
-  }
-  .hidden {
-    display: none;
-  }
-  .product-list, .pedido-list {
-    max-height: 300px;
-    overflow-y: auto;
-    margin-top: 15px;
-    background: #2563eb;
-    padding: 10px;
-    border-radius: 6px;
-  }
-  .product-item, .pedido-item {
-    background: #3b82f6;
-    margin-bottom: 8px;
-    padding: 8px;
-    border-radius: 6px;
-  }
-  .product-item:last-child, .pedido-item:last-child {
-    margin-bottom: 0;
-  }
-  .flex-row {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-  .flex-grow {
-    flex-grow: 1;
-  }
-  .small-btn {
-    background: #ef4444;
-    border: none;
-    color: white;
-    border-radius: 4px;
-    cursor: pointer;
-    padding: 4px 8px;
-    font-size: 0.9rem;
-    transition: background 0.3s ease;
-  }
-  .small-btn:hover {
-    background: #b91c1c;
-  }
-  label[for="img-url"] {
-    font-size: 0.9rem;
-  }
-  img.product-thumb {
-    max-width: 50px;
-    max-height: 50px;
-    object-fit: cover;
-    border-radius: 5px;
-    margin-right: 8px;
-  }
-  select {
-    padding: 6px;
-  }
-  .pedido-status-select {
-    margin-top: 5px;
-    width: 100%;
-    padding: 6px;
-    border-radius: 4px;
-    border: none;
-  }
-  @media (max-width: 500px) {
-    #login-container, #admin-container {
-      max-width: 100%;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MDoces - Área Administrativa</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1a237e; /* azul índigo escuro */
+      color: #fff;
+      margin: 0; padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
-  }
-</style>
+    header {
+      padding: 1rem;
+      text-align: center;
+      background: #283593;
+      width: 100%;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+    header h1 {
+      margin: 0;
+      font-weight: 700;
+      font-size: 2rem;
+      color: #bbdefb;
+    }
+    main {
+      flex-grow: 1;
+      max-width: 900px;
+      width: 100%;
+      padding: 1rem;
+      box-sizing: border-box;
+    }
+    .login-container, .admin-container {
+      background: #3949ab;
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+    }
+    .login-container h2, .admin-container h2 {
+      margin-top: 0;
+      margin-bottom: 1rem;
+      color: #e3f2fd;
+      text-align: center;
+    }
+    label {
+      display: block;
+      margin: 0.5rem 0 0.2rem;
+      font-weight: 600;
+      color: #e8eaf6;
+    }
+    input[type="text"], input[type="password"], input[type="number"], textarea, select {
+      width: 100%;
+      padding: 0.4rem 0.5rem;
+      font-size: 1rem;
+      border-radius: 4px;
+      border: none;
+      outline: none;
+      box-sizing: border-box;
+    }
+    textarea {
+      resize: vertical;
+    }
+    button {
+      margin-top: 1rem;
+      background: #66bb6a; /* verde */
+      border: none;
+      padding: 0.7rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 700;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #fff;
+      transition: background 0.3s;
+    }
+    button:hover {
+      background: #4caf50;
+    }
+    .btn-danger {
+      background: #ef5350;
+    }
+    .btn-danger:hover {
+      background: #d32f2f;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1rem;
+      color: #e3f2fd;
+    }
+    th, td {
+      border: 1px solid #5c6bc0;
+      padding: 0.5rem 0.7rem;
+      text-align: left;
+    }
+    th {
+      background: #283593;
+    }
+    td.actions {
+      text-align: center;
+      white-space: nowrap;
+    }
+    .footer {
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.9rem;
+      background: #283593;
+      width: 100%;
+      color: #c5cae9;
+      user-select: none;
+    }
+    .hidden {
+      display: none;
+    }
+    .msg-error {
+      background: #ef5350;
+      padding: 0.7rem;
+      margin-top: 1rem;
+      border-radius: 4px;
+      color: #fff;
+      font-weight: 700;
+      text-align: center;
+    }
+    @media (max-width: 600px) {
+      table, th, td {
+        font-size: 0.9rem;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div id="login-container">
-  <h2>Login Admin MDoces</h2>
-  <label for="admin-password">Senha:</label>
-  <input type="password" id="admin-password" placeholder="Digite a senha" />
-  <button id="btn-login">Entrar</button>
-  <p style="margin-top:15px; font-size: 0.85rem; color: #a5b4fc;">Senha padrão: <strong>mdoces123</strong></p>
-</div>
+<header>
+  <h1>MDoces - Área Administrativa</h1>
+</header>
 
-<div id="admin-container" class="hidden">
-  <h2>Administração MDoces</h2>
-  <button id="logout-btn">Sair</button>
+<main>
+  <!-- Tela de login -->
+  <section id="login-section" class="login-container">
+    <h2>Login</h2>
+    <label for="senha">Senha:</label>
+    <input type="password" id="senha" placeholder="Digite a senha" autocomplete="current-password" />
+    <button id="btn-login">Entrar</button>
+    <div id="login-error" class="msg-error hidden">Senha incorreta. Tente novamente.</div>
+  </section>
 
-  <section id="produtos-section">
-    <h3>Gerenciar Produtos</h3>
-    <form id="produto-form">
+  <!-- Tela administrativa -->
+  <section id="admin-section" class="admin-container hidden" aria-live="polite">
+    <h2>Cadastro e Edição de Produtos</h2>
+
+    <form id="form-produto" aria-label="Formulário para cadastrar ou editar produto">
       <input type="hidden" id="produto-id" />
-      <label for="produto-nome">Nome</label>
-      <input type="text" id="produto-nome" required />
-      <label for="produto-descricao">Descrição</label>
-      <input type="text" id="produto-descricao" />
-      <label for="produto-preco">Preço (R$)</label>
-      <input type="number" id="produto-preco" step="0.01" min="0" required />
-      <label for="produto-categoria">Categoria</label>
-      <select id="produto-categoria" required>
+      <label for="nome-produto">Nome:</label>
+      <input type="text" id="nome-produto" required autocomplete="off" />
+      
+      <label for="descricao-produto">Descrição:</label>
+      <textarea id="descricao-produto" rows="2" required></textarea>
+      
+      <label for="preco-produto">Preço (R$):</label>
+      <input type="number" id="preco-produto" min="0" step="0.01" required />
+      
+      <label for="imagem-produto">URL da imagem:</label>
+      <input type="text" id="imagem-produto" placeholder="https://..." required />
+      
+      <label for="categoria-produto">Categoria:</label>
+      <select id="categoria-produto" required>
         <option value="">Selecione...</option>
-        <option value="Doces">Doces</option>
-        <option value="Bolos">Bolos</option>
-        <option value="Salgados">Salgados</option>
-        <option value="Bebidas">Bebidas</option>
+        <option>Brigadeiros</option>
+        <option>Docinhos</option>
+        <option>Doces tradicionais</option>
+        <option>Bolos</option>
+        <option>Outros</option>
       </select>
-      <label for="produto-img-url">URL da Imagem</label>
-      <input type="text" id="produto-img-url" placeholder="https://..." />
+      
       <button type="submit" id="btn-salvar-produto">Salvar Produto</button>
-      <button type="button" id="btn-limpar-form" style="background:#2563eb; margin-top:5px;">Limpar Formulário</button>
+      <button type="button" id="btn-cancelar-edicao" class="hidden">Cancelar Edição</button>
     </form>
-    <div class="product-list" id="lista-produtos"></div>
-  </section>
 
-  <section id="pedidos-section" style="margin-top: 30px;">
-    <h3>Gerenciar Pedidos</h3>
-    <div class="pedido-list" id="lista-pedidos"></div>
+    <h3>Produtos cadastrados</h3>
+    <table aria-label="Tabela de produtos cadastrados">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Preço</th>
+          <th>Categoria</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody id="lista-produtos"></tbody>
+    </table>
+
+    <hr style="margin: 2rem 0; border-color: #5c6bc0;" />
+
+    <h2>Configuração do WhatsApp</h2>
+    <form id="form-whatsapp" aria-label="Formulário para configurar número do WhatsApp">
+      <label for="numero-whatsapp">Número do WhatsApp (com DDD e código do país, ex: 5511999999999):</label>
+      <input type="text" id="numero-whatsapp" placeholder="Ex: 5511999999999" pattern="[0-9]{10,15}" required autocomplete="tel" />
+      <button type="submit">Salvar Número</button>
+    </form>
   </section>
+</main>
+
+<div class="footer">
+  &copy; 2025 MDoces - Desenvolvido por Você
 </div>
 
 <script>
-  const senhaAdmin = 'mdoces123'; // senha simples para demo
-  const loginContainer = document.getElementById('login-container');
-  const adminContainer = document.getElementById('admin-container');
+  // Senha fixa (pode mudar depois)
+  const SENHA_ADMIN = 'mdoces123';
+
+  // Elementos do DOM
+  const loginSection = document.getElementById('login-section');
+  const adminSection = document.getElementById('admin-section');
+  const inputSenha = document.getElementById('senha');
   const btnLogin = document.getElementById('btn-login');
-  const logoutBtn = document.getElementById('logout-btn');
+  const loginError = document.getElementById('login-error');
 
-  const produtoForm = document.getElementById('produto-form');
+  const formProduto = document.getElementById('form-produto');
   const inputProdutoId = document.getElementById('produto-id');
-  const inputNome = document.getElementById('produto-nome');
-  const inputDescricao = document.getElementById('produto-descricao');
-  const inputPreco = document.getElementById('produto-preco');
-  const selectCategoria = document.getElementById('produto-categoria');
-  const inputImgUrl = document.getElementById('produto-img-url');
-  const btnLimparForm = document.getElementById('btn-limpar-form');
+  const inputNome = document.getElementById('nome-produto');
+  const inputDescricao = document.getElementById('descricao-produto');
+  const inputPreco = document.getElementById('preco-produto');
+  const inputImagem = document.getElementById('imagem-produto');
+  const selectCategoria = document.getElementById('categoria-produto');
+  const btnCancelarEdicao = document.getElementById('btn-cancelar-edicao');
 
-  const listaProdutosDiv = document.getElementById('lista-produtos');
-  const listaPedidosDiv = document.getElementById('lista-pedidos');
+  const listaProdutosTbody = document.getElementById('lista-produtos');
 
-  let produtos = [];
-  let pedidos = [];
+  const formWhatsapp = document.getElementById('form-whatsapp');
+  const inputNumeroWhatsApp = document.getElementById('numero-whatsapp');
 
-  // Verifica se admin está logado
-  function checkLogin() {
-    const logado = localStorage.getItem('mdoces-admin-logado');
-    if (logado === 'true') {
-      loginContainer.classList.add('hidden');
-      adminContainer.classList.remove('hidden');
-      carregarProdutos();
-      carregarPedidos();
-      renderProdutos();
-      renderPedidos();
-    } else {
-      loginContainer.classList.remove('hidden');
-      adminContainer.classList.add('hidden');
-    }
-  }
+  // Variáveis de controle
+  let produtos = JSON.parse(localStorage.getItem('mdoces_produtos')) || [];
+  let numeroWhatsApp = localStorage.getItem('mdoces_numeroWhatsApp') || '';
 
-  // Login
-  btnLogin.addEventListener('click', () => {
-    const senha = document.getElementById('admin-password').value;
-    if (senha === senhaAdmin) {
-      localStorage.setItem('mdoces-admin-logado', 'true');
-      checkLogin();
-    } else {
-      alert('Senha incorreta!');
-    }
-  });
-
-  // Logout
-  logoutBtn.addEventListener('click', () => {
-    localStorage.removeItem('mdoces-admin-logado');
-    checkLogin();
-  });
-
-  // Carregar produtos do localStorage
-  function carregarProdutos() {
-    const dados = localStorage.getItem('mdoces-produtos');
-    if (dados) {
-      produtos = JSON.parse(dados);
-    } else {
-      produtos = [];
-      salvarProdutos();
-    }
-  }
-
-  // Salvar produtos no localStorage
-  function salvarProdutos() {
-    localStorage.setItem('mdoces-produtos', JSON.stringify(produtos));
-  }
-
-  // Renderizar lista de produtos
-  function renderProdutos() {
-    listaProdutosDiv.innerHTML = '';
+  // Função para renderizar tabela de produtos
+  function renderizarTabelaProdutos() {
+    listaProdutosTbody.innerHTML = '';
     if (produtos.length === 0) {
-      listaProdutosDiv.innerHTML = '<p>Nenhum produto cadastrado.</p>';
+      listaProdutosTbody.innerHTML = '<tr><td colspan="4" style="text-align:center; color:#ccc;">Nenhum produto cadastrado.</td></tr>';
       return;
     }
+
     produtos.forEach(prod => {
-      const div = document.createElement('div');
-      div.className = 'product-item flex-row';
-      div.innerHTML = `
-        <img src="${prod.imagem || 'https://via.placeholder.com/50'}" alt="${prod.nome}" class="product-thumb" />
-        <div class="flex-grow">
-          <strong>${prod.nome}</strong> <br />
-          R$ ${prod.preco.toFixed(2)} - <em>${prod.categoria}</em><br />
-          ${prod.descricao || ''}
-        </div>
-        <button class="small-btn" data-id="${prod.id}" data-action="editar">Editar</button>
-        <button class="small-btn" data-id="${prod.id}" data-action="excluir">Excluir</button>
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${prod.nome}</td>
+        <td>${prod.preco.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td>
+        <td>${prod.categoria}</td>
+        <td class="actions">
+          <button aria-label="Editar ${prod.nome}" data-id="${prod.id}">✏️</button>
+          <button aria-label="Excluir ${prod.nome}" data-id="${prod.id}" class="btn-danger">🗑️</button>
+        </td>
       `;
-      listaProdutosDiv.appendChild(div);
+      listaProdutosTbody.appendChild(tr);
+    });
+
+    // Adicionar eventos aos botões
+    listaProdutosTbody.querySelectorAll('button').forEach(botao => {
+      botao.addEventListener('click', e => {
+        const id = e.currentTarget.getAttribute('data-id');
+        if (botao.classList.contains('btn-danger')) {
+          excluirProduto(id);
+        } else {
+          editarProduto(id);
+        }
+      });
     });
   }
 
-  // Editar produto
-  listaProdutosDiv.addEventListener('click', (e) => {
-    const btn = e.target.closest('button');
-    if (!btn) return;
+  // Função para salvar produtos no localStorage
+  function salvarProdutos() {
+    localStorage.setItem('mdoces_produtos', JSON.stringify(produtos));
+  }
 
-    const id = btn.getAttribute('data-id');
-    const action = btn.getAttribute('data-action');
-    if (action === 'editar') {
-      const prod = produtos.find(p => p.id === id);
-      if (!prod) return;
-      inputProdutoId.value = prod.id;
-      inputNome.value = prod.nome;
-      inputDescricao.value = prod.descricao || '';
-      inputPreco.value = prod.preco;
-      selectCategoria.value = prod.categoria;
-      inputImgUrl.value = prod.imagem || '';
-    }
-    if (action === 'excluir') {
-      if (confirm('Confirma exclusão do produto?')) {
-        produtos = produtos.filter(p => p.id !== id);
-        salvarProdutos();
-        renderProdutos();
-      }
-    }
-  });
-
-  // Limpar formulário
-  btnLimparForm.addEventListener('click', () => {
-    limparFormularioProduto();
-  });
-
+  // Função para limpar formulário produto
   function limparFormularioProduto() {
     inputProdutoId.value = '';
     inputNome.value = '';
     inputDescricao.value = '';
     inputPreco.value = '';
+    inputImagem.value = '';
     selectCategoria.value = '';
-    inputImgUrl.value = '';
+    btnCancelarEdicao.classList.add('hidden');
+    formProduto.querySelector('button[type="submit"]').textContent = 'Salvar Produto';
   }
 
-  // Salvar produto (novo ou editado)
-  produtoForm.addEventListener('submit', (e) => {
+  // Função para validar produto
+  function validarProduto(nome, descricao, preco, imagem, categoria) {
+    if (!nome.trim() || !descricao.trim() || !imagem.trim() || !categoria.trim()) return false;
+    if (isNaN(preco) || preco < 0) return false;
+    return true;
+  }
+
+  // Função para gerar ID único simples
+  function gerarId() {
+    return 'p' + Date.now();
+  }
+
+  // Salvar ou editar produto no envio do form
+  formProduto.addEventListener('submit', e => {
     e.preventDefault();
+
     const id = inputProdutoId.value;
     const nome = inputNome.value.trim();
     const descricao = inputDescricao.value.trim();
     const preco = parseFloat(inputPreco.value);
+    const imagem = inputImagem.value.trim();
     const categoria = selectCategoria.value;
-    const imagem = inputImgUrl.value.trim();
 
-    if (!nome || !categoria || isNaN(preco)) {
-      alert('Preencha nome, categoria e preço corretamente.');
+    if (!validarProduto(nome, descricao, preco, imagem, categoria)) {
+      alert('Por favor, preencha todos os campos corretamente.');
       return;
     }
 
     if (id) {
-      // Editar
-      const idx = produtos.findIndex(p => p.id === id);
-      if (idx >= 0) {
-        produtos[idx] = { id, nome, descricao, preco, categoria, imagem };
+      // Editar produto
+      const index = produtos.findIndex(p => p.id === id);
+      if (index > -1) {
+        produtos[index] = { id, nome, descricao, preco, imagem, categoria };
       }
     } else {
-      // Novo
-      const novoId = 'p' + Date.now();
-      produtos.push({ id: novoId, nome, descricao, preco, categoria, imagem });
+      // Novo produto
+      produtos.push({ id: gerarId(), nome, descricao, preco, imagem, categoria });
     }
+
     salvarProdutos();
-    renderProdutos();
+    renderizarTabelaProdutos();
+    limparFormularioProduto();
+    alert('Produto salvo com sucesso!');
+  });
+
+  // Editar produto - preencher form
+  function editarProduto(id) {
+    const produto = produtos.find(p => p.id === id);
+    if (!produto) return;
+
+    inputProdutoId.value = produto.id;
+    inputNome.value = produto.nome;
+    inputDescricao.value = produto.descricao;
+    inputPreco.value = produto.preco;
+    inputImagem.value = produto.imagem;
+    selectCategoria.value = produto.categoria;
+
+    btnCancelarEdicao.classList.remove('hidden');
+    formProduto.querySelector('button[type="submit"]').textContent = 'Atualizar Produto';
+  }
+
+  btnCancelarEdicao.addEventListener('click', e => {
+    e.preventDefault();
     limparFormularioProduto();
   });
 
-  // --- Pedidos ---
-
-  // Carregar pedidos do localStorage
-  function carregarPedidos() {
-    const dados = localStorage.getItem('mdoces-pedidos');
-    if (dados) {
-      pedidos = JSON.parse(dados);
-    } else {
-      pedidos = [];
-      salvarPedidos();
+  // Excluir produto
+  function excluirProduto(id) {
+    if (confirm('Tem certeza que deseja excluir este produto?')) {
+      produtos = produtos.filter(p => p.id !== id);
+      salvarProdutos();
+      renderizarTabelaProdutos();
+      alert('Produto excluído.');
     }
   }
 
-  // Salvar pedidos no localStorage
-  function salvarPedidos() {
-    localStorage.setItem('mdoces-pedidos', JSON.stringify(pedidos));
-  }
+  // Salvar número WhatsApp
+  formWhatsapp.addEventListener('submit', e => {
+    e.preventDefault();
 
-  // Renderizar pedidos
-  function renderPedidos() {
-    listaPedidosDiv.innerHTML = '';
-    if (pedidos.length === 0) {
-      listaPedidosDiv.innerHTML = '<p>Nenhum pedido realizado.</p>';
+    const numero = inputNumeroWhatsApp.value.trim();
+
+    if (!/^\d{10,15}$/.test(numero)) {
+      alert('Número inválido. Digite somente números entre 10 e 15 dígitos.');
       return;
     }
 
-    pedidos.forEach(pedido => {
-      const div = document.createElement('div');
-      div.className = 'pedido-item';
+    numeroWhatsApp = numero;
+    localStorage.setItem('mdoces_numeroWhatsApp', numeroWhatsApp);
+    alert('Número do WhatsApp salvo com sucesso!');
+  });
 
-      // Produtos texto
-      let produtosTexto = pedido.produtos.map(item => {
-        return `${item.nome} x${item.quantidade}`;
-      }).join(', ');
-
-      div.innerHTML = `
-        <p><strong>Pedido:</strong> ${pedido.id}</p>
-        <p><strong>Cliente:</strong> ${pedido.cliente}</p>
-        <p><strong>Produtos:</strong> ${produtosTexto}</p>
-        <p><strong>Endereço:</strong> ${pedido.endereco}</p>
-        <p><strong>Pagamento:</strong> ${pedido.formaPagamento}</p>
-        <p><strong>Observações:</strong> ${pedido.observacoes || '-'}</p>
-        <p><strong>Data:</strong> ${new Date(pedido.dataHora).toLocaleString('pt-BR')}</p>
-        <label for="status-${pedido.id}">Status:</label>
-        <select class="pedido-status-select" id="status-${pedido.id}" data-id="${pedido.id}">
-          <option value="0" ${pedido.status === 0 ? 'selected' : ''}>Pedido Recebido</option>
-          <option value="1" ${pedido.status === 1 ? 'selected' : ''}>Em Preparo</option>
-          <option value="2" ${pedido.status === 2 ? 'selected' : ''}>Saiu para Entrega</option>
-          <option value="3" ${pedido.status === 3 ? 'selected' : ''}>Entregue</option>
-        </select>
-      `;
-
-      listaPedidosDiv.appendChild(div);
-    });
+  // Carregar número WhatsApp salvo
+  function carregarNumeroWhatsApp() {
+    if (numeroWhatsApp) {
+      inputNumeroWhatsApp.value = numeroWhatsApp;
+    }
   }
 
-  // Alterar status pedido
-  listaPedidosDiv.addEventListener('change', (e) => {
-    if (e.target.classList.contains('pedido-status-select')) {
-      const id = e.target.getAttribute('data-id');
-      const novoStatus = parseInt(e.target.value);
-      const idx = pedidos.findIndex(p => p.id === id);
-      if (idx >= 0) {
-        pedidos[idx].status = novoStatus;
-        salvarPedidos();
-        alert('Status atualizado!');
-      }
+  // Login simples
+  btnLogin.addEventListener('click', () => {
+    const senha = inputSenha.value;
+    if (senha === SENHA_ADMIN) {
+      loginSection.classList.add('hidden');
+      adminSection.classList.remove('hidden');
+      loginError.classList.add('hidden');
+      inputSenha.value = '';
+      renderizarTabelaProdutos();
+      carregarNumeroWhatsApp();
+      inputNome.focus();
+    } else {
+      loginError.classList.remove('hidden');
+      inputSenha.focus();
     }
   });
 
-  // Inicialização
-  checkLogin();
-
+  // Permitir Enter no campo senha para login
+  inputSenha.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      btnLogin.click();
+    }
+  });
 </script>
+
 </body>
 </html>
