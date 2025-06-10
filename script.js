@@ -144,7 +144,7 @@ function finalizarPedido() {
   if (confirm("Confirme seu pedido:\n\n" + resumoPedido)) {
     const mensagem = encodeURIComponent(resumoPedido);
     // Substitua SEU_NUMERO pelo seu número no formato internacional, ex: 5511999999999
-    window.open("https://wa.me/SEU_NUMERO?text=" + mensagem, "_blank");
+    window.open("https://wa.me/96988019993?text=" + mensagem, "_blank");
   }
 }
 
