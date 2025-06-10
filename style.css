@@ -11,7 +11,7 @@ body {
 }
 
 header {
-  background: #4b0082; /* índigo */
+  background: #011941; /* índigo */
   padding: 2rem 1rem;
   text-align: center;
   color: white;
@@ -65,7 +65,7 @@ header p {
 .produto h3 {
   margin: 0.5rem 0 0.3rem;
   font-size: 1.2rem;
-  color: #4b0082;
+  color: #011941;
 }
 
 .produto p {
@@ -82,7 +82,7 @@ header p {
 }
 
 .produto button {
-  background: #4b0082;
+  background: #011941;
   color: white;
   border: none;
   padding: 0.5rem 1rem;
@@ -107,7 +107,7 @@ header p {
 #carrinho h2 {
   margin-top: 0;
   font-size: 1.5rem;
-  color: #4b0082;
+  color: #011941;
   text-align: center;
 }
 
@@ -168,7 +168,7 @@ footer {
 
 footer a {
   text-decoration: none;
-  color: #4b0082;
+  color: #011941;
   font-weight: bold;
 }
 
