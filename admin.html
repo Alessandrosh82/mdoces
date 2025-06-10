@@ -35,6 +35,35 @@
       box-shadow: 0 4px 16px rgba(0,0,0,0.08);
       padding: 2rem;
     }
+    .login-screen {
+      max-width: 400px;
+      margin: 5rem auto;
+      padding: 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    .login-screen input {
+      width: 100%;
+      padding: 0.7rem;
+      margin: 1rem 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    .login-screen button {
+      padding: 0.7rem 1.5rem;
+      background: var(--indigo);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+    .hidden {
+      display: none;
+    }
     h1 {
       font-size: 1.8rem;
       color: var(--indigo);
@@ -109,7 +138,15 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <div id="login" class="login-screen">
+    <h2>Área Administrativa</h2>
+    <p>Digite a senha para acessar:</p>
+    <input type="password" id="adminPassword" placeholder="Senha" />
+    <button onclick="checkPassword()">Entrar</button>
+    <p id="loginError" style="color: red; display: none;">Senha incorreta!</p>
+  </div>
+
+  <div id="adminPanel" class="container hidden">
     <h1>Administração MDoces</h1>
 
     <div class="section">
@@ -151,6 +188,22 @@
   </div>
 
   <script>
+    const senhaCorreta = "mdoces123";
+
+    function checkPassword() {
+      const senhaDigitada = document.getElementById("adminPassword").value;
+      const erro = document.getElementById("loginError");
+      if (senhaDigitada === senhaCorreta) {
+        document.getElementById("login").classList.add("hidden");
+        document.getElementById("adminPanel").classList.remove("hidden");
+        listarProdutos();
+        listarPedidos();
+        document.getElementById("whatsapp").value = localStorage.getItem("whatsapp") || "";
+      } else {
+        erro.style.display = "block";
+      }
+    }
+
     let produtos = JSON.parse(localStorage.getItem("produtos") || "[]");
     let pedidos = JSON.parse(localStorage.getItem("pedidos") || "[]");
 
@@ -228,10 +281,6 @@
       localStorage.setItem("pedidos", JSON.stringify(pedidos));
       listarPedidos();
     }
-
-    listarProdutos();
-    listarPedidos();
-    document.getElementById("whatsapp").value = localStorage.getItem("whatsapp") || "";
   </script>
 </body>
 </html>
