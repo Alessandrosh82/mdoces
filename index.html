@@ -2,19 +2,30 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>MDoces - Peça Agora</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+
+  <!-- Fonte Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet" />
+
   <style>
     :root {
+      --azul-base: #011941;
+      --azul-escuro: #000f2a;
+      --azul-claro: #0a2a74;
       --roxo: #3b0a59;
       --roxo-hover: #5f2a8a;
-      --fundo: #fffaf7;
-      --branco: #fff;
-      --sombra: 0 4px 8px rgba(0, 0, 0, 0.06);
+      --bege: #fdf9f0;
+      --bege-medio: #f3e9d7;
+      --branco: #ffffff;
+      --cinza-claro: #ddd;
+      --cinza-escuro: #555;
+      --verde: #25d366;
       --radius: 12px;
+      --sombra: 0 4px 10px rgba(0,0,0,0.07);
     }
 
+    /* Reset */
     * {
       margin: 0;
       padding: 0;
@@ -23,115 +34,170 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: var(--fundo);
-      color: #222;
-      padding: 1.5rem;
+      background-color: var(--bege);
+      color: var(--azul-escuro);
       max-width: 720px;
-      margin: auto;
+      margin: 2rem auto;
+      padding: 0 1rem 3rem;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
     }
 
     h1 {
       text-align: center;
       color: var(--roxo);
+      font-weight: 700;
+      font-size: 2.8rem;
       margin-bottom: 2rem;
-      font-size: 2rem;
+      user-select: none;
+      text-shadow: 1px 1px 4px rgba(0,0,0,0.1);
     }
 
     .produto {
       background: var(--branco);
       border-radius: var(--radius);
-      padding: 1rem;
-      margin-bottom: 1.5rem;
       box-shadow: var(--sombra);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.8rem;
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
-      transition: transform 0.2s ease;
+      gap: 0.8rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      cursor: default;
     }
-
     .produto:hover {
-      transform: translateY(-2px);
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     }
 
     .produto img {
       width: 100%;
-      border-radius: 8px;
+      border-radius: 10px;
       object-fit: cover;
+      aspect-ratio: 1 / 1;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      user-select: none;
     }
 
     .produto h2 {
-      font-size: 1.2rem;
       color: var(--roxo);
+      font-weight: 700;
+      font-size: 1.4rem;
     }
 
     .produto p {
-      font-size: 0.95rem;
-      color: #555;
+      color: var(--cinza-escuro);
+      font-size: 1rem;
+      line-height: 1.3;
+      user-select: text;
     }
 
     .preco {
-      font-weight: 600;
+      font-weight: 700;
+      font-size: 1.2rem;
       color: var(--roxo);
+      margin-bottom: 0.6rem;
+      user-select: text;
+    }
+
+    .quantidade-container {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .quantidade-container label {
+      font-weight: 600;
+      font-size: 1rem;
+      user-select: none;
     }
 
     .produto input[type="number"] {
       width: 60px;
-      padding: 0.3rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
+      padding: 0.4rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1.8px solid var(--cinza-claro);
+      transition: border-color 0.3s;
+    }
+    .produto input[type="number"]:focus {
+      outline: none;
+      border-color: var(--roxo-hover);
+      box-shadow: 0 0 6px var(--roxo-hover);
     }
 
     .produto button {
       background-color: var(--roxo);
       color: var(--branco);
       border: none;
-      padding: 0.5rem;
-      border-radius: 8px;
+      padding: 0.7rem 1.3rem;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1.05rem;
       cursor: pointer;
-      font-weight: 600;
-      transition: background 0.3s;
+      align-self: flex-start;
+      transition: background-color 0.3s ease;
+      user-select: none;
     }
-
     .produto button:hover {
       background-color: var(--roxo-hover);
     }
 
     #finalizar {
+      margin-top: auto;
       text-align: center;
-      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1.5px solid var(--cinza-claro);
     }
 
     #finalizar button {
-      background-color: var(--roxo);
+      background-color: var(--verde);
       color: var(--branco);
-      padding: 0.75rem 2rem;
-      font-size: 1rem;
+      font-weight: 700;
+      font-size: 1.3rem;
+      padding: 1rem 3rem;
       border: none;
-      border-radius: 8px;
+      border-radius: 14px;
       cursor: pointer;
-      font-weight: bold;
-      transition: background 0.3s;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 5px 15px rgba(37, 211, 102, 0.4);
+      user-select: none;
     }
-
     #finalizar button:hover {
-      background-color: var(--roxo-hover);
+      background-color: #1ebc57;
+      box-shadow: 0 7px 20px rgba(37, 211, 102, 0.6);
     }
 
+    /* Mensagem total */
+    #total-pedido {
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin: 1rem 0 0.5rem;
+      color: var(--azul-claro);
+      text-align: right;
+      user-select: none;
+    }
+
+    /* Responsividade */
     @media (max-width: 480px) {
       body {
-        padding: 1rem;
+        margin: 1rem;
+        padding: 0 0.5rem 2rem;
       }
-
+      h1 {
+        font-size: 2.2rem;
+      }
       .produto h2 {
-        font-size: 1rem;
+        font-size: 1.1rem;
       }
-
-      .produto p {
-        font-size: 0.85rem;
+      .produto p, .preco {
+        font-size: 0.95rem;
       }
-
       #finalizar button {
         width: 100%;
+        font-size: 1.2rem;
       }
     }
   </style>
@@ -139,13 +205,17 @@
 <body>
   <h1>MDoces</h1>
 
+  <!-- Produtos -->
   <div class="produto" data-nome="Brigadeiro Gourmet" data-preco="2.5">
     <img src="img/brigadeiro.jpg" alt="Brigadeiro Gourmet" />
     <h2>Brigadeiro Gourmet</h2>
     <p>Delicioso brigadeiro feito com chocolate belga.</p>
     <div class="preco">R$ 2,50</div>
-    <input type="number" min="0" value="0" />
-    <button onclick="adicionar(this)">Adicionar</button>
+    <div class="quantidade-container">
+      <label for="qtd-brigadeiro">Quantidade:</label>
+      <input type="number" id="qtd-brigadeiro" min="0" value="0" />
+    </div>
+    <button onclick="adicionar(this)">Adicionar ao pedido</button>
   </div>
 
   <div class="produto" data-nome="Beijinho" data-preco="2">
@@ -153,10 +223,19 @@
     <h2>Beijinho</h2>
     <p>Tradicional doce de coco com toque especial.</p>
     <div class="preco">R$ 2,00</div>
-    <input type="number" min="0" value="0" />
-    <button onclick="adicionar(this)">Adicionar</button>
+    <div class="quantidade-container">
+      <label for="qtd-beijinho">Quantidade:</label>
+      <input type="number" id="qtd-beijinho" min="0" value="0" />
+    </div>
+    <button onclick="adicionar(this)">Adicionar ao pedido</button>
   </div>
 
+  <!-- Total Pedido -->
+  <div id="total-pedido" style="display:none;">
+    Total acumulado: R$ 0,00
+  </div>
+
+  <!-- Botão Finalizar Pedido -->
   <div id="finalizar">
     <button onclick="finalizarPedido()">Finalizar Pedido no WhatsApp</button>
   </div>
@@ -165,21 +244,48 @@
     const carrinho = [];
 
     function adicionar(botao) {
-      const produto = botao.closest('.produto');
-      const nome = produto.dataset.nome;
-      const preco = parseFloat(produto.dataset.preco);
-      const quantidade = parseInt(produto.querySelector('input').value);
+      const produtoElem = botao.closest('.produto');
+      const nome = produtoElem.dataset.nome;
+      const preco = parseFloat(produtoElem.dataset.preco);
+      const inputQtd = produtoElem.querySelector('input[type="number"]');
+      const quantidade = parseInt(inputQtd.value);
 
-      if (quantidade > 0) {
-        carrinho.push({ nome, quantidade, preco });
-        produto.querySelector('input').value = 0;
-        alert(`${quantidade}x ${nome} adicionado(s) ao pedido.`);
+      if (quantidade <= 0 || isNaN(quantidade)) {
+        alert('Por favor, informe uma quantidade válida maior que zero.');
+        return;
       }
+
+      // Verifica se o produto já está no carrinho
+      const itemExistente = carrinho.find(item => item.nome === nome);
+      if (itemExistente) {
+        itemExistente.quantidade += quantidade;
+      } else {
+        carrinho.push({ nome, preco, quantidade });
+      }
+
+      inputQtd.value = 0; // zera input
+      alert(`${quantidade}x ${nome} adicionado(s) ao pedido.`);
+
+      atualizarTotal();
+    }
+
+    function atualizarTotal() {
+      if (carrinho.length === 0) {
+        document.getElementById('total-pedido').style.display = 'none';
+        return;
+      }
+      let total = 0;
+      carrinho.forEach(item => {
+        total += item.preco * item.quantidade;
+      });
+      const totalElem = document.getElementById('total-pedido');
+      totalElem.style.display = 'block';
+      totalElem.textContent = `Total acumulado: R$ ${total.toFixed(2)}`;
     }
 
     function finalizarPedido() {
       if (carrinho.length === 0) {
-        alert('Adicione ao menos um produto.');
+        alert('Adicione ao menos um produto para finalizar o pedido.');
         return;
       }
 
@@ -192,7 +298,10 @@
       });
 
       mensagem += `%0ATotal: R$ ${total.toFixed(2)}`;
-      const numero = '5599999999999'; // Altere para seu número real
+      
+      // Número do WhatsApp para pedido - ATENÇÃO: coloque o seu número real aqui, no formato internacional sem espaços, só números.
+      const numero = '5599999999999';
+
       window.open(`https://wa.me/${numero}?text=${mensagem}`, '_blank');
     }
   </script>
