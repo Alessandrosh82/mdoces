@@ -1,10 +1,9 @@
-// Script do MDoces Delivery
+// Script do MDoces Delivery - VERSÃO OTIMIZADA
 
 let produtos = JSON.parse(localStorage.getItem('mdoces-produtos')) || [];
 let carrinho = JSON.parse(localStorage.getItem('mdoces-carrinho')) || [];
 let pedidos = JSON.parse(localStorage.getItem('mdoces-pedidos')) || [];
 
-// Obter categorias únicas
 function getCategorias() {
   return [...new Set(produtos.map(p => p.categoria))];
 }
@@ -29,29 +28,27 @@ function renderProdutos() {
     h2.textContent = categoria.charAt(0).toUpperCase() + categoria.slice(1);
     section.appendChild(h2);
 
-    produtos
-      .filter(p => p.categoria === categoria)
-      .forEach(produto => {
-        if (!produto.nome || !produto.preco || !produto.imagem) return;
+    produtos.filter(p => p.categoria === categoria).forEach(produto => {
+      if (!produto.nome || !produto.preco || !produto.imagem) return;
 
-        const div = document.createElement('div');
-        div.className = 'produto';
-        div.innerHTML = `
-          <img src="${produto.imagem}" alt="${produto.nome}" />
-          <div>
-            <h3>${produto.nome}</h3>
-            <p>${produto.descricao}</p>
-            <strong>R$ ${produto.preco.toFixed(2)}</strong>
-          </div>
-          <div class="quantidade-container">
-            <button onclick="alterarQuantidade('${produto.id}', -1)">-</button>
-            <span id="qtd-${produto.id}">${getQuantidade(produto.id)}</span>
-            <button onclick="alterarQuantidade('${produto.id}', 1)">+</button>
-          </div>
-          <button onclick="adicionarAoCarrinho('${produto.id}')">Adicionar</button>
-        `;
-        section.appendChild(div);
-      });
+      const div = document.createElement('div');
+      div.className = 'produto';
+      div.innerHTML = `
+        <img src="${produto.imagem}" alt="${produto.nome}" />
+        <div>
+          <h3>${produto.nome}</h3>
+          <p>${produto.descricao || ''}</p>
+          <strong>R$ ${produto.preco.toFixed(2)}</strong>
+        </div>
+        <div class="quantidade-container">
+          <button onclick="alterarQuantidade('${produto.id}', -1)">-</button>
+          <span id="qtd-${produto.id}">${getQuantidade(produto.id)}</span>
+          <button onclick="alterarQuantidade('${produto.id}', 1)">+</button>
+        </div>
+        <button onclick="adicionarAoCarrinho('${produto.id}')">Adicionar</button>
+      `;
+      section.appendChild(div);
+    });
 
     container.appendChild(section);
   });
@@ -145,10 +142,6 @@ function finalizarPedido() {
     alert('Preencha todos os campos e adicione ao menos um item.');
     return;
   }
-  if (nome.length < 2 || endereco.length < 5) {
-    alert('Preencha nome e endereço corretamente.');
-    return;
-  }
 
   const total = carrinho.reduce((soma, item) => {
     const p = produtos.find(p => p.id === item.id);
@@ -156,33 +149,18 @@ function finalizarPedido() {
   }, 0);
 
   const pedido = {
-    id: Date.now(),
-    nome,
-    endereco,
-    pagamento,
-    observacoes,
-    carrinho: [...carrinho],
-    status: 0,
-    criadoEm: new Date().toISOString(),
-    total
+    id: Date.now(), nome, endereco, pagamento, observacoes,
+    carrinho: [...carrinho], status: 0, criadoEm: new Date().toISOString(), total
   };
 
   pedidos.push(pedido);
   salvarPedidos();
-
   carrinho = [];
   salvarCarrinho();
-
   renderCarrinho();
   renderStatusPedidos();
-
-  // Resetar o formulário (ID do form deve ser "form-pedido")
-  const form = document.getElementById('form-pedido');
-  if (form) form.reset();
-
-  // Salvar a forma de pagamento para próxima vez
+  document.getElementById('form-pedido')?.reset();
   localStorage.setItem('mdoces-pagamento', pagamento);
-
   alert('Pedido enviado com sucesso!');
   enviarPedidoWhatsApp(pedido);
 }
@@ -191,7 +169,6 @@ function renderStatusPedidos() {
   const container = document.getElementById('status-pedidos');
   if (!container) return;
   container.innerHTML = '<h2>Status dos Pedidos</h2>';
-
   const statusTextos = ['Pendente', 'Em preparo', 'Saiu para entrega', 'Entregue'];
 
   pedidos.slice().reverse().forEach(pedido => {
@@ -239,7 +216,6 @@ function enviarPedidoWhatsApp(pedido) {
   window.open(url, '_blank');
 }
 
-// Ao carregar, pré-carregar forma de pagamento se disponível
 window.addEventListener('DOMContentLoaded', () => {
   const pagamentoSalvo = localStorage.getItem('mdoces-pagamento');
   if (pagamentoSalvo) {
@@ -248,7 +224,6 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-// Inicialização
 renderProdutos();
 renderCarrinho();
 renderStatusPedidos();
