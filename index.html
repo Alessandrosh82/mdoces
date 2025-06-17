@@ -1,101 +1,138 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MDoces - Peça Agora</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
   <style>
+    :root {
+      --roxo: #3b0a59;
+      --roxo-hover: #5f2a8a;
+      --fundo: #fffaf7;
+      --branco: #fff;
+      --sombra: 0 4px 8px rgba(0, 0, 0, 0.06);
+      --radius: 12px;
+    }
+
     * {
-      box-sizing: border-box;
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
 
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #fffaf7;
+      background-color: var(--fundo);
       color: #222;
-      padding: 1rem;
-      max-width: 700px;
+      padding: 1.5rem;
+      max-width: 720px;
       margin: auto;
     }
 
     h1 {
       text-align: center;
-      color: #3b0a59;
-      margin-bottom: 1rem;
+      color: var(--roxo);
+      margin-bottom: 2rem;
+      font-size: 2rem;
     }
 
     .produto {
-      border: 1px solid #ddd;
-      border-radius: 12px;
+      background: var(--branco);
+      border-radius: var(--radius);
       padding: 1rem;
-      margin-bottom: 1rem;
-      background: #fff;
+      margin-bottom: 1.5rem;
+      box-shadow: var(--sombra);
       display: flex;
       flex-direction: column;
+      gap: 0.5rem;
+      transition: transform 0.2s ease;
+    }
+
+    .produto:hover {
+      transform: translateY(-2px);
     }
 
     .produto img {
       width: 100%;
-      height: auto;
       border-radius: 8px;
-      margin-bottom: 0.5rem;
+      object-fit: cover;
     }
 
     .produto h2 {
       font-size: 1.2rem;
-      margin-bottom: 0.25rem;
+      color: var(--roxo);
     }
 
     .produto p {
       font-size: 0.95rem;
-      margin-bottom: 0.5rem;
+      color: #555;
     }
 
-    .produto .preco {
-      font-weight: bold;
-      color: #3b0a59;
-      margin-bottom: 0.5rem;
+    .preco {
+      font-weight: 600;
+      color: var(--roxo);
     }
 
     .produto input[type="number"] {
       width: 60px;
-      padding: 0.25rem;
-      margin-bottom: 0.5rem;
+      padding: 0.3rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
     }
 
     .produto button {
-      background-color: #3b0a59;
-      color: #fff;
+      background-color: var(--roxo);
+      color: var(--branco);
       border: none;
       padding: 0.5rem;
       border-radius: 8px;
       cursor: pointer;
+      font-weight: 600;
+      transition: background 0.3s;
     }
 
     .produto button:hover {
-      background-color: #5f2a8a;
+      background-color: var(--roxo-hover);
     }
 
     #finalizar {
-      margin-top: 2rem;
       text-align: center;
+      margin-top: 2rem;
     }
 
     #finalizar button {
-      background-color: #3b0a59;
-      color: #fff;
-      padding: 0.75rem 1.5rem;
+      background-color: var(--roxo);
+      color: var(--branco);
+      padding: 0.75rem 2rem;
+      font-size: 1rem;
       border: none;
       border-radius: 8px;
-      font-size: 1rem;
       cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
     }
 
     #finalizar button:hover {
-      background-color: #5f2a8a;
+      background-color: var(--roxo-hover);
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 1rem;
+      }
+
+      .produto h2 {
+        font-size: 1rem;
+      }
+
+      .produto p {
+        font-size: 0.85rem;
+      }
+
+      #finalizar button {
+        width: 100%;
+      }
     }
   </style>
 </head>
@@ -103,20 +140,20 @@
   <h1>MDoces</h1>
 
   <div class="produto" data-nome="Brigadeiro Gourmet" data-preco="2.5">
-    <img src="img/brigadeiro.jpg" alt="Brigadeiro Gourmet">
+    <img src="img/brigadeiro.jpg" alt="Brigadeiro Gourmet" />
     <h2>Brigadeiro Gourmet</h2>
     <p>Delicioso brigadeiro feito com chocolate belga.</p>
     <div class="preco">R$ 2,50</div>
-    <input type="number" min="0" value="0">
+    <input type="number" min="0" value="0" />
     <button onclick="adicionar(this)">Adicionar</button>
   </div>
 
   <div class="produto" data-nome="Beijinho" data-preco="2">
-    <img src="img/beijinho.jpg" alt="Beijinho">
+    <img src="img/beijinho.jpg" alt="Beijinho" />
     <h2>Beijinho</h2>
     <p>Tradicional doce de coco com toque especial.</p>
     <div class="preco">R$ 2,00</div>
-    <input type="number" min="0" value="0">
+    <input type="number" min="0" value="0" />
     <button onclick="adicionar(this)">Adicionar</button>
   </div>
 
@@ -148,13 +185,14 @@
 
       let mensagem = 'Olá! Gostaria de fazer um pedido:%0A';
       let total = 0;
+
       carrinho.forEach(item => {
         mensagem += `- ${item.quantidade}x ${item.nome}%0A`;
         total += item.quantidade * item.preco;
       });
-      mensagem += `%0ATotal: R$ ${total.toFixed(2)}`;
 
-      const numero = '5599999999999'; // Altere para o número do WhatsApp real
+      mensagem += `%0ATotal: R$ ${total.toFixed(2)}`;
+      const numero = '5599999999999'; // Altere para seu número real
       window.open(`https://wa.me/${numero}?text=${mensagem}`, '_blank');
     }
   </script>
