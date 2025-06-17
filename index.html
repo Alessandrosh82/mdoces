@@ -54,6 +54,7 @@
       text-shadow: 1px 1px 4px rgba(0,0,0,0.1);
     }
 
+    /* Produto */
     .produto {
       background: var(--branco);
       border-radius: var(--radius);
@@ -145,11 +146,135 @@
       background-color: var(--roxo-hover);
     }
 
-    #finalizar {
-      margin-top: auto;
+    /* Carrinho */
+    #carrinho {
+      background: var(--branco);
+      border-radius: var(--radius);
+      box-shadow: var(--sombra);
+      padding: 1rem 1.5rem;
+      margin-bottom: 2rem;
+      user-select: none;
+    }
+
+    #carrinho h2 {
+      color: var(--azul-claro);
+      font-weight: 700;
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    #lista-itens {
+      max-height: 220px;
+      overflow-y: auto;
+      margin-bottom: 1rem;
+      border-top: 1px solid var(--cinza-claro);
+      border-bottom: 1px solid var(--cinza-claro);
+    }
+
+    .item-carrinho {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.4rem 0;
+      font-size: 1rem;
+      color: var(--azul-escuro);
+      border-bottom: 1px solid var(--cinza-claro);
+    }
+    .item-carrinho:last-child {
+      border-bottom: none;
+    }
+
+    .item-info {
+      flex: 1;
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .item-quantidade {
+      width: 40px;
       text-align: center;
-      padding-top: 1rem;
-      border-top: 1.5px solid var(--cinza-claro);
+      font-weight: 600;
+    }
+
+    .item-preco {
+      font-weight: 700;
+      color: var(--roxo);
+      min-width: 70px;
+      text-align: right;
+    }
+
+    .item-remover {
+      background: transparent;
+      border: none;
+      color: var(--roxo);
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 1.2rem;
+      padding: 0 8px;
+      user-select: none;
+      transition: color 0.2s;
+    }
+    .item-remover:hover {
+      color: var(--roxo-hover);
+    }
+
+    /* Total pedido */
+    #total-pedido {
+      font-weight: 700;
+      font-size: 1.3rem;
+      color: var(--azul-claro);
+      text-align: right;
+      margin-bottom: 1rem;
+      user-select: none;
+    }
+
+    /* Formulário dados cliente */
+    #dados-cliente {
+      background: var(--branco);
+      border-radius: var(--radius);
+      box-shadow: var(--sombra);
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      user-select: none;
+    }
+
+    #dados-cliente h2 {
+      color: var(--azul-claro);
+      font-weight: 700;
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+    }
+
+    #dados-cliente label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: var(--azul-escuro);
+      user-select: text;
+    }
+
+    #dados-cliente input, #dados-cliente select, #dados-cliente textarea {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      font-size: 1rem;
+      border-radius: 8px;
+      border: 1.8px solid var(--cinza-claro);
+      margin-bottom: 1.2rem;
+      resize: vertical;
+      font-family: 'Inter', sans-serif;
+      transition: border-color 0.3s;
+    }
+    #dados-cliente input:focus, #dados-cliente select:focus, #dados-cliente textarea:focus {
+      outline: none;
+      border-color: var(--roxo-hover);
+      box-shadow: 0 0 6px var(--roxo-hover);
+    }
+
+    /* Botão finalizar */
+    #finalizar {
+      text-align: center;
+      margin-bottom: 3rem;
     }
 
     #finalizar button {
@@ -168,16 +293,6 @@
     #finalizar button:hover {
       background-color: #1ebc57;
       box-shadow: 0 7px 20px rgba(37, 211, 102, 0.6);
-    }
-
-    /* Mensagem total */
-    #total-pedido {
-      font-weight: 700;
-      font-size: 1.2rem;
-      margin: 1rem 0 0.5rem;
-      color: var(--azul-claro);
-      text-align: right;
-      user-select: none;
     }
 
     /* Responsividade */
@@ -230,80 +345,39 @@
     <button onclick="adicionar(this)">Adicionar ao pedido</button>
   </div>
 
-  <!-- Total Pedido -->
-  <div id="total-pedido" style="display:none;">
-    Total acumulado: R$ 0,00
-  </div>
+  <!-- Carrinho -->
+  <section id="carrinho" style="display:none;">
+    <h2>Seu Pedido</h2>
+    <div id="lista-itens"></div>
+    <div id="total-pedido">Total: R$ 0,00</div>
+  </section>
+
+  <!-- Dados Cliente -->
+  <section id="dados-cliente" style="display:none;">
+    <h2>Informações para Entrega</h2>
+    <label for="nome-cliente">Nome completo *</label>
+    <input type="text" id="nome-cliente" placeholder="Seu nome" required />
+
+    <label for="endereco-cliente">Endereço completo *</label>
+    <textarea id="endereco-cliente" rows="3" placeholder="Rua, número, bairro, cidade, CEP" required></textarea>
+
+    <label for="pagamento-cliente">Forma de pagamento *</label>
+    <select id="pagamento-cliente" required>
+      <option value="">Selecione...</option>
+      <option value="Dinheiro">Dinheiro</option>
+      <option value="Pix">Pix</option>
+      <option value="Cartão de Crédito">Cartão de Crédito</option>
+      <option value="Cartão de Débito">Cartão de Débito</option>
+    </select>
+  </section>
 
   <!-- Botão Finalizar Pedido -->
-  <div id="finalizar">
+  <div id="finalizar" style="display:none;">
     <button onclick="finalizarPedido()">Finalizar Pedido no WhatsApp</button>
   </div>
 
   <script>
-    const carrinho = [];
-
-    function adicionar(botao) {
-      const produtoElem = botao.closest('.produto');
-      const nome = produtoElem.dataset.nome;
-      const preco = parseFloat(produtoElem.dataset.preco);
-      const inputQtd = produtoElem.querySelector('input[type="number"]');
-      const quantidade = parseInt(inputQtd.value);
-
-      if (quantidade <= 0 || isNaN(quantidade)) {
-        alert('Por favor, informe uma quantidade válida maior que zero.');
-        return;
-      }
-
-      // Verifica se o produto já está no carrinho
-      const itemExistente = carrinho.find(item => item.nome === nome);
-      if (itemExistente) {
-        itemExistente.quantidade += quantidade;
-      } else {
-        carrinho.push({ nome, preco, quantidade });
-      }
-
-      inputQtd.value = 0; // zera input
-      alert(`${quantidade}x ${nome} adicionado(s) ao pedido.`);
-
-      atualizarTotal();
-    }
-
-    function atualizarTotal() {
-      if (carrinho.length === 0) {
-        document.getElementById('total-pedido').style.display = 'none';
-        return;
-      }
-      let total = 0;
-      carrinho.forEach(item => {
-        total += item.preco * item.quantidade;
-      });
-      const totalElem = document.getElementById('total-pedido');
-      totalElem.style.display = 'block';
-      totalElem.textContent = `Total acumulado: R$ ${total.toFixed(2)}`;
-    }
-
-    function finalizarPedido() {
-      if (carrinho.length === 0) {
-        alert('Adicione ao menos um produto para finalizar o pedido.');
-        return;
-      }
-
-      let mensagem = 'Olá! Gostaria de fazer um pedido:%0A';
-      let total = 0;
-
-      carrinho.forEach(item => {
-        mensagem += `- ${item.quantidade}x ${item.nome}%0A`;
-        total += item.quantidade * item.preco;
-      });
-
-      mensagem += `%0ATotal: R$ ${total.toFixed(2)}`;
-      
-      // Número do WhatsApp para pedido - ATENÇÃO: coloque o seu número real aqui, no formato internacional sem espaços, só números.
-      const numero = '5599999999999';
-
-      window.open(`https://wa.me/${numero}?text=${mensagem}`, '_blank');
-    }
+    // Aqui vamos colocar o JS na próxima etapa!
   </script>
 </body>
 </html>
