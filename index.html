@@ -1,61 +1,162 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDoces - Doceria Delivery</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MDoces - Peça Agora</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #fffaf7;
+      color: #222;
+      padding: 1rem;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #3b0a59;
+      margin-bottom: 1rem;
+    }
+
+    .produto {
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .produto img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+
+    .produto h2 {
+      font-size: 1.2rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .produto p {
+      font-size: 0.95rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .produto .preco {
+      font-weight: bold;
+      color: #3b0a59;
+      margin-bottom: 0.5rem;
+    }
+
+    .produto input[type="number"] {
+      width: 60px;
+      padding: 0.25rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .produto button {
+      background-color: #3b0a59;
+      color: #fff;
+      border: none;
+      padding: 0.5rem;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .produto button:hover {
+      background-color: #5f2a8a;
+    }
+
+    #finalizar {
+      margin-top: 2rem;
+      text-align: center;
+    }
+
+    #finalizar button {
+      background-color: #3b0a59;
+      color: #fff;
+      padding: 0.75rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    #finalizar button:hover {
+      background-color: #5f2a8a;
+    }
+  </style>
 </head>
 <body>
-
-<header>
   <h1>MDoces</h1>
-  <p>Doceria Delivery - Os melhores doces direto para sua casa</p>
-</header>
 
-<main class="container">
-  <nav id="categorias" aria-label="Categorias de produtos">
-    <!-- Categorias aparecerão aqui -->
-  </nav>
-
-  <section id="produtos" aria-label="Lista de produtos">
-    <!-- Produtos inseridos por JS -->
-  </section>
-
-  <aside id="carrinho" aria-label="Carrinho de compras">
-    <h2>Carrinho</h2>
-    <ul id="itens-carrinho" tabindex="0" aria-live="polite" aria-relevant="additions removals"></ul>
-    <div id="total">Total: R$ 0,00</div>
-
-    <form id="form-pedido" aria-label="Formulário para finalizar pedido">
-      <label for="nome-cliente">Seu nome:</label>
-      <input type="text" id="nome-cliente" name="nomeCliente" placeholder="Digite seu nome" required autocomplete="name" />
-
-      <label for="endereco-cliente">Endereço para entrega:</label>
-      <textarea id="endereco-cliente" name="enderecoCliente" placeholder="Rua, número, bairro, cidade..." rows="3" required autocomplete="street-address"></textarea>
-
-      <label for="observacoes">Observações:</label>
-      <textarea id="observacoes" name="observacoes" placeholder="Ex: Sem granulado, ponto de referência, etc." rows="2"></textarea>
-
-      <button type="submit" class="btn-finalizar" aria-label="Finalizar pedido via WhatsApp">
-        Finalizar pedido pelo WhatsApp
-      </button>
-    </form>
-  </aside>
-</main>
-
-<section id="status-pedidos" aria-label="Status dos pedidos">
-  <h2>Status dos pedidos recentes</h2>
-  <div id="lista-status-pedidos">
-    <p>Nenhum pedido realizado ainda.</p>
+  <div class="produto" data-nome="Brigadeiro Gourmet" data-preco="2.5">
+    <img src="img/brigadeiro.jpg" alt="Brigadeiro Gourmet">
+    <h2>Brigadeiro Gourmet</h2>
+    <p>Delicioso brigadeiro feito com chocolate belga.</p>
+    <div class="preco">R$ 2,50</div>
+    <input type="number" min="0" value="0">
+    <button onclick="adicionar(this)">Adicionar</button>
   </div>
-</section>
 
-<footer>
-  Desenvolvido por MDoces &copy; 2025<br />
-  <a href="admin.html" class="admin-link" aria-label="Área administrativa do MDoces">Área Administrativa</a>
-</footer>
+  <div class="produto" data-nome="Beijinho" data-preco="2">
+    <img src="img/beijinho.jpg" alt="Beijinho">
+    <h2>Beijinho</h2>
+    <p>Tradicional doce de coco com toque especial.</p>
+    <div class="preco">R$ 2,00</div>
+    <input type="number" min="0" value="0">
+    <button onclick="adicionar(this)">Adicionar</button>
+  </div>
 
-<script src="script.js"></script>
+  <div id="finalizar">
+    <button onclick="finalizarPedido()">Finalizar Pedido no WhatsApp</button>
+  </div>
+
+  <script>
+    const carrinho = [];
+
+    function adicionar(botao) {
+      const produto = botao.closest('.produto');
+      const nome = produto.dataset.nome;
+      const preco = parseFloat(produto.dataset.preco);
+      const quantidade = parseInt(produto.querySelector('input').value);
+
+      if (quantidade > 0) {
+        carrinho.push({ nome, quantidade, preco });
+        produto.querySelector('input').value = 0;
+        alert(`${quantidade}x ${nome} adicionado(s) ao pedido.`);
+      }
+    }
+
+    function finalizarPedido() {
+      if (carrinho.length === 0) {
+        alert('Adicione ao menos um produto.');
+        return;
+      }
+
+      let mensagem = 'Olá! Gostaria de fazer um pedido:%0A';
+      let total = 0;
+      carrinho.forEach(item => {
+        mensagem += `- ${item.quantidade}x ${item.nome}%0A`;
+        total += item.quantidade * item.preco;
+      });
+      mensagem += `%0ATotal: R$ ${total.toFixed(2)}`;
+
+      const numero = '5599999999999'; // Altere para o número do WhatsApp real
+      window.open(`https://wa.me/${numero}?text=${mensagem}`, '_blank');
+    }
+  </script>
 </body>
 </html>
