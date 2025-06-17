@@ -5,16 +5,17 @@
   --azul-escuro: #000f2a;
   --azul-claro: #0a2a74;
   --bege: #fdf9f0;
-  --bege-médio: #f3e9d7;
+  --bege-medio: #f3e9d7;
   --branco: #ffffff;
   --cinza: #f0f0f0;
-  --cinza-escuro: #444;
+  --cinza-escuro: #444444;
   --verde: #25d366;
   --vermelho: #e53935;
   --radius: 12px;
-  --sombra: 0 4px 10px rgba(0,0,0,0.05);
+  --sombra: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
+/* Reset básico */
 * {
   margin: 0;
   padding: 0;
@@ -62,7 +63,7 @@ main.container {
   flex: 2 1 320px;
 }
 #produtos section {
-  background: var(--bege-médio);
+  background: var(--bege-medio);
   padding: 1rem;
   border-radius: var(--radius);
   margin-bottom: 2rem;
@@ -89,7 +90,7 @@ main.container {
   width: 100%;
   border-radius: var(--radius);
   object-fit: cover;
-  aspect-ratio: 1/1;
+  aspect-ratio: 1 / 1;
 }
 .produto h3 {
   font-size: 1.2rem;
@@ -128,7 +129,7 @@ main.container {
 .quantidade-container span {
   min-width: 24px;
   text-align: center;
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .produto button:last-of-type {
@@ -137,7 +138,7 @@ main.container {
   border: none;
   border-radius: 6px;
   padding: 0.5rem;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
   transition: background 0.3s;
 }
@@ -148,7 +149,7 @@ main.container {
 /* Carrinho */
 #carrinho {
   flex: 1 1 300px;
-  background: var(--bege-médio);
+  background: var(--bege-medio);
   padding: 1rem;
   border-radius: var(--radius);
   box-shadow: var(--sombra);
@@ -162,6 +163,9 @@ main.container {
 }
 #itens-carrinho {
   list-style: none;
+  max-height: 350px;
+  overflow-y: auto;
+  padding-right: 4px; /* para scrollbar não cortar texto */
 }
 #itens-carrinho li {
   padding: 0.5rem 0;
@@ -169,6 +173,7 @@ main.container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  font-weight: 600;
 }
 #itens-carrinho button {
   background: var(--vermelho);
@@ -178,10 +183,14 @@ main.container {
   padding: 0.3rem 0.6rem;
   font-weight: bold;
   cursor: pointer;
+  transition: background 0.3s;
+}
+#itens-carrinho button:hover {
+  background: #c5302c;
 }
 #total {
   font-size: 1.2rem;
-  font-weight: bold;
+  font-weight: 700;
   text-align: right;
   margin-top: 0.5rem;
 }
@@ -194,25 +203,31 @@ form#form-pedido {
 }
 form label {
   font-weight: 600;
+  color: var(--azul-base);
 }
-form input, form textarea, form select {
+form input,
+form textarea,
+form select {
   border: 1px solid var(--cinza);
   padding: 0.5rem;
   border-radius: 6px;
   font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
 }
 form textarea {
   resize: vertical;
+  min-height: 80px;
 }
 .btn-finalizar {
   background: var(--verde);
   color: var(--branco);
   padding: 0.7rem;
-  font-weight: bold;
+  font-weight: 700;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.3s;
+  text-align: center;
 }
 .btn-finalizar:hover {
   background: #1ebc57;
@@ -229,19 +244,34 @@ form textarea {
   margin-bottom: 1rem;
   border-radius: var(--radius);
   box-shadow: var(--sombra);
+  font-size: 0.9rem;
+  color: var(--azul-escuro);
+}
+.pedido-status h3 {
+  margin-bottom: 0.3rem;
+  color: var(--azul-base);
 }
 .status-badge {
   display: inline-block;
   padding: 0.3rem 0.7rem;
   font-size: 0.8rem;
-  font-weight: bold;
+  font-weight: 700;
   color: var(--branco);
   border-radius: 10px;
+  user-select: none;
 }
-.status-0 { background: #f59e0b; }
-.status-1 { background: #2563eb; }
-.status-2 { background: #14b8a6; }
-.status-3 { background: #16a34a; }
+.status-0 {
+  background: #f59e0b; /* Pendente - amarelo */
+}
+.status-1 {
+  background: #2563eb; /* Em preparo - azul */
+}
+.status-2 {
+  background: #14b8a6; /* Saiu para entrega - verde água */
+}
+.status-3 {
+  background: #16a34a; /* Entregue - verde escuro */
+}
 
 /* Rodapé */
 footer {
@@ -250,15 +280,38 @@ footer {
   color: var(--branco);
   text-align: center;
   padding: 1rem;
+  font-size: 0.9rem;
 }
 footer a.admin-link {
   color: var(--verde);
+  text-decoration: none;
+  font-weight: 600;
+}
+footer a.admin-link:hover {
+  text-decoration: underline;
+}
+
+/* Scrollbar customizada para listas longas */
+#itens-carrinho::-webkit-scrollbar {
+  width: 8px;
+}
+#itens-carrinho::-webkit-scrollbar-track {
+  background: var(--bege-medio);
+  border-radius: 4px;
+}
+#itens-carrinho::-webkit-scrollbar-thumb {
+  background: var(--azul-claro);
+  border-radius: 4px;
+}
+#itens-carrinho::-webkit-scrollbar-thumb:hover {
+  background: var(--azul-base);
 }
 
 /* Responsivo */
 @media (max-width: 720px) {
   main.container {
     flex-direction: column;
+    padding: 0 1rem;
   }
   #produtos section {
     padding: 0.8rem;
