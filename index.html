@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="MDoces Delivery - Seus doces artesanais favoritos, fresquinhos e entregues na sua porta. Bolos, docinhos, tortas e muito mais!">
-  <meta name="keywords" content="doceria, doces artesanais, delivery, bolo, brigadeiro, sobremesas, pedir doce online, doceria em [sua cidade], confeitaria">
+  <meta name="keywords" content="doceria, doces artesanais, delivery, bolo, brigadeiro, sobremesas, pedir doce online, doceria em Macapá, confeitaria artesanal">
   <meta name="author" content="Alessandrosh82">
   <title>MDoces Delivery - Sabor e Doçura na Sua Porta</title>
   
@@ -46,9 +46,9 @@
     <section id="cardapio">
       <h2>Nosso Cardápio de Delícias</h2>
       <div class="produtos-grid" id="produtos-cardapio">
-        <p id="loading-products-message" style="text-align:center; color:#888;">Carregando nossos doces deliciosos...</p>
+        <p id="loading-products-message" class="info-message">Carregando nossos doces deliciosos...</p>
       </div>
-      <p id="no-products-message" style="text-align:center; color:#888; display:none; margin-top: 2rem;">Ainda não temos produtos cadastrados. Por favor, acesse o painel administrativo para adicioná-los!</p>
+      <p id="no-products-message" class="info-message" style="display:none;">Ainda não temos produtos cadastrados. Por favor, acesse o painel administrativo para adicioná-los!</p>
     </section>
     
     <section id="sobre">
@@ -60,7 +60,7 @@
     <section id="contato">
       <h2>Fale Conosco</h2>
       <p class="contact-intro">Tem alguma dúvida, sugestão ou gostaria de fazer um pedido especial? Entre em contato!</p>
-      <form action="#" method="POST" class="contact-form" id="contact-form">
+      <form class="contact-form" id="contact-form">
         <div class="form-group">
           <label for="nome">Seu Nome:</label>
           <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required aria-required="true">
@@ -85,19 +85,17 @@
   <footer>
     <p>&copy; 2025 MDoces Delivery. Todos os direitos reservados.</p>
     <div class="social-links">
-      <a href="https://www.facebook.com/seufacebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook da MDoces">Facebook</a>
-      <a href="https://www.instagram.com/seuinstagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram da MDoces">Instagram</a>
-      <a href="https://wa.me/5596999999999" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp da MDoces">WhatsApp</a>
+      <a href="https://www.facebook.com/seufacebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook da MDoces"><i class="fab fa-facebook-f"></i> Facebook</a>
+      <a href="https://www.instagram.com/seuinstagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram da MDoces"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://wa.me/5596999999999" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp da MDoces"><i class="fab fa-whatsapp"></i> WhatsApp</a>
     </div>
   </footer>
 
-  <div id="cart-modal" class="cart-modal">
-    <div class="cart-modal-content">
-      <span class="close-button" aria-label="Fechar carrinho">&times;</span>
+  <div id="cart-modal" class="modal"> <div class="modal-content"> <span class="close-button" aria-label="Fechar carrinho">&times;</span>
       <h2>Seu Carrinho de Compras</h2>
       <ul id="cart-items-list">
-      </ul>
-      <p id="empty-cart-message" class="empty-cart-message" style="display:none;">Seu carrinho está vazio.</p>
+        </ul>
+      <p id="empty-cart-message" class="info-message" style="display:none;">Seu carrinho está vazio.</p>
       <p id="cart-total">Total: R$ 0,00</p>
 
       <form id="checkout-form" class="checkout-form">
@@ -133,6 +131,5 @@
     </div>
   </div>
 
-  <script src="app.js"></script>
-</body>
+  <script src="script.js"></script> </body>
 </html>
