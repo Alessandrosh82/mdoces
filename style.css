@@ -125,6 +125,40 @@ section {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Sombra mais suave */
 }
 
+/* --- Hero Section (Página Inicial) --- */
+.hero-section {
+    background: linear-gradient(rgba(0, 51, 102, 0.7), rgba(0, 51, 102, 0.7)), url('https://via.placeholder.com/1500x500?text=Fundo+MDoces') no-repeat center center/cover; /* Imagem de fundo e overlay */
+    color: var(--text-light);
+    text-align: center;
+    padding: 6rem 1rem; /* Mais padding para um visual imponente */
+    border-radius: 0; /* Remove borda arredondada se for full-width */
+    box-shadow: none; /* Remove sombra aqui */
+    margin: 0; /* Ocupa a largura total */
+}
+
+.hero-section .hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-section h1 {
+    font-size: 3.5em; /* Título principal ainda maior */
+    color: var(--accent-color); /* Título em bege para destaque */
+    margin-bottom: 0.4em;
+    line-height: 1.2;
+}
+
+.hero-section .highlight {
+    color: #fff; /* Deixa o "MDoces Delivery" em branco no título */
+}
+
+.hero-section p {
+    font-size: 1.3em;
+    margin-bottom: 2rem;
+    line-height: 1.5;
+    color: #f0f0f0;
+}
+
 /* --- Grid de Produtos --- */
 .produtos-grid {
     display: grid;
@@ -159,9 +193,9 @@ section {
     margin-bottom: 0.5rem;
 }
 
-.produto p {
-    color: var(--text-dark);
-    font-size: 0.95em;
+.produto .description { /* Estilo para a descrição do produto */
+    color: #666;
+    font-size: 0.9em;
     margin-bottom: 1rem;
     flex-grow: 1; /* Permite que o parágrafo ocupe o espaço disponível */
 }
@@ -188,34 +222,47 @@ section {
     display: inline-block; /* Para padding e largura funcionarem em <a> */
     text-align: center;
     white-space: nowrap; /* Evita que o texto quebre */
-    transition: background-color 0.2s ease, transform 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.btn:hover {
+.btn.primary-btn { /* Botão primário com estilo padrão */
+    background-color: var(--primary-color);
+}
+
+.btn.primary-btn:hover {
     background-color: var(--hover-dark);
     transform: translateY(-2px); /* Efeito de elevação sutil */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.produto button.btn { /* Sobrescreve o botão do produto para usar a classe .btn */
-    width: auto; /* Ajusta a largura ao conteúdo */
+/* --- Formulário de Contato --- */
+.contact-intro {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 1.1em;
+    color: #555;
 }
 
-/* --- Formulário de Contato --- */
-#contact .form-group { /* Agrupamento de label e input */
+.contact-form {
+    max-width: 600px; /* Limita a largura do formulário */
+    margin: 0 auto;
+}
+
+.contact-form .form-group { /* Agrupamento de label e input */
     margin-bottom: 1.5rem;
 }
 
-#contact label {
+.contact-form label {
     display: block;
     margin-bottom: 0.5rem;
     font-weight: 600;
     color: var(--secondary-color);
 }
 
-#contact input[type="text"],
-#contact input[type="email"],
-#contact textarea {
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="url"], /* Incluído para consistência, se necessário */
+.contact-form textarea {
     width: 100%;
     padding: 12px;
     border: 1px solid var(--border-color);
@@ -225,15 +272,16 @@ section {
     background-color: var(--text-light); /* Fundo claro */
 }
 
-#contact input[type="text"]:focus,
-#contact input[type="email"]:focus,
-#contact textarea:focus {
+.contact-form input[type="text"]:focus,
+.contact-form input[type="email"]:focus,
+.contact-form input[type="url"]:focus,
+.contact-form textarea:focus {
     outline: none;
     border-color: var(--primary-color); /* Borda azul ao focar */
     box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.2); /* Sombra suave de foco */
 }
 
-#contact textarea {
+.contact-form textarea {
     resize: vertical; /* Permite redimensionar verticalmente */
     min-height: 120px;
 }
@@ -247,59 +295,6 @@ section {
     font-weight: 500;
 }
 
-/* --- Contagem Regressiva da Promoção --- */
-#promo {
-    font-size: 1.8em;
-    font-weight: bold;
-    color: var(--secondary-color); /* Preto para destaque */
-    text-align: center;
-    margin-top: 2rem;
-    background-color: var(--accent-color); /* Fundo bege para a barra de promo */
-    padding: 1.5rem;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    display: flex;
-    flex-wrap: wrap; /* Permite que os itens quebrem em telas menores */
-    justify-content: center;
-    align-items: center;
-    gap: 15px; /* Espaço entre os itens da contagem */
-}
-
-.countdown-label {
-    font-size: 0.8em;
-    font-weight: 500;
-    color: var(--text-dark);
-    flex-basis: 100%; /* Ocupa toda a largura */
-    margin-bottom: 0.5rem;
-}
-
-.countdown-item {
-    background-color: var(--primary-color);
-    color: var(--text-light);
-    padding: 10px 15px;
-    border-radius: 5px;
-    min-width: 70px; /* Garante largura mínima para alinhamento */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.2em;
-}
-
-.countdown-item small {
-    font-size: 0.6em;
-    font-weight: normal;
-    display: block; /* Garante que a palavra fique abaixo do número */
-    margin-top: 3px;
-}
-
-.promo-ended {
-    color: var(--text-dark) !important; /* Cor mais suave quando a promo termina */
-    font-size: 1.2em;
-    font-style: italic;
-}
-
-
 /* --- Footer --- */
 footer {
     background-color: var(--secondary-color); /* Fundo preto para o footer */
@@ -311,14 +306,18 @@ footer {
     box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
-footer a {
+footer .social-links {
+    margin-top: 1rem;
+}
+
+footer .social-links a {
     color: var(--accent-color); /* Links do footer em bege */
     text-decoration: none;
     margin: 0 0.8rem;
     font-weight: 500;
 }
 
-footer a:hover {
+footer .social-links a:hover {
     text-decoration: underline;
 }
 
@@ -339,12 +338,18 @@ footer a:hover {
     section {
         padding: 2.5rem 1rem;
     }
+    .hero-section {
+        padding: 4rem 1rem;
+    }
+    .hero-section h1 {
+        font-size: 2.8em;
+    }
+    .hero-section p {
+        font-size: 1.1em;
+    }
     .produtos-grid {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
         gap: 1.5rem;
-    }
-    .promo-ended {
-        font-size: 1.1em;
     }
 }
 
@@ -393,14 +398,11 @@ footer a:hover {
         width: auto; /* Deixa o grid cuidar da largura */
         margin: 0; /* Remove a margem individual, o gap do grid cuida */
     }
-    #promo {
-        font-size: 1.5em;
-        padding: 1rem;
+    .hero-section h1 {
+        font-size: 2.2em;
     }
-    .countdown-item {
+    .hero-section p {
         font-size: 1em;
-        min-width: 60px;
-        padding: 8px 12px;
     }
 }
 
@@ -414,19 +416,20 @@ footer a:hover {
     section {
         padding: 2rem 0.8rem;
     }
+    .hero-section {
+        padding: 3rem 0.8rem;
+    }
+    .hero-section h1 {
+        font-size: 1.8em;
+    }
+    .hero-section p {
+        font-size: 0.9em;
+    }
     .produtos-grid {
         grid-template-columns: 1fr; /* Uma coluna em telas muito pequenas */
     }
     .btn {
         padding: 0.7rem 1.2rem;
         font-size: 0.9em;
-    }
-    #promo {
-        font-size: 1.2em;
-    }
-    .countdown-item {
-        font-size: 0.9em;
-        min-width: 50px;
-        padding: 6px 10px;
     }
 }
