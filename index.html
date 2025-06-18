@@ -31,7 +31,7 @@
         <h1>Bem-vindo à <span class="highlight">MDoces Delivery</span></h1>
         <p>Doces artesanais feitos com carinho, frescos e entregues na sua porta. <br>A doçura perfeita para o seu dia!</p>
         <a href="#cardapio" class="btn primary-btn">Ver Nosso Cardápio Agora!</a>
-        </div>
+      </div>
     </section>
 
     <section id="cardapio">
@@ -131,11 +131,11 @@
       loadProductsFromLocalStorage();
 
       // Opcional: Recarrega os produtos se houver alguma alteração no localStorage (útil para desenvolvimento)
-      window.addEventListener('storage', (event) => {
-          if (event.key === 'mdoces_products') {
-              loadProductsFromLocalStorage();
-          }
-      });
+      // window.addEventListener('storage', (event) => {
+      //     if (event.key === 'mdoces_products') {
+      //         loadProductsFromLocalStorage();
+      //     }
+      // });
     });
   </script>
 </body>
