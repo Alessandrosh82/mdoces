@@ -3,66 +3,162 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Doceria Moisés - Deliciosos doces artesanais entregues na sua casa.">
-  <title>Doceria Moisés - Seu doce favorito na porta de casa</title>
+  <meta name="description" content="MDoces Delivery - Seus doces artesanais favoritos, fresquinhos e entregues na sua porta. Bolos, docinhos, tortas e muito mais!">
+  <meta name="keywords" content="doceria, doces artesanais, delivery, bolo, brigadeiro, sobremesas, pedir doce online, doceria em [sua cidade], confeitaria">
+  <meta name="author" content="Alessandrosh82">
+  <title>MDoces Delivery - Sabor e Doçura na Sua Porta</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
   <link rel="stylesheet" href="style.css">
-</head>
+  </head>
 <body>
   <header>
     <nav>
+      <a href="#home" class="logo">MDoces Delivery</a>
       <ul>
         <li><a href="#home">Início</a></li>
         <li><a href="#cardapio">Cardápio</a></li>
-        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#promocao">Promoções</a></li>
+        <li><a href="#depoimentos">Depoimentos</a></li>
+        <li><a href="#sobre">Sobre Nós</a></li>
         <li><a href="#contato">Contato</a></li>
       </ul>
-    </nav>
+      </nav>
   </header>
 
-  <section id="home">
-    <h1>Bem-vindo à Doceria Moisés</h1>
-    <p>Doces artesanais feitos com carinho e entregues na sua porta.</p>
-    <a href="#cardapio" class="btn">Veja nosso cardápio</a>
-  </section>
+  <main>
+    <section id="home" class="hero-section">
+      <div class="hero-content">
+        <h1>Bem-vindo à <span class="highlight">MDoces Delivery</span></h1>
+        <p>Doces artesanais feitos com carinho, frescos e entregues na sua porta. <br>A doçura perfeita para o seu dia!</p>
+        <a href="#cardapio" class="btn primary-btn">Ver Nosso Cardápio Agora!</a>
+        <p id="promo-countdown" class="promo-countdown-text"></p>
+      </div>
+    </section>
 
-  <section id="cardapio">
-    <h2>Nosso Cardápio</h2>
-    <div class="produto">
-      <img src="img/brownie.jpg" alt="Brownie de chocolate">
-      <h3>Brownie de Chocolate</h3>
-      <p>R$ 25,00</p>
-      <button class="btn">Adicionar ao carrinho</button>
-    </div>
-    <!-- Adicionar mais produtos conforme necessário -->
-  </section>
+    <section id="cardapio">
+      <h2>Nosso Cardápio de Delícias</h2>
+      <div class="produtos-grid" id="produtos-cardapio">
+        <p id="loading-products-message" style="text-align:center; color:#888;">Carregando nossos doces deliciosos...</p>
+      </div>
+      <p id="no-products-message" style="text-align:center; color:#888; display:none; margin-top: 2rem;">Não foi possível carregar os produtos no momento. Por favor, tente novamente mais tarde.</p>
+    </section>
 
-  <section id="sobre">
-    <h2>Sobre nós</h2>
-    <p>Somos uma doceria artesanal apaixonada por doces e pela satisfação dos nossos clientes.</p>
-  </section>
+    <section id="promocao" class="highlight-section">
+        <h2>Promoção do Dia!</h2>
+        <p class="promo-description">Não perca nossa oferta especial por tempo limitado:</p>
+        <div id="promo" class="promo-timer"></div> 
+        <a href="#cardapio" class="btn secondary-btn">Aproveitar a Oferta!</a>
+    </section>
 
-  <section id="contato">
-    <h2>Contato</h2>
-    <form action="enviar_pedido.php" method="POST">
-      <label for="nome">Nome:</label>
-      <input type="text" id="nome" name="nome" required>
-      <label for="email">E-mail:</label>
-      <input type="email" id="email" name="email" required>
-      <label for="mensagem">Mensagem:</label>
-      <textarea id="mensagem" name="mensagem" required></textarea>
-      <button type="submit" class="btn">Enviar Pedido</button>
-    </form>
-  </section>
+    <section id="depoimentos">
+      <h2>O Que Nossos Clientes Dizem</h2>
+      <div class="depoimentos-grid">
+        <div class="depoimento-item">
+          <p>"Os bolos da MDoces são incríveis! Sempre fresquinhos e deliciosos. A entrega é super rápida."</p>
+          <span class="cliente-nome">- Ana Paula S.</span>
+        </div>
+        <div class="depoimento-item">
+          <p>"Melhor brownie que já comi! Viciante e perfeito para qualquer hora. Recomendo muito!"</p>
+          <span class="cliente-nome">- Carlos R.</span>
+        </div>
+        <div class="depoimento-item">
+          <p>"Atendimento impecável e doces que parecem feitos em casa. Minha doceria favorita!"</p>
+          <span class="cliente-nome">- Mariana L.</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="sobre">
+      <h2>Sobre a MDoces Delivery</h2>
+      <p>Na **MDoces Delivery**, somos mais que uma doceria artesanal; somos apaixonados por transformar momentos simples em celebrações doces. Cada um de nossos produtos é feito com ingredientes selecionados, carinho e a dedicação que só a culinária artesanal pode oferecer.</p>
+      <p>Nosso objetivo é levar a doçura e a alegria diretamente para a sua casa, com a conveniência da entrega e a qualidade que você merece. Explore nosso cardápio e descubra seu novo doce favorito!</p>
+    </section>
+
+    <section id="contato">
+      <h2>Fale Conosco</h2>
+      <p class="contact-intro">Tem alguma dúvida, sugestão ou gostaria de fazer um pedido especial? Entre em contato!</p>
+      <form action="enviar_pedido.php" method="POST" class="contact-form">
+        <div class="form-group">
+          <label for="nome">Seu Nome:</label>
+          <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Seu Melhor E-mail:</label>
+          <input type="email" id="email" name="email" placeholder="email@exemplo.com" required>
+        </div>
+        <div class="form-group">
+          <label for="assunto">Assunto (Opcional):</label>
+          <input type="text" id="assunto" name="assunto" placeholder="Dúvida, sugestão, pedido..." >
+        </div>
+        <div class="form-group">
+          <label for="mensagem">Sua Mensagem:</label>
+          <textarea id="mensagem" name="mensagem" rows="5" placeholder="Digite sua mensagem aqui..." required></textarea>
+        </div>
+        <button type="submit" class="btn primary-btn">Enviar Mensagem</button>
+      </form>
+    </section>
+  </main>
 
   <footer>
-    <p>&copy; 2025 Doceria Moisés - Todos os direitos reservados.</p>
-    <div>
-      <a href="#">Facebook</a>
-      <a href="#">Instagram</a>
-      <a href="#">WhatsApp</a>
+    <p>&copy; 2025 MDoces Delivery. Todos os direitos reservados.</p>
+    <div class="social-links">
+      <a href="#" target="_blank" aria-label="Facebook da MDoces">Facebook</a>
+      <a href="#" target="_blank" aria-label="Instagram da MDoces">Instagram</a>
+      <a href="#" target="_blank" aria-label="WhatsApp da MDoces">WhatsApp</a>
     </div>
   </footer>
 
   <script src="script.js"></script>
+  <script>
+    // Script local para carregar produtos do localStorage (simulação)
+    document.addEventListener('DOMContentLoaded', () => {
+      const productsListContainer = document.getElementById('produtos-cardapio');
+      const loadingMessage = document.getElementById('loading-products-message');
+      const noProductsMessage = document.getElementById('no-products-message');
+
+      function loadProducts() {
+        loadingMessage.style.display = 'block'; // Mostra a mensagem de carregamento
+        productsListContainer.innerHTML = ''; // Limpa qualquer conteúdo anterior
+
+        setTimeout(() => { // Simula um pequeno atraso para carregamento
+          const products = JSON.parse(localStorage.getItem('mdoces_products')) || [];
+          loadingMessage.style.display = 'none'; // Esconde a mensagem de carregamento
+
+          if (products.length === 0) {
+            noProductsMessage.style.display = 'block';
+            noProductsMessage.textContent = 'Parece que ainda não temos produtos cadastrados. Volte em breve!';
+          } else {
+            noProductsMessage.style.display = 'none';
+            products.forEach(prod => {
+              const productDiv = document.createElement('div');
+              productDiv.className = 'produto';
+              productDiv.innerHTML = `
+                <img src="${prod.imagem}" alt="${prod.nome}" onerror="this.onerror=null;this.src='https://via.placeholder.com/250x180?text=Imagem+N/D';" />
+                <h3>${prod.nome}</h3>
+                <p class="description">${prod.descricao}</p>
+                <p class="price">R$ ${prod.preco.toFixed(2)}</p>
+                <button class="btn add-to-cart-btn" data-product-id="${prod.id}">Adicionar ao carrinho</button>
+              `;
+              productsListContainer.appendChild(productDiv);
+            });
+            // Adicionar listeners para os botões "Adicionar ao carrinho"
+            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+              button.addEventListener('click', () => {
+                const productId = button.dataset.productId;
+                alert(`Produto com ID ${productId} adicionado ao carrinho! (Funcionalidade real precisa ser implementada)`);
+                // Aqui você adicionaria a lógica para adicionar ao carrinho (ex: salvar no localStorage, enviar para um backend, etc.)
+                // Por exemplo: addToCart(productId);
+              });
+            });
+          }
+        }, 500); // Carrega após 0.5 segundos
+      }
+
+      // Chama a função para carregar produtos quando a página for carregada
+      loadProducts();
+    });
+  </script>
 </body>
 </html>
