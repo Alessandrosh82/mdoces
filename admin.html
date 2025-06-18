@@ -1,367 +1,599 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MDoces - Administração</title>
-  <style>
-    /* Reset básico */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MDoces - Painel Administrativo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Reset de Estilos Aprimorado --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif; /* Usando Poppins para consistência */
+            transition: all 0.3s ease-in-out; /* Transições suaves para todos os elementos */
+        }
 
-    body {
-      background: #f5f7fa;
-      color: #222;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-    }
+        /* --- Variáveis CSS para Cores (Consistência com o site principal) --- */
+        :root {
+            --primary-admin: #003366; /* Azul Marinho para elementos principais do admin */
+            --secondary-admin: #1a1a1a; /* Preto para textos e detalhes fortes */
+            --accent-admin: #f5deb3; /* Bege para fundos e realces suaves */
+            --background-light: #fdfdfd; /* Fundo branco sutil para cards */
+            --text-dark: #333; /* Cor de texto padrão */
+            --text-light: #f8f8f8; /* Cor de texto para fundos escuros */
+            --border-color: #e0e0e0; /* Borda padrão mais suave */
+            --success-color: #28a745; /* Verde para sucesso */
+            --error-color: #dc3545; /* Vermelho para erro */
+            --hover-dark: #002244; /* Azul marinho mais escuro para hover */
+            --delete-red: #c82333; /* Vermelho mais escuro para botão de excluir */
+        }
 
-    header {
-      background: #3f51b5; /* azul índigo */
-      color: white;
-      padding: 1.5rem 2rem;
-      text-align: center;
-      box-shadow: 0 2px 8px rgb(63 81 181 / 0.4);
-      font-weight: 700;
-      font-size: 1.8rem;
-      letter-spacing: 1.5px;
-    }
+        body {
+            background: var(--accent-admin); /* Fundo bege suave para o admin */
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            font-size: 16px; /* Tamanho base da fonte */
+        }
 
-    main.admin.container {
-      flex: 1;
-      display: flex;
-      gap: 2rem;
-      max-width: 1100px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
+        /* --- Header --- */
+        header {
+            background: var(--primary-admin);
+            color: var(--text-light);
+            padding: 1.5rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra mais destacada */
+            font-weight: 700;
+            font-size: 1.8rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase; /* Mais profissional */
+        }
 
-    /* Formulário */
-    .form-produto {
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgb(0 0 0 / 0.08);
-      flex: 1 1 400px;
-      display: flex;
-      flex-direction: column;
-    }
+        /* --- Main Container --- */
+        main.admin.container {
+            flex: 1;
+            display: flex;
+            gap: 2.5rem; /* Aumenta o espaçamento entre as seções */
+            max-width: 1200px; /* Aumenta a largura máxima para melhor aproveitamento */
+            margin: 2.5rem auto; /* Mais margem vertical */
+            padding: 0 1.5rem; /* Mais padding horizontal */
+        }
 
-    .form-produto h2 {
-      color: #3f51b5;
-      margin-bottom: 1.5rem;
-      font-weight: 600;
-      font-size: 1.5rem;
-      border-bottom: 2px solid #3f51b5;
-      padding-bottom: 0.5rem;
-    }
+        /* --- Estilo Geral de Seção/Card --- */
+        section {
+            background: var(--background-light); /* Fundo branco suave */
+            padding: 2.5rem; /* Mais padding interno */
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08); /* Sombra mais proeminente */
+            display: flex;
+            flex-direction: column;
+            flex: 1; /* Permite que as seções cresçam igualmente */
+        }
 
-    .form-produto label {
-      margin-top: 1rem;
-      font-weight: 600;
-      color: #333;
-    }
+        section h2 {
+            color: var(--primary-admin);
+            margin-bottom: 2rem; /* Mais espaçamento abaixo do título */
+            font-weight: 600;
+            font-size: 1.8rem; /* Título maior e mais impactante */
+            border-bottom: 3px solid var(--primary-admin); /* Linha mais grossa */
+            padding-bottom: 0.8rem; /* Mais espaçamento da linha */
+            text-align: center; /* Centraliza o título */
+        }
 
-    .form-produto input[type="text"],
-    .form-produto input[type="number"],
-    .form-produto input[type="url"],
-    .form-produto textarea {
-      margin-top: 0.3rem;
-      padding: 0.6rem 0.8rem;
-      font-size: 1rem;
-      border: 2px solid #cbd5e1;
-      border-radius: 8px;
-      transition: border-color 0.3s ease;
-      width: 100%;
-      font-family: inherit;
-      resize: vertical;
-    }
+        /* --- Formulário de Produto --- */
+        .form-produto {
+            flex: 1 1 450px; /* Ajusta a base para o formulário */
+        }
 
-    .form-produto input[type="text"]:focus,
-    .form-produto input[type="number"]:focus,
-    .form-produto input[type="url"]:focus,
-    .form-produto textarea:focus {
-      outline: none;
-      border-color: #3f51b5;
-      box-shadow: 0 0 6px #3f51b5aa;
-    }
+        .form-produto label {
+            margin-top: 1.2rem; /* Mais espaço acima do label */
+            margin-bottom: 0.5rem;
+            display: block; /* Garante que o label ocupe sua própria linha */
+            font-weight: 600;
+            color: var(--secondary-admin);
+        }
 
-    .form-produto button {
-      margin-top: 1.8rem;
-      background: #3f51b5;
-      color: white;
-      font-weight: 700;
-      padding: 0.8rem;
-      font-size: 1.1rem;
-      border: none;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
+        .form-produto input[type="text"],
+        .form-produto input[type="number"],
+        .form-produto input[type="url"],
+        .form-produto textarea {
+            padding: 0.8rem 1rem; /* Mais padding interno */
+            font-size: 1.05rem; /* Fonte ligeiramente maior */
+            border: 1px solid var(--border-color); /* Borda mais suave */
+            border-radius: 8px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            width: 100%;
+            background-color: #fff; /* Fundo branco nos inputs */
+        }
 
-    .form-produto button:hover {
-      background: #2c3a99;
-    }
+        .form-produto input[type="text"]:focus,
+        .form-produto input[type="number"]:focus,
+        .form-produto input[type="url"]:focus,
+        .form-produto textarea:focus {
+            outline: none;
+            border-color: var(--primary-admin);
+            box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.2); /* Sombra de foco mais sutil */
+        }
 
-    /* Lista de produtos */
-    .lista-produtos {
-      flex: 1 1 600px;
-      background: white;
-      padding: 2rem;
-      border-radius: 12px;
-      box-shadow: 0 2px 10px rgb(0 0 0 / 0.08);
-      overflow-y: auto;
-      max-height: 600px;
-      display: flex;
-      flex-direction: column;
-    }
+        .form-produto textarea {
+            min-height: 100px; /* Altura mínima da textarea */
+        }
 
-    .lista-produtos h2 {
-      color: #3f51b5;
-      margin-bottom: 1rem;
-      font-weight: 600;
-      font-size: 1.5rem;
-      border-bottom: 2px solid #3f51b5;
-      padding-bottom: 0.5rem;
-    }
+        .form-produto button {
+            margin-top: 2.5rem; /* Mais espaço antes do botão */
+            background: var(--primary-admin);
+            color: var(--text-light);
+            font-weight: 700;
+            padding: 1rem 1.5rem; /* Padding maior para o botão */
+            font-size: 1.15rem; /* Fonte do botão maior */
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+            width: 100%; /* Botão ocupa a largura total */
+            letter-spacing: 0.8px;
+        }
 
-    #produtos-lista {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
+        .form-produto button:hover {
+            background: var(--hover-dark);
+            transform: translateY(-2px); /* Efeito de elevação sutil */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
 
-    .item-produto {
-      display: flex;
-      gap: 1rem;
-      background: #f0f4ff;
-      padding: 1rem;
-      border-radius: 10px;
-      align-items: center;
-      box-shadow: inset 0 0 4px #a5b1f0aa;
-    }
+        /* --- Mensagens de Alerta (Feedback JS) --- */
+        .feedback-message {
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            text-align: center;
+            opacity: 0; /* Começa invisível */
+            transform: translateY(10px);
+            animation: fadeInOut 4s forwards; /* Animação de fade */
+        }
 
-    .item-produto img {
-      width: 80px;
-      height: 80px;
-      border-radius: 10px;
-      object-fit: cover;
-      flex-shrink: 0;
-      box-shadow: 0 1px 5px rgb(63 81 181 / 0.3);
-      border: 2px solid #3f51b5;
-    }
+        .feedback-message.success {
+            background-color: #d4edda;
+            color: var(--success-color);
+            border: 1px solid #c3e6cb;
+        }
 
-    .item-produto > div {
-      flex: 1;
-      color: #333;
-      font-size: 0.95rem;
-    }
+        .feedback-message.error {
+            background-color: #f8d7da;
+            color: var(--error-color);
+            border: 1px solid #f5c6cb;
+        }
 
-    .item-produto strong {
-      font-size: 1.1rem;
-      color: #2c3a99;
-      margin-bottom: 0.3rem;
-      display: inline-block;
-    }
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: translateY(10px); }
+            10% { opacity: 1; transform: translateY(0); }
+            90% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
 
-    .item-produto em {
-      color: #5c6bc0;
-      font-style: normal;
-      font-weight: 600;
-    }
+        /* --- Lista de Produtos --- */
+        .lista-produtos {
+            flex: 1 1 700px; /* Ajusta a base para a lista */
+            max-height: 700px; /* Aumenta a altura máxima */
+            overflow-y: auto; /* Scroll apenas quando necessário */
+        }
+        
+        #produtos-lista {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem; /* Mais espaço entre os itens da lista */
+        }
 
-    .item-produto button {
-      margin-top: 0.5rem;
-      margin-right: 0.5rem;
-      padding: 0.4rem 0.8rem;
-      font-weight: 600;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      font-size: 0.9rem;
-      user-select: none;
-    }
+        .item-produto {
+            display: flex;
+            gap: 1.5rem; /* Mais espaço entre imagem e texto */
+            background: #fff; /* Fundo branco para cada item */
+            padding: 1.2rem; /* Mais padding interno */
+            border-radius: 10px;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Sombra mais suave */
+            border: 1px solid var(--border-color); /* Borda sutil */
+        }
 
-    .item-produto button:first-of-type {
-      background-color: #3f51b5;
-      color: white;
-    }
+        .item-produto img {
+            width: 100px; /* Imagem um pouco maior */
+            height: 100px;
+            border-radius: 10px;
+            object-fit: cover;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--primary-admin);
+        }
 
-    .item-produto button:first-of-type:hover {
-      background-color: #2c3a99;
-    }
+        .item-produto > div {
+            flex: 1;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
 
-    .item-produto button:last-of-type {
-      background-color: #e53935;
-      color: white;
-    }
+        .item-produto strong {
+            font-size: 1.2rem; /* Nome do produto maior */
+            color: var(--primary-admin); /* Nome em azul marinho */
+            margin-bottom: 0.4rem;
+            display: block; /* Garante que o nome ocupe sua própria linha */
+        }
 
-    .item-produto button:last-of-type:hover {
-      background-color: #b71c1c;
-    }
+        .item-produto .descricao {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
 
-    /* Footer */
-    footer {
-      background: #3f51b5;
-      color: white;
-      padding: 1rem 2rem;
-      text-align: center;
-      font-weight: 600;
-      box-shadow: 0 -2px 8px rgb(63 81 181 / 0.4);
-      user-select: none;
-    }
+        .item-produto em {
+            color: var(--secondary-admin); /* Categoria em preto */
+            font-style: normal;
+            font-weight: 600;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
 
-    footer small {
-      display: block;
-      margin-top: 0.5rem;
-      font-weight: 400;
-      font-size: 0.9rem;
-      color: #b3c0f9;
-    }
+        .item-produto .preco {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--success-color); /* Preço em verde */
+            margin-top: 0.5rem;
+        }
 
-    /* Scrollbar estilizado para lista de produtos */
-    #produtos-lista::-webkit-scrollbar {
-      width: 8px;
-    }
+        .item-produto .actions {
+            display: flex;
+            gap: 10px; /* Espaço entre os botões */
+            margin-top: 1rem;
+        }
 
-    #produtos-lista::-webkit-scrollbar-thumb {
-      background-color: #3f51b5cc;
-      border-radius: 4px;
-    }
+        .item-produto button {
+            padding: 0.6rem 1.2rem; /* Padding aprimorado */
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            font-size: 0.9rem;
+            user-select: none;
+            min-width: 80px; /* Garante que os botões tenham uma largura mínima */
+        }
 
-    #produtos-lista::-webkit-scrollbar-track {
-      background: #e0e6f9;
-      border-radius: 4px;
-    }
+        .item-produto button.edit-btn {
+            background-color: var(--primary-admin);
+            color: var(--text-light);
+        }
 
-    /* Responsividade */
-    @media (max-width: 900px) {
-      main.admin.container {
-        flex-direction: column;
-      }
+        .item-produto button.edit-btn:hover {
+            background-color: var(--hover-dark);
+            transform: translateY(-2px);
+        }
 
-      .form-produto, .lista-produtos {
-        max-height: none;
-      }
-    }
-  </style>
+        .item-produto button.delete-btn {
+            background-color: var(--error-color);
+            color: var(--text-light);
+        }
+
+        .item-produto button.delete-btn:hover {
+            background-color: var(--delete-red);
+            transform: translateY(-2px);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--secondary-admin); /* Fundo preto para o footer */
+            color: var(--text-light);
+            padding: 1.2rem 2rem;
+            text-align: center;
+            font-weight: 500;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: 3rem; /* Espaço antes do footer */
+        }
+
+        footer small {
+            display: block;
+            margin-top: 0.5rem;
+            font-weight: 400;
+            font-size: 0.85rem;
+            color: #b3c0f9; /* Um tom de azul claro para o texto da senha */
+            opacity: 0.8;
+        }
+
+        /* --- Scrollbar estilizado para lista de produtos --- */
+        .lista-produtos::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .lista-produtos::-webkit-scrollbar-thumb {
+            background-color: var(--primary-admin);
+            border-radius: 4px;
+        }
+
+        .lista-produtos::-webkit-scrollbar-track {
+            background: #e0e6f9; /* Fundo suave para a track */
+            border-radius: 4px;
+        }
+
+        /* --- Responsividade --- */
+        @media (max-width: 1024px) {
+            main.admin.container {
+                gap: 2rem;
+                margin: 2rem auto;
+            }
+            section {
+                padding: 2rem;
+            }
+            section h2 {
+                font-size: 1.6rem;
+            }
+            .form-produto button {
+                padding: 0.9rem 1.2rem;
+                font-size: 1.05rem;
+            }
+            .item-produto img {
+                width: 90px;
+                height: 90px;
+            }
+            .item-produto strong {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            main.admin.container {
+                flex-direction: column;
+                padding: 0 1rem;
+                gap: 1.5rem;
+            }
+
+            .form-produto, .lista-produtos {
+                max-height: none; /* Remove altura máxima em mobile */
+                width: 100%;
+            }
+
+            header, footer {
+                padding: 1rem 1rem;
+            }
+
+            section {
+                padding: 1.5rem;
+            }
+
+            section h2 {
+                font-size: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+
+            .item-produto {
+                flex-direction: column; /* Pilha a imagem e o texto */
+                text-align: center;
+                gap: 0.8rem;
+            }
+            .item-produto img {
+                width: 120px; /* Aumenta a imagem para destaque em coluna */
+                height: 120px;
+            }
+            .item-produto .actions {
+                justify-content: center; /* Centraliza botões */
+                margin-top: 1.2rem;
+            }
+        }
+
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            section h2 {
+                font-size: 1.3rem;
+                margin-bottom: 1.2rem;
+            }
+            .form-produto button {
+                padding: 0.8rem 1rem;
+                font-size: 1rem;
+            }
+            .item-produto button {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.85rem;
+                min-width: 70px;
+            }
+            .item-produto .preco {
+                font-size: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Administração - MDoces</h1>
-  </header>
-  <main class="container admin">
-    <section class="form-produto">
-      <h2>Cadastrar/Editar Produto</h2>
-      <form id="produto-form">
-        <input type="hidden" id="produto-id" />
-        <label for="produto-nome">Nome:</label>
-        <input type="text" id="produto-nome" required />
-        <label for="produto-descricao">Descrição:</label>
-        <textarea id="produto-descricao" rows="2" required></textarea>
-        <label for="produto-preco">Preço (R$):</label>
-        <input type="number" id="produto-preco" step="0.01" min="0" required />
-        <label for="produto-imagem">Imagem (URL):</label>
-        <input type="url" id="produto-imagem" required />
-        <label for="produto-categoria">Categoria:</label>
-        <input type="text" id="produto-categoria" required />
-        <button type="submit">Salvar Produto</button>
-      </form>
-    </section>
-    <section class="lista-produtos">
-      <h2>Produtos Cadastrados</h2>
-      <div id="produtos-lista"></div>
-    </section>
-  </main>
-  <footer>
-    <p>Administração MDoces</p>
-    <small>Senha: <span id="senha-admin"></span></small>
-  </footer>
-  <script>
-    const senha = 'admin123';
-    document.getElementById('senha-admin').textContent = senha;
+    <header>
+        <h1>Painel Administrativo MDoces</h1>
+    </header>
 
-    let produtos = JSON.parse(localStorage.getItem('mdoces_produtos')) || [];
+    <main class="container admin">
+        <section class="form-produto">
+            <h2><span id="form-title">Cadastrar Novo Produto</span></h2>
+            <form id="produto-form">
+                <input type="hidden" id="produto-id" value="" />
 
-    const form = document.getElementById('produto-form');
-    const lista = document.getElementById('produtos-lista');
+                <label for="produto-nome">Nome do Produto:</label>
+                <input type="text" id="produto-nome" placeholder="Ex: Bolo de Chocolate" required />
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const id = document.getElementById('produto-id').value || 'p' + Date.now();
-      const nome = document.getElementById('produto-nome').value.trim();
-      const descricao = document.getElementById('produto-descricao').value.trim();
-      const preco = parseFloat(document.getElementById('produto-preco').value);
-      const imagem = document.getElementById('produto-imagem').value.trim();
-      const categoria = document.getElementById('produto-categoria').value.trim();
+                <label for="produto-descricao">Descrição:</label>
+                <textarea id="produto-descricao" rows="3" placeholder="Detalhes sobre o doce, ingredientes, etc." required></textarea>
 
-      if (!nome || !descricao || isNaN(preco) || preco < 0 || !imagem || !categoria) {
-        alert('Por favor, preencha todos os campos corretamente.');
-        return;
-      }
+                <label for="produto-preco">Preço (R$):</label>
+                <input type="number" id="produto-preco" step="0.01" min="0.01" placeholder="Ex: 25.50" required />
 
-      const index = produtos.findIndex(p => p.id === id);
-      if (index >= 0) {
-        produtos[index] = { id, nome, descricao, preco, imagem, categoria };
-      } else {
-        produtos.push({ id, nome, descricao, preco, imagem, categoria });
-      }
+                <label for="produto-imagem">URL da Imagem:</label>
+                <input type="url" id="produto-imagem" placeholder="Ex: https://seusite.com/imagem.jpg" required />
 
-      localStorage.setItem('mdoces_produtos', JSON.stringify(produtos));
-      form.reset();
-      document.getElementById('produto-id').value = '';
-      atualizarLista();
-    });
+                <label for="produto-categoria">Categoria:</label>
+                <input type="text" id="produto-categoria" placeholder="Ex: Bolos, Docinhos, Sobremesas Especiais" required />
+                
+                <button type="submit" id="submit-button">Salvar Produto</button>
+                <div id="feedback-message" class="feedback-message" style="display: none;"></div>
+            </form>
+        </section>
 
-    function atualizarLista() {
-      lista.innerHTML = '';
-      if(produtos.length === 0) {
-        lista.innerHTML = '<p style="text-align:center; color:#888;">Nenhum produto cadastrado.</p>';
-        return;
-      }
-      produtos.forEach(prod => {
-        const div = document.createElement('div');
-        div.className = 'item-produto';
-        div.innerHTML = `
-          <img src="${prod.imagem}" alt="${prod.nome}" />
-          <div>
-            <strong>${prod.nome}</strong><br />
-            ${prod.descricao}<br />
-            <em>${prod.categoria}</em> - R$ ${prod.preco.toFixed(2)}<br />
-            <button onclick="editarProduto('${prod.id}')">Editar</button>
-            <button onclick="excluirProduto('${prod.id}')">Excluir</button>
-          </div>
-        `;
-        lista.appendChild(div);
-      });
-    }
+        <section class="lista-produtos">
+            <h2>Produtos Cadastrados</h2>
+            <div id="produtos-lista">
+                </div>
+            <p id="empty-list-message" style="text-align:center; color:#888; margin-top: 2rem; display: none;">Nenhum produto cadastrado.</p>
+        </section>
+    </main>
 
-    window.editarProduto = id => {
-      const p = produtos.find(p => p.id === id);
-      if (!p) return;
-      document.getElementById('produto-id').value = p.id;
-      document.getElementById('produto-nome').value = p.nome;
-      document.getElementById('produto-descricao').value = p.descricao;
-      document.getElementById('produto-preco').value = p.preco;
-      document.getElementById('produto-imagem').value = p.imagem;
-      document.getElementById('produto-categoria').value = p.categoria;
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+    <footer>
+        <p>&copy; 2025 MDoces - Painel Administrativo</p>
+        <small>Senha de Acesso (apenas para demonstração): <span id="senha-admin"></span></small>
+    </footer>
 
-    window.excluirProduto = id => {
-      if (!confirm('Tem certeza que deseja excluir este produto?')) return;
-      produtos = produtos.filter(p => p.id !== id);
-      localStorage.setItem('mdoces_produtos', JSON.stringify(produtos));
-      atualizarLista();
-    };
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const adminPassword = 'admin123'; // Melhor gerenciar isso em um backend para produção!
+            const passwordDisplay = document.getElementById('senha-admin');
+            if (passwordDisplay) {
+                passwordDisplay.textContent = adminPassword;
+            }
 
-    atualizarLista();
-  </script>
+            let products = JSON.parse(localStorage.getItem('mdoces_products')) || [];
+
+            const productForm = document.getElementById('produto-form');
+            const productIdInput = document.getElementById('produto-id');
+            const productNameInput = document.getElementById('produto-nome');
+            const productDescriptionInput = document.getElementById('produto-descricao');
+            const productPriceInput = document.getElementById('produto-preco');
+            const productImageUrlInput = document.getElementById('produto-imagem');
+            const productCategoryInput = document.getElementById('produto-categoria');
+            const submitButton = document.getElementById('submit-button');
+            const formTitle = document.getElementById('form-title');
+            const productsListContainer = document.getElementById('produtos-lista');
+            const emptyListMessage = document.getElementById('empty-list-message');
+            const feedbackMessageDiv = document.getElementById('feedback-message');
+
+            // --- Função para exibir feedback (sucesso/erro) ---
+            function showFeedback(message, type) {
+                feedbackMessageDiv.textContent = message;
+                feedbackMessageDiv.className = `feedback-message ${type}`;
+                feedbackMessageDiv.style.display = 'block';
+                // Esconde a mensagem após alguns segundos
+                setTimeout(() => {
+                    feedbackMessageDiv.style.display = 'none';
+                }, 3000); // 3 segundos
+            }
+
+            // --- Função para salvar/atualizar produto ---
+            productForm.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const id = productIdInput.value || 'p' + Date.now();
+                const name = productNameInput.value.trim();
+                const description = productDescriptionInput.value.trim();
+                const price = parseFloat(productPriceInput.value);
+                const imageUrl = productImageUrlInput.value.trim();
+                const category = productCategoryInput.value.trim();
+
+                if (!name || !description || isNaN(price) || price <= 0 || !imageUrl || !category) {
+                    showFeedback('Por favor, preencha todos os campos corretamente e com valores válidos.', 'error');
+                    return;
+                }
+
+                // Validação de URL de imagem básica
+                try {
+                    new URL(imageUrl);
+                } catch (_) {
+                    showFeedback('Por favor, insira uma URL de imagem válida.', 'error');
+                    return;
+                }
+
+                const productIndex = products.findIndex(p => p.id === id);
+                if (productIndex >= 0) {
+                    products[productIndex] = { id, nome: name, descricao: description, preco: price, imagem: imageUrl, categoria: category };
+                    showFeedback('Produto atualizado com sucesso!', 'success');
+                } else {
+                    products.push({ id, nome: name, descricao: description, preco: price, imagem: imageUrl, categoria: category });
+                    showFeedback('Produto cadastrado com sucesso!', 'success');
+                }
+
+                localStorage.setItem('mdoces_products', JSON.stringify(products));
+                
+                resetForm();
+                updateProductsList();
+            });
+
+            // --- Função para preencher formulário para edição ---
+            window.editProduct = (id) => {
+                const productToEdit = products.find(p => p.id === id);
+                if (!productToEdit) {
+                    showFeedback('Produto não encontrado para edição.', 'error');
+                    return;
+                }
+
+                productIdInput.value = productToEdit.id;
+                productNameInput.value = productToEdit.nome;
+                productDescriptionInput.value = productToEdit.descricao;
+                productPriceInput.value = productToEdit.preco;
+                productImageUrlInput.value = productToEdit.imagem;
+                productCategoryInput.value = productToEdit.categoria;
+
+                submitButton.textContent = 'Atualizar Produto'; // Muda o texto do botão
+                formTitle.textContent = 'Editar Produto'; // Muda o título do formulário
+                window.scrollTo({ top: 0, behavior: 'smooth' }); // Rola para o topo da página
+            };
+
+            // --- Função para excluir produto ---
+            window.deleteProduct = (id) => {
+                if (!confirm('Tem certeza que deseja EXCLUIR este produto? Esta ação é irreversível.')) {
+                    return;
+                }
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem('mdoces_products', JSON.stringify(products));
+                showFeedback('Produto excluído com sucesso!', 'success');
+                updateProductsList();
+            };
+
+            // --- Função para redefinir o formulário ---
+            function resetForm() {
+                productForm.reset();
+                productIdInput.value = ''; // Limpa o ID oculto
+                submitButton.textContent = 'Salvar Produto'; // Restaura o texto do botão
+                formTitle.textContent = 'Cadastrar Novo Produto'; // Restaura o título do formulário
+            }
+
+            // --- Função para renderizar a lista de produtos ---
+            function updateProductsList() {
+                productsListContainer.innerHTML = ''; // Limpa a lista atual
+
+                if (products.length === 0) {
+                    emptyListMessage.style.display = 'block'; // Mostra mensagem de lista vazia
+                    return;
+                } else {
+                    emptyListMessage.style.display = 'none'; // Esconde mensagem de lista vazia
+                }
+
+                products.forEach(prod => {
+                    const productDiv = document.createElement('div');
+                    productDiv.className = 'item-produto';
+                    productDiv.innerHTML = `
+                        <img src="${prod.imagem}" alt="${prod.nome}" onerror="this.onerror=null;this.src='https://via.placeholder.com/100x100?text=Imagem+N/D';" />
+                        <div>
+                            <strong>${prod.nome}</strong>
+                            <span class="descricao">${prod.descricao}</span>
+                            <em>${prod.categoria}</em>
+                            <span class="preco">R$ ${prod.preco.toFixed(2)}</span>
+                            <div class="actions">
+                                <button class="edit-btn" onclick="editProduct('${prod.id}')">Editar</button>
+                                <button class="delete-btn" onclick="deleteProduct('${prod.id}')">Excluir</button>
+                            </div>
+                        </div>
+                    `;
+                    productsListContainer.appendChild(productDiv);
+                });
+            }
+
+            // Inicializa a lista ao carregar a página
+            updateProductsList();
+        });
+    </script>
 </body>
 </html>
