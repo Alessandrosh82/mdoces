@@ -10,14 +10,15 @@
 /* --- Variáveis CSS para Cores (Melhora a Manutenção) --- */
 :root {
     --primary-color: #003366; /* Azul Marinho Principal */
-    --secondary-color: #1a1a1a; /* Preto Quase Pura para Textos/Detalhes Fortes */
-    --accent-color: #f5deb3; /* Bege para Fundos Leves e Elementos Destacados */
+    --secondary-color: #1A1A1A; /* Preto Quase Puro para Textos/Detalhes Fortes */
+    --accent-color: #F5DEB3; /* Bege para Fundos Leves e Elementos Destacados */
     --text-dark: #333; /* Cor de texto padrão mais escura */
-    --text-light: #f8f8f8; /* Cor de texto para fundos escuros */
-    --border-color: #ddd; /* Cor de borda padrão */
-    --hover-dark: #002244; /* Azul marinho mais escuro para hover */
-    --error-color: #dc3545; /* Vermelho para mensagens de erro/excluir */
-    --success-color: #28a745; /* Verde para mensagens de sucesso/confirmar */
+    --text-light: #F8F8F8; /* Cor de texto para fundos escuros */
+    --border-color: #DDD; /* Cor de borda padrão */
+    --hover-dark: #002243; /* Azul marinho mais escuro para hover */
+    --error-color: #DC3545; /* Vermelho para mensagens de erro/excluir */
+    --success-color: #28A745; /* Verde para mensagens de sucesso/confirmar */
+    --info-color: #6c757d; /* Cinza para mensagens de informação */
 }
 
 body {
@@ -25,6 +26,7 @@ body {
     background-color: var(--accent-color); /* Fundo bege suave */
     color: var(--text-dark); /* Cor de texto padrão */
     line-height: 1.6; /* Melhora a legibilidade do texto */
+    overflow-x: hidden; /* Evita scroll horizontal */
 }
 
 /* --- Estilos da Tipografia --- */
@@ -45,6 +47,7 @@ h2 {
     margin-top: 1.5em;
     margin-bottom: 1em;
     position: relative; /* Para a linha decorativa */
+    padding-top: 1rem; /* Adiciona um pouco de padding para seções */
 }
 
 h2::after { /* Linha decorativa abaixo dos títulos de seção */
@@ -74,7 +77,7 @@ nav {
     display: flex;
     justify-content: space-between; /* Espaço entre logo e menu */
     align-items: center; /* Alinha verticalmente */
-    padding: 0 1rem;
+    padding: 0 1.5rem; /* Padding horizontal maior */
 }
 
 .logo {
@@ -83,6 +86,7 @@ nav {
     color: var(--text-light);
     text-decoration: none;
     padding: 0.5rem 0;
+    white-space: nowrap; /* Evita que o logo quebre em várias linhas */
 }
 
 nav ul {
@@ -90,7 +94,7 @@ nav ul {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0; /* Garante que o margin do ul seja zero */
+    margin: 0;
 }
 
 nav ul li {
@@ -100,35 +104,41 @@ nav ul li {
 nav ul li a {
     color: var(--text-light);
     text-decoration: none;
-    font-weight: 600; /* Um pouco mais encorpado que bold */
+    font-weight: 600;
     padding: 0.5rem 0;
-    position: relative; /* Para o efeito hover */
+    position: relative;
+    transition: color 0.3s ease; /* Transição para a cor do texto também */
 }
 
-nav ul li a::after { /* Linha de hover elegante */
+nav ul li a::after {
     content: '';
     position: absolute;
     width: 0;
     height: 2px;
-    background-color: var(--accent-color); /* Bege no hover */
+    background-color: var(--accent-color);
     left: 0;
-    bottom: -5px; /* Posição abaixo do texto */
+    bottom: -5px;
     transition: width 0.3s ease-out;
+}
+
+nav ul li a:hover {
+    color: var(--accent-color); /* Mudar a cor do texto no hover */
 }
 
 nav ul li a:hover::after {
     width: 100%;
 }
 
-/* --- Carrinho de Compras --- */
+/* --- Ícone do Carrinho de Compras --- */
 .cart-icon {
-    font-size: 1.5em;
+    font-size: 1.6em; /* Ícone um pouco maior */
     color: var(--text-light);
     cursor: pointer;
     position: relative;
     padding: 0.5rem;
-    display: flex; /* Para alinhar o ícone e a contagem */
+    display: flex;
     align-items: center;
+    gap: 5px; /* Espaçamento entre o ícone e a contagem */
 }
 
 .cart-icon:hover {
@@ -138,50 +148,74 @@ nav ul li a:hover::after {
 #cart-count {
     background-color: var(--error-color); /* Vermelho para destaque */
     color: var(--text-light);
-    font-size: 0.7em;
+    font-size: 0.75em; /* Um pouco maior */
     font-weight: bold;
     border-radius: 50%;
-    padding: 0.3em 0.6em;
-    position: absolute;
-    top: 5px; /* Ajusta a posição */
-    right: 0;
-    line-height: 1; /* Garante que o texto fique centralizado verticalmente */
-    min-width: 20px; /* Garante tamanho mínimo */
+    padding: 0.2em 0.5em; /* Ajustado padding */
+    position: absolute; /* Posição absoluta para flutuar */
+    top: -5px; /* Ajusta a posição */
+    right: -5px; /* Ajusta a posição */
+    line-height: 1;
+    min-width: 20px;
     text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2); /* Sombra para destaque */
 }
-
 
 /* --- Seções do Conteúdo --- */
 section {
-    padding: 3rem 1rem; /* Mais padding para espaçamento */
-    margin: 1.5rem auto; /* Centraliza e adiciona margem vertical */
+    padding: 3rem 1.5rem; /* Mais padding e largura padrão */
+    margin: 2rem auto; /* Centraliza e adiciona margem vertical */
     max-width: 1200px; /* Largura máxima para o conteúdo */
     background-color: #fff; /* Fundo branco para as seções */
-    border-radius: 8px; /* Cantos arredondados */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Sombra mais suave */
+    border-radius: 10px; /* Cantos mais arredondados */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08); /* Sombra mais suave e pronunciada */
+    text-align: center; /* Alinha o conteúdo principal ao centro */
+}
+
+section p {
+    max-width: 800px;
+    margin: 1rem auto; /* Centraliza parágrafos dentro da seção */
+    text-align: justify; /* Justifica o texto para melhor leitura */
+}
+
+/* Estilo para mensagens de informação (carregamento, carrinho vazio, sem produtos) */
+.info-message {
+    text-align: center;
+    color: var(--info-color);
+    font-style: italic;
+    margin-top: 2rem;
+    padding: 1rem;
+    background-color: #f8f9fa; /* Fundo leve para destaque */
+    border-radius: 5px;
+    border: 1px dashed var(--border-color);
 }
 
 /* --- Hero Section (Página Inicial) --- */
 .hero-section {
-    background: linear-gradient(rgba(0, 51, 102, 0.7), rgba(0, 51, 102, 0.7)), url('https://via.placeholder.com/1500x500?text=Fundo+MDoces') no-repeat center center/cover; /* Imagem de fundo e overlay */
+    background: linear-gradient(rgba(0, 51, 102, 0.75), rgba(0, 51, 102, 0.75)), url('https://via.placeholder.com/1500x500/003366/F5DEB3?text=Fundo+MDoces+Delivery') no-repeat center center/cover;
     color: var(--text-light);
     text-align: center;
-    padding: 6rem 1rem; /* Mais padding para um visual imponente */
+    padding: 8rem 1.5rem; /* Mais padding para um visual imponente */
     border-radius: 0; /* Remove borda arredondada se for full-width */
     box-shadow: none; /* Remove sombra aqui */
     margin: 0; /* Ocupa a largura total */
+    min-height: 50vh; /* Garante uma altura mínima */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero-section .hero-content {
-    max-width: 800px;
+    max-width: 900px;
     margin: 0 auto;
 }
 
 .hero-section h1 {
-    font-size: 3.5em; /* Título principal ainda maior */
+    font-size: 3.8em; /* Título principal ainda maior */
     color: var(--accent-color); /* Título em bege para destaque */
-    margin-bottom: 0.4em;
+    margin-bottom: 0.5em;
     line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3); /* Sombra no texto do título */
 }
 
 .hero-section .highlight {
@@ -189,65 +223,74 @@ section {
 }
 
 .hero-section p {
-    font-size: 1.3em;
-    margin-bottom: 2rem;
-    line-height: 1.5;
+    font-size: 1.4em;
+    margin-bottom: 2.5rem;
+    line-height: 1.6;
     color: #f0f0f0;
+    max-width: 700px;
 }
 
 /* --- Grid de Produtos --- */
 .produtos-grid {
     display: grid;
     /* Ajustado para 3 colunas padrão no desktop, com minmax para responsividade */
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 2rem; /* Espaçamento entre os produtos */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Min-width um pouco maior */
+    gap: 2.5rem; /* Espaçamento entre os produtos */
     padding: 1rem 0;
+    justify-content: center; /* Centraliza o grid se houver poucas colunas */
 }
 
-.produto {
+/* Estilo para cada card de produto */
+.produto-card {
     background-color: #fff;
     border: 1px solid var(--border-color);
-    border-radius: 8px; /* Cantos arredondados */
+    border-radius: 10px; /* Cantos arredondados */
     padding: 1.5rem; /* Mais padding interno */
     text-align: center;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Sombra sutil para cada produto */
-    display: flex; /* Para centralizar o conteúdo verticalmente, se necessário */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Sombra sutil para cada produto */
+    display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%; /* Garante que todos os cards tenham a mesma altura */
+    overflow: hidden; /* Garante que nada saia do card */
 }
 
-.produto img {
-    /* Imagem com 1/3 do tamanho original (aproximadamente) */
+.produto-card img {
     width: 100%; /* Ocupa a largura do card */
-    max-width: 180px; /* Limita a largura máxima da imagem */
-    height: 120px; /* Altura fixa para consistência */
+    max-width: 200px; /* Limita a largura máxima da imagem */
+    height: 150px; /* Altura fixa para consistência */
     object-fit: cover; /* Garante que a imagem preencha o espaço sem distorção */
-    border-radius: 4px;
-    margin: 0 auto 1rem auto; /* Centraliza a imagem e adiciona margem inferior */
-    display: block; /* Garante que margin auto funcione */
+    border-radius: 8px; /* Cantos arredondados na imagem */
+    margin: 0 auto 1.5rem auto; /* Centraliza a imagem e adiciona margem inferior */
+    display: block;
 }
 
-.produto h3 {
+.produto-card h3 {
     color: var(--secondary-color); /* Títulos de produto em preto */
-    font-size: 1.25em; /* Títulos menores */
-    margin-bottom: 0.5rem;
+    font-size: 1.3em;
+    margin-bottom: 0.8rem;
+    min-height: 2.6em; /* Garante altura mínima para 2 linhas de título */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
-.produto .description { /* Estilo para a descrição do produto */
+.produto-card .description {
     color: #666;
-    font-size: 0.85em; /* Descrição menor */
-    margin-bottom: 1rem;
-    flex-grow: 1; /* Permite que o parágrafo ocupe o espaço disponível */
-    overflow: hidden; /* Esconde o excesso de texto */
-    text-overflow: ellipsis; /* Adiciona "..." se o texto for muito longo */
-    display: -webkit-box; /* Para limitar o número de linhas */
+    font-size: 0.9em;
+    margin-bottom: 1.2rem;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
     -webkit-line-clamp: 3; /* Limita a 3 linhas de descrição */
     -webkit-box-orient: vertical;
+    text-align: center; /* Centraliza a descrição */
 }
 
-.produto .price { /* Preço com destaque */
-    font-size: 1.4em; /* Preço ligeiramente menor */
+.produto-card .price {
+    font-size: 1.5em; /* Preço ligeiramente maior */
     font-weight: bold;
     color: var(--primary-color);
     margin-top: 1rem;
@@ -255,30 +298,26 @@ section {
 }
 
 /* --- Botões (Gerais e de Produto) --- */
-.btn { /* Classe geral para botões */
+.btn {
     background-color: var(--primary-color);
     color: var(--text-light);
     border: none;
-    padding: 0.8rem 1.5rem; /* Padding maior para botões */
-    border-radius: 5px; /* Cantos arredondados */
+    padding: 0.9rem 1.8rem; /* Padding maior para botões */
+    border-radius: 8px; /* Cantos mais arredondados */
     cursor: pointer;
-    font-size: 1em;
+    font-size: 1.05em;
     font-weight: 600;
-    text-decoration: none; /* Para usar em <a> */
-    display: inline-block; /* Para padding e largura funcionarem em <a> */
+    text-decoration: none;
+    display: inline-block;
     text-align: center;
-    white-space: nowrap; /* Evita que o texto quebre */
+    white-space: nowrap;
     transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.btn.primary-btn { /* Botão primário com estilo padrão */
-    background-color: var(--primary-color);
 }
 
 .btn.primary-btn:hover {
     background-color: var(--hover-dark);
-    transform: translateY(-2px); /* Efeito de elevação sutil */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px); /* Efeito de elevação mais pronunciado */
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Sombra maior no hover */
 }
 
 /* --- Formulário de Contato --- */
@@ -287,140 +326,173 @@ section {
     margin-bottom: 2rem;
     font-size: 1.1em;
     color: #555;
+    max-width: 700px;
 }
 
 .contact-form {
-    max-width: 600px; /* Limita a largura do formulário */
+    max-width: 650px; /* Limita a largura do formulário */
     margin: 0 auto;
+    text-align: left; /* Alinha labels à esquerda */
 }
 
-.contact-form .form-group { /* Agrupamento de label e input */
-    margin-bottom: 1.5rem;
+.contact-form .form-group {
+    margin-bottom: 1.8rem; /* Espaçamento maior entre grupos */
 }
 
 .contact-form label {
     display: block;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.6rem; /* Mais espaço abaixo do label */
     font-weight: 600;
     color: var(--secondary-color);
+    font-size: 1.05em;
 }
 
 .contact-form input[type="text"],
 .contact-form input[type="email"],
-.contact-form input[type="url"], /* Incluído para consistência, se necessário */
+.contact-form input[type="tel"], /* Adicionado input type tel */
 .contact-form textarea {
     width: 100%;
-    padding: 12px;
+    padding: 14px; /* Mais padding interno */
     border: 1px solid var(--border-color);
-    border-radius: 5px;
+    border-radius: 8px; /* Cantos mais arredondados */
     font-size: 1em;
     color: var(--text-dark);
-    background-color: var(--text-light); /* Fundo claro */
+    background-color: var(--text-light);
+    box-shadow: inset 0 1px 3px rgba(0,0,0,0.05); /* Sombra interna sutil */
 }
 
 .contact-form input[type="text"]:focus,
 .contact-form input[type="email"]:focus,
-.contact-form input[type="url"]:focus,
+.contact-form input[type="tel"]:focus,
 .contact-form textarea:focus {
     outline: none;
-    border-color: var(--primary-color); /* Borda azul ao focar */
-    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.2); /* Sombra suave de foco */
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 4px rgba(0, 51, 102, 0.25); /* Sombra de foco mais forte */
 }
 
 .contact-form textarea {
-    resize: vertical; /* Permite redimensionar verticalmente */
-    min-height: 120px;
+    resize: vertical;
+    min-height: 150px; /* Altura mínima maior */
 }
 
 /* Estilos para mensagens de erro do JS */
-.error-message {
-    color: var(--error-color) !important; /* Vermelho vibrante para erros */
-    font-size: 0.85em;
-    margin-top: 0.3rem;
-    display: block; /* Garante que a mensagem fique em sua própria linha */
+.form-group .error-message {
+    color: var(--error-color);
+    font-size: 0.88em;
+    margin-top: 0.5rem;
+    display: block;
     font-weight: 500;
+    text-align: left; /* Alinha a mensagem de erro com o campo */
 }
+
+/* Estilo para input com erro */
+input.has-error, textarea.has-error, select.has-error {
+    border-color: var(--error-color) !important;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25) !important;
+}
+
 
 /* --- Footer --- */
 footer {
     background-color: var(--secondary-color); /* Fundo preto para o footer */
     color: var(--text-light);
     text-align: center;
-    padding: 1.5rem 1rem;
-    margin-top: 3rem; /* Espaço antes do footer */
-    font-size: 0.9em;
-    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+    padding: 2rem 1.5rem; /* Mais padding */
+    margin-top: 4rem; /* Espaço antes do footer */
+    font-size: 0.95em;
+    box-shadow: 0 -3px 8px rgba(0, 0, 0, 0.15);
 }
 
 footer .social-links {
-    margin-top: 1rem;
+    margin-top: 1.5rem; /* Mais espaço acima dos links sociais */
+    display: flex; /* Para alinhar os ícones */
+    justify-content: center;
+    gap: 1.5rem; /* Espaçamento entre os links */
 }
 
 footer .social-links a {
     color: var(--accent-color); /* Links do footer em bege */
     text-decoration: none;
-    margin: 0 0.8rem;
     font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* Espaço entre ícone e texto */
+}
+
+footer .social-links a i {
+    font-size: 1.2em; /* Tamanho do ícone */
 }
 
 footer .social-links a:hover {
-    text-decoration: underline;
+    color: #fff; /* Muda para branco no hover para destaque */
+    transform: translateY(-2px);
 }
 
-/* --- Modal do Carrinho --- */
-.cart-modal {
+/* --- Modal Geral (para carrinho e futuro admin) --- */
+.modal {
     display: none; /* Escondido por padrão */
     position: fixed; /* Fixo na tela */
-    z-index: 1001; /* Acima de tudo, inclusive do header sticky */
+    z-index: 1001; /* Acima de tudo */
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
     overflow: auto; /* Habilita scroll se o conteúdo for muito grande */
-    background-color: rgba(0,0,0,0.6); /* Fundo semi-transparente */
-    justify-content: center; /* Centraliza horizontalmente */
-    align-items: center; /* Centraliza verticalmente */
+    background-color: rgba(0,0,0,0.7); /* Fundo mais escuro semi-transparente */
+    justify-content: center; /* Centraliza horizontalmente (com display:flex) */
+    align-items: center; /* Centraliza verticalmente (com display:flex) */
+    backdrop-filter: blur(5px); /* Efeito de blur no fundo para modernidade */
 }
 
-.cart-modal-content {
+.modal-content {
     background-color: #fefefe;
-    margin: auto; /* Centraliza na tela */
-    padding: 2.5rem;
-    border-radius: 10px;
-    width: 90%; /* Largura padrão */
-    max-width: 600px; /* Largura máxima */
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    padding: 3rem; /* Mais padding */
+    border-radius: 12px; /* Cantos mais arredondados */
+    width: 95%; /* Largura padrão */
+    max-width: 650px; /* Largura máxima */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.4); /* Sombra mais pronunciada */
     position: relative;
     max-height: 90vh; /* Limita a altura do modal */
     overflow-y: auto; /* Adiciona scroll interno se o conteúdo for grande */
+    transform: scale(0.95); /* Começa um pouco menor */
+    opacity: 0; /* Inicia transparente */
+    animation: modal-pop-in 0.3s forwards ease-out; /* Animação de entrada */
+}
+
+/* Animação para o modal */
+@keyframes modal-pop-in {
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .close-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
+    color: var(--info-color);
+    font-size: 30px; /* Botão de fechar maior */
     font-weight: bold;
     position: absolute;
-    top: 10px;
-    right: 20px;
+    top: 15px;
+    right: 25px;
+    cursor: pointer;
+    transition: color 0.2s ease;
 }
 
 .close-button:hover,
 .close-button:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
+    color: var(--error-color); /* Muda para vermelho no hover */
 }
 
-.cart-modal-content h2 {
+.modal-content h2 {
     color: var(--primary-color);
-    text-align: left; /* Título do modal alinhado à esquerda */
-    margin-bottom: 1.5rem;
+    text-align: left;
+    margin-bottom: 1.8rem; /* Mais espaçamento */
     border-bottom: 2px solid var(--primary-color);
     padding-bottom: 0.8rem;
+    font-size: 1.8em; /* Título do modal um pouco maior */
 }
 
-.cart-modal-content h2::after { /* Remove a linha decorativa centralizada */
+.modal-content h2::after { /* Remove a linha decorativa centralizada de H2 */
     display: none;
 }
 
@@ -429,8 +501,8 @@ footer .social-links a:hover {
     margin-bottom: 1.5rem;
     border-bottom: 1px dashed var(--border-color);
     padding-bottom: 1rem;
-    max-height: 200px; /* Altura máxima da lista de itens */
-    overflow-y: auto; /* Scroll para muitos itens */
+    max-height: 250px; /* Altura máxima da lista de itens um pouco maior */
+    overflow-y: auto;
 }
 
 .cart-item {
@@ -447,93 +519,124 @@ footer .social-links a:hover {
 
 .cart-item-info {
     flex-grow: 1;
-}
-
-.cart-item-info span {
-    display: block;
-    font-size: 0.9em;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha o texto à esquerda */
 }
 
 .cart-item-info .item-name {
     font-weight: bold;
     color: var(--secondary-color);
+    font-size: 1.05em;
+}
+
+.cart-item-info .item-quantity {
+    font-weight: normal;
+    color: #555;
+    font-size: 0.9em;
 }
 
 .cart-item-info .item-price {
     color: var(--primary-color);
+    font-size: 1.1em;
+    font-weight: 600;
+    margin-top: 0.3rem;
 }
 
 .remove-item-btn {
-    background-color: var(--error-color); /* Usando a variável de erro */
-    color: var(--text-light);
+    background: none; /* Remove o background para ser apenas um ícone */
     border: none;
-    border-radius: 4px;
-    padding: 0.4rem 0.8rem;
+    color: var(--error-color);
     cursor: pointer;
-    font-size: 0.8em;
+    font-size: 1.2em; /* Tamanho do ícone */
     margin-left: 1rem;
-    transition: background-color 0.2s ease;
+    transition: transform 0.2s ease, color 0.2s ease;
+    padding: 0.5rem; /* Área de clique maior */
+    border-radius: 50%; /* Faz o botão circular */
 }
 
 .remove-item-btn:hover {
-    background-color: #c82333; /* Um tom um pouco mais escuro de vermelho para hover */
+    color: #c82333; /* Tom mais escuro de vermelho */
+    transform: scale(1.1);
 }
 
 #cart-total {
     text-align: right;
-    font-size: 1.2em;
+    font-size: 1.3em; /* Total maior */
     font-weight: bold;
     color: var(--primary-color);
-    margin-top: 1rem;
+    margin-top: 1.5rem;
     padding-top: 1rem;
     border-top: 2px solid var(--primary-color);
 }
 
+.checkout-form {
+    margin-top: 2rem;
+    text-align: left; /* Alinha o texto do formulário à esquerda */
+}
+
+.checkout-form h3 {
+    text-align: center; /* Título do formulário de checkout centralizado */
+    margin-bottom: 1.5rem;
+    color: var(--secondary-color);
+    position: relative;
+    font-size: 1.6em;
+}
+
+.checkout-form h3::after { /* Linha decorativa para o título do checkout */
+    content: '';
+    display: block;
+    width: 40px;
+    height: 2px;
+    background-color: var(--secondary-color);
+    margin: 0.5em auto 0;
+    border-radius: 5px;
+}
+
 .checkout-form .form-group {
-    margin-bottom: 1rem;
+    margin-bottom: 1.2rem;
 }
 
 .checkout-form label {
     display: block;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.4rem;
     font-weight: 500;
+    color: var(--text-dark);
 }
 
 .checkout-form input[type="text"],
-.checkout-form input[type="email"],
-.checkout-form textarea,
-.checkout-form select {
+.checkout-form input[type="tel"], /* Adicionado input type tel */
+.checkout-form select,
+.checkout-form textarea {
     width: 100%;
-    padding: 10px;
+    padding: 12px;
     border: 1px solid var(--border-color);
     border-radius: 5px;
     font-size: 1em;
+    background-color: #fcfcfc;
 }
 
 .checkout-form input[type="text"]:focus,
-.checkout-form input[type="email"]:focus,
-.checkout-form textarea:focus,
-.checkout-form select:focus {
+.checkout-form input[type="tel"]:focus,
+.checkout-form select:focus,
+.checkout-form textarea:focus {
     outline: none;
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.2);
 }
 
+.checkout-form textarea {
+    resize: vertical;
+    min-height: 80px;
+}
+
 .checkout-form button {
-    margin-top: 1.5rem;
+    margin-top: 2rem; /* Mais espaço antes do botão final */
     width: 100%;
-    padding: 1rem;
-    font-size: 1.1em;
+    padding: 1.1rem;
+    font-size: 1.15em;
+    border-radius: 8px;
 }
-
-/* Estilos para estado de carrinho vazio */
-.empty-cart-message {
-    text-align: center;
-    color: #777;
-    font-style: italic;
-    padding: 1rem 0;
-}
-
 
 /* --- Media Queries para Responsividade --- */
 @media (max-width: 992px) {
@@ -550,77 +653,82 @@ footer .social-links a:hover {
         font-size: 0.95em;
     }
     section {
-        padding: 2.5rem 1rem;
+        padding: 2.5rem 1.5rem;
     }
     .hero-section {
-        padding: 4rem 1rem;
+        padding: 6rem 1.5rem;
     }
     .hero-section h1 {
-        font-size: 2.8em;
+        font-size: 3em;
     }
     .hero-section p {
-        font-size: 1.1em;
+        font-size: 1.2em;
     }
     .produtos-grid {
-        /* Ajustado para 2 colunas em tablets */
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1.5rem;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); /* 2 colunas em tablets */
+        gap: 2rem;
     }
-    .produto img {
-        max-width: 160px; /* Reduz a imagem um pouco mais */
-        height: 100px;
+    .produto-card img {
+        max-width: 180px;
+        height: 130px;
     }
-    .produto h3 {
-        font-size: 1.15em;
+    .produto-card h3 {
+        font-size: 1.2em;
     }
-    .produto .description {
-        font-size: 0.8em;
+    .produto-card .description {
+        font-size: 0.85em;
     }
-    .produto .price {
-        font-size: 1.3em;
+    .produto-card .price {
+        font-size: 1.4em;
+    }
+    .modal-content {
+        padding: 2rem;
     }
 }
 
 @media (max-width: 768px) {
     nav {
-        flex-direction: column; /* Coloca logo e menu em linhas separadas */
-        align-items: flex-start; /* Alinha itens à esquerda */
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1rem 1.5rem;
     }
 
     nav .logo {
         margin-bottom: 1rem;
+        font-size: 1.6em;
     }
 
     nav ul {
         flex-direction: column;
-        width: 100%; /* Menu ocupa a largura total */
+        width: 100%;
+        margin-top: 1rem;
     }
 
     nav ul li {
-        margin: 0.5rem 0; /* Mais espaçamento vertical para itens do menu */
+        margin: 0.5rem 0;
         width: 100%;
         text-align: center;
     }
 
     nav ul li a {
-        display: block; /* Para que o link ocupe todo o espaço do li */
+        display: block;
         padding: 0.8rem 0;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separador sutil */
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     nav ul li:last-child a {
-        border-bottom: none; /* Remove borda do último item */
+        border-bottom: none;
     }
 
-    nav ul li a::after { /* Esconde o efeito de linha em mobile para um menu vertical */
-        display: none;
+    nav ul li a::after {
+        display: none; /* Esconde o efeito de linha em mobile para um menu vertical */
     }
 
     /* Move o ícone do carrinho para a direita do logo em telas menores */
     nav .cart-icon {
         position: absolute;
         top: 1.2rem;
-        right: 1rem;
+        right: 1.5rem;
     }
 
     h1 {
@@ -629,30 +737,33 @@ footer .social-links a:hover {
     h2 {
         font-size: 1.6em;
     }
-    .produto {
-        width: auto; /* Deixa o grid cuidar da largura */
-        margin: 0; /* Remove a margem individual, o gap do grid cuida */
+    section {
+        padding: 2rem 1rem; /* Reduz padding em mobile */
+        margin: 1.5rem auto;
     }
     .hero-section h1 {
-        font-size: 2.2em;
+        font-size: 2.5em;
     }
     .hero-section p {
-        font-size: 1em;
+        font-size: 1.1em;
     }
-    /* Grid em uma coluna para mobile */
     .produtos-grid {
         grid-template-columns: 1fr; /* Uma coluna em telas menores */
+        gap: 1.5rem;
     }
-    .produto img {
-        max-width: 200px; /* Permite que a imagem seja um pouco maior em coluna única */
+    .produto-card img {
+        max-width: 200px;
         height: 150px;
     }
-    .cart-modal-content {
-        width: 95%; /* Ocupa mais largura em mobile */
-        padding: 1.5rem;
+    .modal-content {
+        width: 95%;
+        padding: 1.8rem;
     }
-    .cart-modal-content h2 {
-        font-size: 1.5em;
+    .modal-content h2 {
+        font-size: 1.6em;
+    }
+    .checkout-form h3 {
+        font-size: 1.4em;
     }
 }
 
@@ -664,19 +775,37 @@ footer .social-links a:hover {
         font-size: 1.4em;
     }
     section {
-        padding: 2rem 0.8rem;
+        padding: 1.5rem 0.8rem;
     }
     .hero-section {
-        padding: 3rem 0.8rem;
+        padding: 4rem 0.8rem;
     }
     .hero-section h1 {
-        font-size: 1.8em;
+        font-size: 2em;
     }
     .hero-section p {
-        font-size: 0.9em;
+        font-size: 0.95em;
     }
     .btn {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9em;
+        padding: 0.8rem 1.4rem;
+        font-size: 0.95em;
+    }
+    footer .social-links {
+        flex-direction: column; /* Links sociais em coluna em telas muito pequenas */
+        gap: 0.8rem;
+    }
+    .modal-content {
+        padding: 1.2rem;
+    }
+    .modal-content h2 {
+        font-size: 1.4em;
+        margin-bottom: 1.2rem;
+    }
+    .checkout-form h3 {
+        font-size: 1.2em;
+    }
+    .checkout-form button {
+        font-size: 1em;
+        padding: 1rem;
     }
 }
