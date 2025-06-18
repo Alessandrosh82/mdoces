@@ -1,103 +1,432 @@
-/* Reset de estilos */
+/* --- Reset de Estilos Aprimorado --- */
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* Suaviza as transições para um efeito mais elegante */
+    transition: all 0.3s ease-in-out;
+}
+
+/* --- Variáveis CSS para Cores (Melhora a Manutenção) --- */
+:root {
+    --primary-color: #003366; /* Azul Marinho Principal */
+    --secondary-color: #1a1a1a; /* Preto Quase Pura para Textos/Detalhes Fortes */
+    --accent-color: #f5deb3; /* Bege para Fundos Leves e Elementos Destacados */
+    --text-dark: #333; /* Cor de texto padrão mais escura */
+    --text-light: #f8f8f8; /* Cor de texto para fundos escuros */
+    --border-color: #ddd; /* Cor de borda padrão */
+    --hover-dark: #002244; /* Azul marinho mais escuro para hover */
 }
 
 body {
-  font-family: 'Arial', sans-serif;
-  background-color: #f5f5f5;
-  color: #333;
+    font-family: 'Poppins', sans-serif; /* Fonte mais moderna e legível */
+    background-color: var(--accent-color); /* Fundo bege suave */
+    color: var(--text-dark); /* Cor de texto padrão */
+    line-height: 1.6; /* Melhora a legibilidade do texto */
 }
 
+/* --- Estilos da Tipografia --- */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--primary-color); /* Títulos em azul marinho */
+    margin-bottom: 0.8em;
+    font-weight: 700; /* Negrito para títulos */
+}
+
+h1 {
+    font-size: 2.5em; /* Tamanho maior para o título principal */
+    text-align: center;
+}
+
+h2 {
+    font-size: 2em;
+    text-align: center;
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+    position: relative; /* Para a linha decorativa */
+}
+
+h2::after { /* Linha decorativa abaixo dos títulos de seção */
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: var(--primary-color);
+    margin: 0.5em auto 0;
+    border-radius: 5px;
+}
+
+/* --- Header e Navegação --- */
 header {
-  background-color: #003366; /* Azul marinho */
-  color: #fff;
-  padding: 1rem;
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 1.2rem 0; /* Padding vertical um pouco maior */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sutil sombra para profundidade */
+}
+
+nav {
+    max-width: 1200px; /* Limita a largura da navegação */
+    margin: 0 auto; /* Centraliza a navegação */
+    display: flex;
+    justify-content: space-between; /* Espaço entre logo e menu */
+    align-items: center; /* Alinha verticalmente */
+    padding: 0 1rem;
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 0.5rem 0;
 }
 
 nav ul {
-  list-style: none;
-  display: flex;
-  justify-content: center;
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0; /* Garante que o margin do ul seja zero */
 }
 
 nav ul li {
-  margin: 0 1rem;
+    margin: 0 1.2rem; /* Aumenta o espaçamento entre os itens do menu */
 }
 
 nav ul li a {
-  color: #fff;
-  text-decoration: none;
-  font-weight: bold;
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 600; /* Um pouco mais encorpado que bold */
+    padding: 0.5rem 0;
+    position: relative; /* Para o efeito hover */
 }
 
+nav ul li a::after { /* Linha de hover elegante */
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    background-color: var(--accent-color); /* Bege no hover */
+    left: 0;
+    bottom: -5px; /* Posição abaixo do texto */
+    transition: width 0.3s ease-out;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+/* --- Seções do Conteúdo --- */
 section {
-  padding: 2rem;
-  margin: 1rem 0;
+    padding: 3rem 1rem; /* Mais padding para espaçamento */
+    margin: 1.5rem auto; /* Centraliza e adiciona margem vertical */
+    max-width: 1200px; /* Largura máxima para o conteúdo */
+    background-color: #fff; /* Fundo branco para as seções */
+    border-radius: 8px; /* Cantos arredondados */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08); /* Sombra mais suave */
 }
 
-h1, h2 {
-  color: #003366; /* Azul marinho */
+/* --- Grid de Produtos --- */
+.produtos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Layout responsivo de grid */
+    gap: 2rem; /* Espaçamento entre os produtos */
+    padding: 1rem 0;
 }
 
 .produto {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 1rem;
-  text-align: center;
-  margin: 1rem;
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px; /* Cantos arredondados */
+    padding: 1.5rem; /* Mais padding interno */
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Sombra sutil para cada produto */
+    display: flex; /* Para centralizar o conteúdo verticalmente, se necessário */
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .produto img {
-  width: 100%;
-  height: auto;
+    width: 100%;
+    max-height: 200px; /* Limita a altura da imagem */
+    object-fit: cover; /* Garante que a imagem preencha o espaço sem distorção */
+    border-radius: 4px;
+    margin-bottom: 1rem;
 }
 
 .produto h3 {
-  color: #003366; /* Azul marinho */
+    color: var(--secondary-color); /* Títulos de produto em preto */
+    font-size: 1.4em;
+    margin-bottom: 0.5rem;
 }
 
 .produto p {
-  color: #666;
+    color: var(--text-dark);
+    font-size: 0.95em;
+    margin-bottom: 1rem;
+    flex-grow: 1; /* Permite que o parágrafo ocupe o espaço disponível */
 }
 
-.produto button {
-  background-color: #003366; /* Azul marinho */
-  color: #fff;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
+.produto .price { /* Preço com destaque */
+    font-size: 1.5em;
+    font-weight: bold;
+    color: var(--primary-color);
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-.produto button:hover {
-  background-color: #002244; /* Azul mais escuro */
+/* --- Botões (Gerais e de Produto) --- */
+.btn { /* Classe geral para botões */
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    border: none;
+    padding: 0.8rem 1.5rem; /* Padding maior para botões */
+    border-radius: 5px; /* Cantos arredondados */
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    text-decoration: none; /* Para usar em <a> */
+    display: inline-block; /* Para padding e largura funcionarem em <a> */
+    text-align: center;
+    white-space: nowrap; /* Evita que o texto quebre */
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
+.btn:hover {
+    background-color: var(--hover-dark);
+    transform: translateY(-2px); /* Efeito de elevação sutil */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.produto button.btn { /* Sobrescreve o botão do produto para usar a classe .btn */
+    width: auto; /* Ajusta a largura ao conteúdo */
+}
+
+/* --- Formulário de Contato --- */
+#contact .form-group { /* Agrupamento de label e input */
+    margin-bottom: 1.5rem;
+}
+
+#contact label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+#contact input[type="text"],
+#contact input[type="email"],
+#contact textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 5px;
+    font-size: 1em;
+    color: var(--text-dark);
+    background-color: var(--text-light); /* Fundo claro */
+}
+
+#contact input[type="text"]:focus,
+#contact input[type="email"]:focus,
+#contact textarea:focus {
+    outline: none;
+    border-color: var(--primary-color); /* Borda azul ao focar */
+    box-shadow: 0 0 0 3px rgba(0, 51, 102, 0.2); /* Sombra suave de foco */
+}
+
+#contact textarea {
+    resize: vertical; /* Permite redimensionar verticalmente */
+    min-height: 120px;
+}
+
+/* Estilos para mensagens de erro do JS */
+.error-message {
+    color: #ff4d4d !important; /* Vermelho vibrante para erros */
+    font-size: 0.85em;
+    margin-top: 0.3rem;
+    display: block; /* Garante que a mensagem fique em sua própria linha */
+    font-weight: 500;
+}
+
+/* --- Contagem Regressiva da Promoção --- */
+#promo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: var(--secondary-color); /* Preto para destaque */
+    text-align: center;
+    margin-top: 2rem;
+    background-color: var(--accent-color); /* Fundo bege para a barra de promo */
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-wrap: wrap; /* Permite que os itens quebrem em telas menores */
+    justify-content: center;
+    align-items: center;
+    gap: 15px; /* Espaço entre os itens da contagem */
+}
+
+.countdown-label {
+    font-size: 0.8em;
+    font-weight: 500;
+    color: var(--text-dark);
+    flex-basis: 100%; /* Ocupa toda a largura */
+    margin-bottom: 0.5rem;
+}
+
+.countdown-item {
+    background-color: var(--primary-color);
+    color: var(--text-light);
+    padding: 10px 15px;
+    border-radius: 5px;
+    min-width: 70px; /* Garante largura mínima para alinhamento */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+}
+
+.countdown-item small {
+    font-size: 0.6em;
+    font-weight: normal;
+    display: block; /* Garante que a palavra fique abaixo do número */
+    margin-top: 3px;
+}
+
+.promo-ended {
+    color: var(--text-dark) !important; /* Cor mais suave quando a promo termina */
+    font-size: 1.2em;
+    font-style: italic;
+}
+
+
+/* --- Footer --- */
 footer {
-  background-color: #003366; /* Azul marinho */
-  color: #fff;
-  text-align: center;
-  padding: 1rem;
+    background-color: var(--secondary-color); /* Fundo preto para o footer */
+    color: var(--text-light);
+    text-align: center;
+    padding: 1.5rem 1rem;
+    margin-top: 3rem; /* Espaço antes do footer */
+    font-size: 0.9em;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
 }
 
 footer a {
-  color: #fff;
-  text-decoration: none;
-  margin: 0 0.5rem;
+    color: var(--accent-color); /* Links do footer em bege */
+    text-decoration: none;
+    margin: 0 0.8rem;
+    font-weight: 500;
 }
 
 footer a:hover {
-  text-decoration: underline;
+    text-decoration: underline;
+}
+
+/* --- Media Queries para Responsividade --- */
+@media (max-width: 992px) {
+    h1 {
+        font-size: 2.2em;
+    }
+    h2 {
+        font-size: 1.8em;
+    }
+    nav ul li {
+        margin: 0 0.8rem;
+    }
+    nav ul li a {
+        font-size: 0.95em;
+    }
+    section {
+        padding: 2.5rem 1rem;
+    }
+    .produtos-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+    .promo-ended {
+        font-size: 1.1em;
+    }
 }
 
 @media (max-width: 768px) {
-  nav ul {
-    flex-direction: column;
-  }
+    nav {
+        flex-direction: column; /* Coloca logo e menu em linhas separadas */
+        align-items: flex-start; /* Alinha itens à esquerda */
+    }
 
-  .produto {
-    width: 100%;
-  }
+    nav .logo {
+        margin-bottom: 1rem;
+    }
+
+    nav ul {
+        flex-direction: column;
+        width: 100%; /* Menu ocupa a largura total */
+    }
+
+    nav ul li {
+        margin: 0.5rem 0; /* Mais espaçamento vertical para itens do menu */
+        width: 100%;
+        text-align: center;
+    }
+
+    nav ul li a {
+        display: block; /* Para que o link ocupe todo o espaço do li */
+        padding: 0.8rem 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1); /* Separador sutil */
+    }
+
+    nav ul li:last-child a {
+        border-bottom: none; /* Remove borda do último item */
+    }
+
+    nav ul li a::after { /* Esconde o efeito de linha em mobile para um menu vertical */
+        display: none;
+    }
+
+    h1 {
+        font-size: 2em;
+    }
+    h2 {
+        font-size: 1.6em;
+    }
+    .produto {
+        width: auto; /* Deixa o grid cuidar da largura */
+        margin: 0; /* Remove a margem individual, o gap do grid cuida */
+    }
+    #promo {
+        font-size: 1.5em;
+        padding: 1rem;
+    }
+    .countdown-item {
+        font-size: 1em;
+        min-width: 60px;
+        padding: 8px 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.8em;
+    }
+    h2 {
+        font-size: 1.4em;
+    }
+    section {
+        padding: 2rem 0.8rem;
+    }
+    .produtos-grid {
+        grid-template-columns: 1fr; /* Uma coluna em telas muito pequenas */
+    }
+    .btn {
+        padding: 0.7rem 1.2rem;
+        font-size: 0.9em;
+    }
+    #promo {
+        font-size: 1.2em;
+    }
+    .countdown-item {
+        font-size: 0.9em;
+        min-width: 50px;
+        padding: 6px 10px;
+    }
 }
