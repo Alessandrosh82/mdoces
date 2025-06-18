@@ -8,22 +8,27 @@
   <meta name="author" content="Alessandrosh82">
   <title>MDoces Delivery - Sabor e Doçura na Sua Porta</title>
   
+  <link rel="icon" type="image/png" href="images/favicon.png"> 
+  
+  <meta name="theme-color" content="#003366">
+
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css">
+  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
   <header>
     <nav>
-      <a href="#home" class="logo">MDoces Delivery</a>
+      <a href="#home" class="logo" aria-label="MDoces Delivery - Ir para o início">MDoces Delivery</a>
       <ul>
-        <li><a href="#home">Início</a></li>
-        <li><a href="#cardapio">Cardápio</a></li>
-        <li><a href="#sobre">Sobre Nós</a></li>
-        <li><a href="#contato">Contato</a></li>
+        <li><a href="#home" aria-label="Ir para a seção Início">Início</a></li>
+        <li><a href="#cardapio" aria-label="Ir para a seção Cardápio">Cardápio</a></li>
+        <li><a href="#sobre" aria-label="Ir para a seção Sobre Nós">Sobre Nós</a></li>
+        <li><a href="#contato" aria-label="Ir para a seção Contato">Contato</a></li>
       </ul>
-      <div class="cart-icon" id="open-cart-modal">
+      <div class="cart-icon" id="open-cart-modal" role="button" aria-label="Abrir carrinho de compras">
         <i class="fas fa-shopping-cart"></i> <span id="cart-count">0</span>
       </div>
     </nav>
@@ -34,7 +39,7 @@
       <div class="hero-content">
         <h1>Bem-vindo à <span class="highlight">MDoces Delivery</span></h1>
         <p>Doces artesanais feitos com carinho, frescos e entregues na sua porta. <br>A doçura perfeita para o seu dia!</p>
-        <a href="#cardapio" class="btn primary-btn">Ver Nosso Cardápio Agora!</a>
+        <a href="#cardapio" class="btn primary-btn" aria-label="Ver nosso cardápio agora">Ver Nosso Cardápio Agora!</a>
       </div>
     </section>
 
@@ -55,22 +60,22 @@
     <section id="contato">
       <h2>Fale Conosco</h2>
       <p class="contact-intro">Tem alguma dúvida, sugestão ou gostaria de fazer um pedido especial? Entre em contato!</p>
-      <form action="enviar_pedido.php" method="POST" class="contact-form">
+      <form action="#" method="POST" class="contact-form" id="contact-form">
         <div class="form-group">
           <label for="nome">Seu Nome:</label>
-          <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+          <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required aria-required="true">
         </div>
         <div class="form-group">
           <label for="email">Seu Melhor E-mail:</label>
-          <input type="email" id="email" name="email" placeholder="email@exemplo.com" required>
+          <input type="email" id="email" name="email" placeholder="email@exemplo.com" required aria-required="true">
         </div>
         <div class="form-group">
           <label for="assunto">Assunto (Opcional):</label>
-          <input type="text" id="assunto" name="assunto" placeholder="Dúvida, sugestão, pedido..." >
+          <input type="text" id="assunto" name="assunto" placeholder="Dúvida, sugestão, pedido...">
         </div>
         <div class="form-group">
           <label for="mensagem">Sua Mensagem:</label>
-          <textarea id="mensagem" name="mensagem" rows="5" placeholder="Digite sua mensagem aqui..." required></textarea>
+          <textarea id="mensagem" name="mensagem" rows="5" placeholder="Digite sua mensagem aqui..." required aria-required="true"></textarea>
         </div>
         <button type="submit" class="btn primary-btn">Enviar Mensagem</button>
       </form>
@@ -80,18 +85,18 @@
   <footer>
     <p>&copy; 2025 MDoces Delivery. Todos os direitos reservados.</p>
     <div class="social-links">
-      <a href="#" target="_blank" aria-label="Facebook da MDoces">Facebook</a>
-      <a href="#" target="_blank" aria-label="Instagram da MDoces">Instagram</a>
-      <a href="#" target="_blank" aria-label="WhatsApp da MDoces">WhatsApp</a>
+      <a href="https://www.facebook.com/seufacebook" target="_blank" rel="noopener noreferrer" aria-label="Facebook da MDoces">Facebook</a>
+      <a href="https://www.instagram.com/seuinstagram" target="_blank" rel="noopener noreferrer" aria-label="Instagram da MDoces">Instagram</a>
+      <a href="https://wa.me/5596999999999" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp da MDoces">WhatsApp</a>
     </div>
   </footer>
 
   <div id="cart-modal" class="cart-modal">
     <div class="cart-modal-content">
-      <span class="close-button">&times;</span>
+      <span class="close-button" aria-label="Fechar carrinho">&times;</span>
       <h2>Seu Carrinho de Compras</h2>
       <ul id="cart-items-list">
-        </ul>
+      </ul>
       <p id="empty-cart-message" class="empty-cart-message" style="display:none;">Seu carrinho está vazio.</p>
       <p id="cart-total">Total: R$ 0,00</p>
 
@@ -99,19 +104,19 @@
         <h3>Finalizar Pedido</h3>
         <div class="form-group">
           <label for="customer-name">Seu Nome:</label>
-          <input type="text" id="customer-name" placeholder="Nome Completo" required>
+          <input type="text" id="customer-name" placeholder="Nome Completo" required aria-required="true">
         </div>
         <div class="form-group">
           <label for="customer-address">Endereço:</label>
-          <input type="text" id="customer-address" placeholder="Rua, Número, Bairro, Cidade, CEP" required>
+          <input type="text" id="customer-address" placeholder="Rua, Número, Bairro, Cidade, CEP" required aria-required="true">
         </div>
         <div class="form-group">
           <label for="customer-phone">Telefone (WhatsApp):</label>
-          <input type="text" id="customer-phone" placeholder="(XX) XXXXX-XXXX" required>
+          <input type="tel" id="customer-phone" placeholder="(XX) XXXXX-XXXX" required aria-required="true">
         </div>
         <div class="form-group">
           <label for="payment-method">Forma de Pagamento:</label>
-          <select id="payment-method" required>
+          <select id="payment-method" required aria-required="true">
             <option value="">Selecione a forma de pagamento</option>
             <option value="pix">PIX</option>
             <option value="cartao_credito">Cartão de Crédito</option>
@@ -121,227 +126,13 @@
         </div>
         <div class="form-group">
           <label for="order-notes">Observações do Pedido:</label>
-          <textarea id="order-notes" rows="3" placeholder="Ex: Sem lactose, alergia a nozes, troco para R$50, etc."></textarea>
+          <textarea id="order-notes" rows="3" placeholder="Ex: Sem lactose, alergia a nozes, troco para R$50, etc." aria-label="Observações sobre o pedido"></textarea>
         </div>
         <button type="submit" class="btn primary-btn">Enviar Pedido via WhatsApp</button>
       </form>
     </div>
   </div>
 
-  <script src="script.js"></script>
-  <script>
-    // Script local para carregar produtos do localStorage (simulação)
-    // Este script é específico para o index.html e lida com a exibição e carrinho
-    document.addEventListener('DOMContentLoaded', () => {
-      const productsListContainer = document.getElementById('produtos-cardapio');
-      const loadingMessage = document.getElementById('loading-products-message');
-      const noProductsMessage = document.getElementById('no-products-message');
-
-      const cartIcon = document.getElementById('open-cart-modal');
-      const cartCountSpan = document.getElementById('cart-count');
-      const cartModal = document.getElementById('cart-modal');
-      const closeButton = document.querySelector('.close-button');
-      const cartItemsList = document.getElementById('cart-items-list');
-      const cartTotalSpan = document.getElementById('cart-total');
-      const emptyCartMessage = document.getElementById('empty-cart-message');
-      const checkoutForm = document.getElementById('checkout-form');
-
-      let cart = JSON.parse(localStorage.getItem('mdoces_cart')) || [];
-      let allProducts = []; // Para armazenar todos os produtos carregados
-
-      // --- Funções do Carrinho ---
-      function saveCart() {
-        localStorage.setItem('mdoces_cart', JSON.stringify(cart));
-      }
-
-      function updateCartCount() {
-        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartCountSpan.textContent = totalItems;
-        cartCountSpan.style.display = totalItems > 0 ? 'block' : 'none';
-      }
-
-      function calculateCartTotal() {
-        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-        cartTotalSpan.textContent = `Total: R$ ${total.toFixed(2).replace('.', ',')}`;
-      }
-
-      function renderCartItems() {
-        cartItemsList.innerHTML = ''; // Limpa a lista
-        if (cart.length === 0) {
-          emptyCartMessage.style.display = 'block';
-          cartItemsList.style.display = 'none';
-        } else {
-          emptyCartMessage.style.display = 'none';
-          cartItemsList.style.display = 'block';
-          cart.forEach(item => {
-            const li = document.createElement('li');
-            li.className = 'cart-item';
-            li.innerHTML = `
-              <div class="cart-item-info">
-                <span class="item-name">${item.name} (x${item.quantity})</span>
-                <span class="item-price">R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}</span>
-              </div>
-              <button class="remove-item-btn" data-id="${item.id}">Remover</button>
-            `;
-            cartItemsList.appendChild(li);
-          });
-        }
-        calculateCartTotal();
-      }
-
-      function addToCart(productId) {
-        const product = allProducts.find(p => p.id === productId);
-        if (product) {
-          const existingItem = cart.find(item => item.id === productId);
-          if (existingItem) {
-            existingItem.quantity++;
-          } else {
-            cart.push({
-              id: product.id,
-              name: product.nome,
-              price: product.preco,
-              quantity: 1
-            });
-          }
-          saveCart();
-          updateCartCount();
-          renderCartItems(); // Atualiza a lista no modal, caso esteja aberto
-          alert(`${product.nome} adicionado ao carrinho!`);
-        } else {
-          alert('Erro: Produto não encontrado.');
-        }
-      }
-
-      function removeFromCart(productId) {
-        cart = cart.filter(item => item.id !== productId);
-        saveCart();
-        updateCartCount();
-        renderCartItems();
-      }
-
-      // --- Event Listeners do Carrinho ---
-      cartIcon.addEventListener('click', () => {
-        cartModal.style.display = 'flex'; // Usar flex para centralizar
-        renderCartItems(); // Renderiza os itens sempre que o modal é aberto
-      });
-
-      closeButton.addEventListener('click', () => {
-        cartModal.style.display = 'none';
-      });
-
-      window.addEventListener('click', (event) => {
-        if (event.target == cartModal) {
-          cartModal.style.display = 'none';
-        }
-      });
-
-      cartItemsList.addEventListener('click', (event) => {
-        if (event.target.classList.contains('remove-item-btn')) {
-          const productId = event.target.dataset.id;
-          removeFromCart(productId);
-        }
-      });
-
-      checkoutForm.addEventListener('submit', (event) => {
-        event.preventDefault();
-
-        if (cart.length === 0) {
-            alert('Seu carrinho está vazio. Adicione produtos antes de finalizar o pedido.');
-            return;
-        }
-
-        const customerName = document.getElementById('customer-name').value.trim();
-        const customerAddress = document.getElementById('customer-address').value.trim();
-        const customerPhone = document.getElementById('customer-phone').value.trim();
-        const paymentMethod = document.getElementById('payment-method').value;
-        const orderNotes = document.getElementById('order-notes').value.trim();
-
-        if (!customerName || !customerAddress || !customerPhone || !paymentMethod) {
-            alert('Por favor, preencha todos os campos obrigatórios do formulário de finalização do pedido.');
-            return;
-        }
-
-        let orderSummary = `Olá! Meu nome é ${customerName} e gostaria de fazer um pedido da MDoces Delivery.\n\n`;
-        orderSummary += `*Itens do Pedido:*\n`;
-        cart.forEach(item => {
-            orderSummary += `- ${item.name} (x${item.quantity}) - R$ ${(item.price * item.quantity).toFixed(2).replace('.', ',')}\n`;
-        });
-        orderSummary += `\n*Total do Pedido: ${cartTotalSpan.textContent}*\n\n`;
-        orderSummary += `*Detalhes para Entrega:*\n`;
-        orderSummary += `Endereço: ${customerAddress}\n`;
-        orderSummary += `Telefone: ${customerPhone}\n`;
-        orderSummary += `Forma de Pagamento: ${paymentMethod}\n`;
-        if (orderNotes) {
-            orderSummary += `Observações: ${orderNotes}\n`;
-        }
-
-        // Número de telefone da doceria (substitua pelo seu)
-        const doceriaPhone = '5596999999999'; // Ex: +55 (96) 99999-9999 (sem hífens ou parênteses, apenas números)
-        const whatsappUrl = `https://wa.me/${doceriaPhone}?text=${encodeURIComponent(orderSummary)}`;
-
-        window.open(whatsappUrl, '_blank'); // Abre o WhatsApp em uma nova aba
-
-        // Limpa o carrinho e o formulário após o pedido
-        cart = [];
-        saveCart();
-        updateCartCount();
-        renderCartItems();
-        checkoutForm.reset();
-        cartModal.style.display = 'none'; // Fecha o modal
-        alert('Seu pedido foi enviado para o WhatsApp da doceria! Entraremos em contato em breve.');
-      });
-
-
-      // --- Função para carregar produtos do localStorage (exibição na página) ---
-      function loadProductsFromLocalStorage() {
-        loadingMessage.style.display = 'block'; // Mostra a mensagem de carregamento
-        productsListContainer.innerHTML = ''; // Limpa qualquer conteúdo anterior
-        noProductsMessage.style.display = 'none'; // Esconde a mensagem de "sem produtos"
-
-        setTimeout(() => { // Simula um pequeno atraso para carregamento
-          const products = JSON.parse(localStorage.getItem('mdoces_products')) || [];
-          allProducts = products; // Armazena os produtos para uso no carrinho
-          loadingMessage.style.display = 'none'; // Esconde a mensagem de carregamento
-
-          if (products.length === 0) {
-            noProductsMessage.style.display = 'block';
-            noProductsMessage.textContent = 'Ainda não temos produtos cadastrados. Por favor, acesse o painel administrativo para adicioná-los!';
-          } else {
-            products.forEach(prod => {
-              const productDiv = document.createElement('div');
-              productDiv.className = 'produto'; // Usa a classe CSS 'produto'
-              productDiv.innerHTML = `
-                <img src="${prod.imagem}" alt="${prod.nome}" onerror="this.onerror=null;this.src='https://via.placeholder.com/250x180?text=Imagem+N/D';" />
-                <h3>${prod.nome}</h3>
-                <p class="description">${prod.descricao}</p>
-                <p class="price">R$ ${prod.preco.toFixed(2).replace('.', ',')}</p> <button class="btn add-to-cart-btn" data-product-id="${prod.id}">Adicionar ao carrinho</button>
-              `;
-              productsListContainer.appendChild(productDiv);
-            });
-            // Adicionar listeners para os botões "Adicionar ao carrinho"
-            document.querySelectorAll('.add-to-cart-btn').forEach(button => {
-              button.addEventListener('click', () => {
-                const productId = button.dataset.productId;
-                addToCart(productId);
-              });
-            });
-          }
-        }, 500); // Carrega após 0.5 segundos
-      }
-
-      // Inicialização
-      loadProductsFromLocalStorage();
-      updateCartCount(); // Atualiza a contagem do carrinho ao carregar a página
-
-      // Opcional: Recarrega os produtos se houver alguma alteração no localStorage (útil para desenvolvimento)
-      window.addEventListener('storage', (event) => {
-          if (event.key === 'mdoces_products' || event.key === 'mdoces_cart') {
-              loadProductsFromLocalStorage(); // Recarrega a lista de produtos (caso haja atualização)
-              updateCartCount(); // Atualiza a contagem do carrinho
-              renderCartItems(); // Atualiza a lista do carrinho no modal
-          }
-      });
-    });
-  </script>
+  <script src="app.js"></script>
 </body>
 </html>
