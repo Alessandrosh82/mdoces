@@ -1,78 +1,68 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>MDoces - Pedido de Doces</title>
-  <link rel="stylesheet" href="style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Doceria Moisés - Deliciosos doces artesanais entregues na sua casa.">
+  <title>Doceria Moisés - Seu doce favorito na porta de casa</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <h1>MDoces</h1>
-    <p>Peça aqui seus doces favoritos</p>
+    <nav>
+      <ul>
+        <li><a href="#home">Início</a></li>
+        <li><a href="#cardapio">Cardápio</a></li>
+        <li><a href="#sobre">Sobre</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </nav>
   </header>
 
-  <main class="container">
-    <div id="produtos"></div>
+  <section id="home">
+    <h1>Bem-vindo à Doceria Moisés</h1>
+    <p>Doces artesanais feitos com carinho e entregues na sua porta.</p>
+    <a href="#cardapio" class="btn">Veja nosso cardápio</a>
+  </section>
 
-    <aside id="carrinho">
-      <h2>Carrinho <span id="carrinho-badge"></span></h2>
-      <ul id="itens-carrinho"></ul>
-      <div id="total">Total: R$ 0,00</div>
+  <section id="cardapio">
+    <h2>Nosso Cardápio</h2>
+    <div class="produto">
+      <img src="img/brownie.jpg" alt="Brownie de chocolate">
+      <h3>Brownie de Chocolate</h3>
+      <p>R$ 25,00</p>
+      <button class="btn">Adicionar ao carrinho</button>
+    </div>
+    <!-- Adicionar mais produtos conforme necessário -->
+  </section>
 
-      <form id="form-pedido">
-        <label for="nome">Seu nome:</label>
-        <input type="text" id="nome" placeholder="Nome" required />
+  <section id="sobre">
+    <h2>Sobre nós</h2>
+    <p>Somos uma doceria artesanal apaixonada por doces e pela satisfação dos nossos clientes.</p>
+  </section>
 
-        <label for="numero">WhatsApp (apenas números):</label>
-        <input type="tel" id="numero" placeholder="Ex: 11999999999" required />
-
-        <label for="endereco">Endereço para entrega:</label>
-        <textarea id="endereco" placeholder="Rua, número, bairro..." required></textarea>
-
-        <label for="observacao">Observações:</label>
-        <textarea id="observacao" placeholder="Ex: Sem granulado, trocar recheio..."></textarea>
-
-        <button type="button" class="btn-finalizar" onclick="enviarPedido()">Finalizar Pedido via WhatsApp</button>
-      </form>
-    </aside>
-  </main>
+  <section id="contato">
+    <h2>Contato</h2>
+    <form action="enviar_pedido.php" method="POST">
+      <label for="nome">Nome:</label>
+      <input type="text" id="nome" name="nome" required>
+      <label for="email">E-mail:</label>
+      <input type="email" id="email" name="email" required>
+      <label for="mensagem">Mensagem:</label>
+      <textarea id="mensagem" name="mensagem" required></textarea>
+      <button type="submit" class="btn">Enviar Pedido</button>
+    </form>
+  </section>
 
   <footer>
-    <p>© 2025 MDoces. Todos os direitos reservados. <a href="admin.html" class="admin-link">Área Administrativa</a></p>
+    <p>&copy; 2025 Doceria Moisés - Todos os direitos reservados.</p>
+    <div>
+      <a href="#">Facebook</a>
+      <a href="#">Instagram</a>
+      <a href="#">WhatsApp</a>
+    </div>
   </footer>
 
-  <script>
-    const listaProdutos = [
-      {
-        id: 1,
-        nome: "Brigadeiro Gourmet",
-        descricao: "Brigadeiro tradicional feito com chocolate belga.",
-        preco: 2.5,
-        imagem: "img/brigadeiro.jpg",
-        categoria: "Doces"
-      },
-      {
-        id: 2,
-        nome: "Beijinho",
-        descricao: "Docinho de coco com leite condensado.",
-        preco: 2.0,
-        imagem: "img/beijinho.jpg",
-        categoria: "Doces"
-      },
-      {
-        id: 3,
-        nome: "Bolo de Pote",
-        descricao: "Camadas de bolo e recheio de leite ninho com morango.",
-        preco: 8.0,
-        imagem: "img/bolo.jpg",
-        categoria: "Bolos"
-      }
-    ];
-  </script>
   <script src="script.js"></script>
 </body>
 </html>
