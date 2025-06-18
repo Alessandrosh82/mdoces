@@ -16,6 +16,8 @@
     --text-light: #f8f8f8; /* Cor de texto para fundos escuros */
     --border-color: #ddd; /* Cor de borda padrão */
     --hover-dark: #002244; /* Azul marinho mais escuro para hover */
+    --error-color: #dc3545; /* Vermelho para mensagens de erro/excluir */
+    --success-color: #28a745; /* Verde para mensagens de sucesso/confirmar */
 }
 
 body {
@@ -118,7 +120,7 @@ nav ul li a:hover::after {
     width: 100%;
 }
 
-/* Carrinho de Compras */
+/* --- Carrinho de Compras --- */
 .cart-icon {
     font-size: 1.5em;
     color: var(--text-light);
@@ -332,7 +334,7 @@ section {
 
 /* Estilos para mensagens de erro do JS */
 .error-message {
-    color: #ff4d4d !important; /* Vermelho vibrante para erros */
+    color: var(--error-color) !important; /* Vermelho vibrante para erros */
     font-size: 0.85em;
     margin-top: 0.3rem;
     display: block; /* Garante que a mensagem fique em sua própria linha */
@@ -462,7 +464,7 @@ footer .social-links a:hover {
 }
 
 .remove-item-btn {
-    background-color: var(--error-color);
+    background-color: var(--error-color); /* Usando a variável de erro */
     color: var(--text-light);
     border: none;
     border-radius: 4px;
@@ -474,7 +476,7 @@ footer .social-links a:hover {
 }
 
 .remove-item-btn:hover {
-    background-color: var(--delete-red);
+    background-color: #c82333; /* Um tom um pouco mais escuro de vermelho para hover */
 }
 
 #cart-total {
