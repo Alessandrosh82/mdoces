@@ -34,9 +34,6 @@ document.addEventListener('DOMContentLoaded', () => {
             if (hasError) {
                 event.preventDefault(); // Impede o envio do formulário se houver erros
             } else {
-                // Se tudo estiver OK, você pode adicionar lógica para enviar o formulário
-                // alert('Mensagem enviada com sucesso! (Funcionalidade de envio precisa ser implementada no backend)');
-                // Para demonstração, impedimos o envio aqui para que você possa ver a validação
                 event.preventDefault();
                 alert('Formulário validado com sucesso! (O envio real seria para um backend)');
                 contactForm.reset(); // Limpa o formulário após validação bem-sucedida (opcional)
@@ -51,31 +48,26 @@ document.addEventListener('DOMContentLoaded', () => {
         errorDiv.style.fontSize = '0.8em';
         errorDiv.style.marginTop = '5px';
         errorDiv.textContent = message;
-        // Insere a mensagem de erro depois do elemento de input, dentro do mesmo form-group
         const formGroup = inputElement.closest('.form-group');
         if (formGroup) {
             formGroup.appendChild(errorDiv);
         } else {
             inputElement.parentNode.insertBefore(errorDiv, inputElement.nextSibling);
         }
-        inputElement.style.borderColor = 'red'; // Destaque visual no campo
+        inputElement.style.borderColor = 'red';
     }
 
     function clearErrorMessages() {
         document.querySelectorAll('.error-message').forEach(el => el.remove());
-        document.querySelectorAll('input, textarea').forEach(el => el.style.borderColor = ''); // Remove destaque visual
+        document.querySelectorAll('input, textarea').forEach(el => el.style.borderColor = '');
     }
 
     function isValidEmail(email) {
-        // Regex para validação básica de e-mail
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     }
 
-    // --- Contagem Regressiva para Promoção Removida ---
-    // O código da contagem regressiva foi removido daqui pois a seção foi retirada do HTML.
-
     // --- Funcionalidade Extra: Efeitos Visuais para Botões ---
-    document.querySelectorAll('.btn').forEach(button => { // Ajuste para usar a classe .btn
+    document.querySelectorAll('.btn').forEach(button => {
         button.addEventListener('mouseover', () => {
             button.style.transform = 'scale(1.05)';
             button.style.transition = 'transform 0.2s ease-in-out';
@@ -95,7 +87,4 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     });
-
-    // --- Funcionalidade Extra: Galeria de Imagens/Carrossel Básico (Removido, pois não é mais necessário no index simplificado) ---
-    // O código do carrossel foi removido daqui.
 });
